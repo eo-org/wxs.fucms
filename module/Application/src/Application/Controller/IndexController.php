@@ -31,7 +31,7 @@ class IndexController extends AbstractActionController
     	
     	$tokenObj = json_decode($output);
     	
-    	$componentAccessToken = $tokenObj['componentAccessToken'];
+    	$componentAccessToken = $tokenObj->componentAccessToken;
     	
     	
     	$url = "https://api.weixin.qq.com/sns/oauth2/component/access_token?appid=wx536a9272e58807e7&code=".$code."&grant_type=authorization_code&component_appid=wx2ce4babba45b702d&component_access_token=".$componentAccessToken;
