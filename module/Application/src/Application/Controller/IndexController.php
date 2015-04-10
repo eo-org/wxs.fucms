@@ -11,29 +11,22 @@ class IndexController extends AbstractActionController
     	
     }
     
-    public function testAction()
-    {
-    	
-    }
-    
     public function getUserCodeAction()
     {
+    	$userAuth = $sm->get('User\Service\SessionAuth');
+    	
+    	if($userAuth->isLogin()) {
+    		
+    	}
+    	
     	$code = $this->params()->fromQuery('code');
-    	
-    	
-    	
-    	
-    	//$pAuth = $this->getServiceLocator()->get('Application\Service\PublicityAuth');
-    	$componentAccessToken = $pAuth->getComponentAccessToken();
-    	
     	
     	$ch = curl_init();
     	curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/component-access-token');
     	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    	//curl_setopt($ch, CURLOPT_POST, 1);
-    	//curl_setopt($ch, CURLOPT_POSTFIELDS, $postData);
     	$output = curl_exec($ch);
     	curl_close($ch);
+    	
     	$tokenObj = json_decode($output);
     	
     	$componentAccessToken = $tokenObj['componentAccessToken'];
