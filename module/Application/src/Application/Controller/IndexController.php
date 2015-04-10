@@ -13,6 +13,8 @@ class IndexController extends AbstractActionController
     
     public function getUserCodeAction()
     {
+    	$sm = $this->getServiceLocator();
+    	
     	$userAuth = $sm->get('User\Service\SessionAuth');
     	
     	if($userAuth->isLogin()) {
