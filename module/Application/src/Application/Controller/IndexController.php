@@ -11,7 +11,7 @@ class IndexController extends AbstractActionController
     	
     }
     
-    public function getUserCodeAction()
+    public function surrogateAction()
     {
     	
     	

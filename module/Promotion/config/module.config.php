@@ -20,6 +20,18 @@ return array(
                 	)
                 ),
             	'may_terminate' => true,
+            	'child_routes' => array(
+//             		'actionroutes' => array(
+//             			'type'		=> 'segment',
+//             			'options'	=> array(
+//             				'route' 	=> '[:controller][/:action]',
+//             				'defaults'	=> array(
+//             					'controller'    => 'Application\Controller\IndexController',
+//             					'action'        => 'test',
+//             				)
+//             			)
+//             		),
+            	)
             ),
         	
         ),

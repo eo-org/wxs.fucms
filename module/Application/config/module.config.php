@@ -7,37 +7,31 @@ return array(
     ),
     'router' => array(
         'routes' => array(
+        	'surrogate' => array(
+        		'type'    => 'literal',
+        		'options' => array(
+        			'route'    => '/',
+        			'defaults' => array(
+        				'controller'    => 'Application\Controller\IndexController',
+        				'action'        => 'surrogate',
+        			)
+        		),
+        		'may_terminate' => true,
+        	),
             'application' => array(
-                'type'    => 'literal',
+                'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/',
+                    'route'    => '/:websiteId',
                     'defaults' => array(
                         'controller'    => 'Application\Controller\IndexController',
                         'action'        => 'index',
                     ),
+                	'constraints' => array(
+                		'websiteId' => '[a-z0-9]{24}',
+					)
                 ),
             	'may_terminate' => true,
             	'child_routes' => array(
-            		'test' => array(
-            			'type'		=> 'literal',
-            			'options'	=> array(
-            				'route' 	=> 'test',
-            				'defaults'	=> array(
-            					'controller'    => 'Application\Controller\IndexController',
-            					'action'        => 'test',
-            				)
-            			)
-            		),
-            		'get-user-code' => array(
-		        		'type'		=> 'literal',
-			        	'options'	=> array(
-			            	'route' 	=> 'get-user-code',
-			        		'defaults'	=> array(
-			        			'controller'    => 'Application\Controller\IndexController',
-			        			'action'        => 'get-user-code',
-			        		)
-			            )
-		        	)
             	)
             ),
         	
@@ -54,8 +48,7 @@ return array(
 			'error/index'						=> __DIR__ . '/../view/error/index.phtml',
 			'error/404'							=> __DIR__ . '/../view/error/404.phtml',
 			'application/index/index'			=> __DIR__ . '/../view/index/index.phtml',
-			'application/index/test'			=> __DIR__ . '/../view/index/test.phtml',
-			'application/index/get-user-code'	=> __DIR__ . '/../view/index/get-user-code.phtml'
+			'application/index/surrogate'		=> __DIR__ . '/../view/index/surrogate.phtml',
 		)
 	),
 	'service_manager' => array(

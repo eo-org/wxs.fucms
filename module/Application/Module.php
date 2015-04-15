@@ -2,6 +2,7 @@
 namespace Application;
 
 use Zend\Mvc\MvcEvent;
+use Application\EventListener\AuthListener;
 
 class Module
 {
@@ -9,6 +10,9 @@ class Module
 	{
 		$eventManager = $moduleManager->getEventManager();
 		$sharedEventManager = $eventManager->getSharedManager();
+		
+		$authListener = new AuthListener();
+		$eventManager->attach($authListener);
 	}
 	
     public function getConfig()
