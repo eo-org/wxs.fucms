@@ -61,7 +61,8 @@ class AuthListener extends AbstractListenerAggregate
     				throw new \Exception('not allowed');
     			}
     		} else {
-    			header("Location: https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx536a9272e58807e7&redirect_uri=http%3A%2F%2Fwxs.fucmsweb.com%2Fuser&response_type=code&scope=snsapi_base&state=access-openid&component_appid=wx2ce4babba45b702d#wechat_redirect");
+    			$requestUri = $router->getRequestUri();
+    			header("Location: https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx536a9272e58807e7&redirect_uri=".urlencode($requestUri)."&response_type=code&scope=snsapi_base&state=access-openid&component_appid=wx2ce4babba45b702d#wechat_redirect");
     			exit(0);
     		}
     	}
