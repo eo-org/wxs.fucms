@@ -3,7 +3,7 @@ namespace Promotion\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 
-class DrawController extends AbstractActionController
+class SmashingController extends AbstractActionController
 {
 	public function indexAction()
 	{

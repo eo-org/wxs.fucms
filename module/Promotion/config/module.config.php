@@ -3,7 +3,7 @@ return array(
 	'controllers' => array(
         'invokables' => array(
         	'Promotion\Controller\IndexController' => 'Promotion\Controller\IndexController',
-        	'draw' => 'Promotion\Controller\DrawController'
+        	'smashing' => 'Promotion\Controller\SmashingController'
         ),
     ),
     'router' => array(
@@ -28,7 +28,7 @@ return array(
     ),
 	'view_manager' => array(
 		'template_map' => array(
-			'promotion/draw/index'			=> __DIR__ . '/../view/draw/index.phtml',
+			'promotion/smashing/index'			=> __DIR__ . '/../view/smashing/index.phtml',
 		)
 	)
 );
