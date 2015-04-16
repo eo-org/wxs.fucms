@@ -13,6 +13,8 @@ class Module
 		
 		$authListener = new AuthListener();
 		$eventManager->attach($authListener);
+		
+		$sharedEventManager->attach('Zend\Mvc\Application', 'dispatch', array($this, 'setWebsiteId'), 1000);
 	}
 	
     public function getConfig()
@@ -25,9 +27,18 @@ class Module
         return array(
             'Zend\Loader\StandardAutoloader' => array(
 				'namespaces' => array(
-					__NAMESPACE__	=> __DIR__ . '/src/' . __NAMESPACE__
+					__NAMESPACE__	=> __DIR__ . '/src/' . __NAMESPACE__,
+					'WxDocument'	=> BASE_PATH . '/inc/WxDocument'
 				)
             ),
         );
+    }
+    
+    public function setWebsiteId(MvcEvent $e)
+    {
+    	$websiteId = $e->getRouteMatch()->getParam('websiteId');
+    	$sm = $e->getApplication()->getServiceManager();
+    	$cmsSite = $sm->get('Application\Service\CmsSiteService');
+    	$cmsSite->setWebsiteId($websiteId);
     }
 }

@@ -6,7 +6,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 
 use Doctrine\Common\Persistence\PersistentObject, Doctrine\ODM\MongoDB\DocumentManager, Doctrine\ODM\MongoDB\Configuration, Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver, Doctrine\MongoDB\Connection;
 
-class WxsDocumentManagerFactory implements FactoryInterface
+class DocumentManagerFactory implements FactoryInterface
 {
     /**
      * @param  ServiceLocatorInterface $serviceLocator
@@ -17,8 +17,14 @@ class WxsDocumentManagerFactory implements FactoryInterface
 		$config = $serviceLocator->get('Config');
 		$env = $config['env'];
 		
-		$host = '127.0.0.1';
-		$dbName = 'wxs_fucms';
+    	$cmsSite = $serviceLocator->get('Application\Service\CmsSiteService');
+    	
+    	$serverArr = $cmsSite->getServerArr();
+    	
+		$host		= $serverArr['host'];
+		$username	= $serverArr['username'];
+		$password	= $serverArr['password'];
+		$dbName		= $serverArr['dbName'];
 		
 		AnnotationDriver::registerAnnotationClasses();
 		$config = new Configuration();
@@ -34,9 +40,9 @@ class WxsDocumentManagerFactory implements FactoryInterface
 			$config->setAutoGenerateProxyClasses(false);
 		}
 		$connection = new Connection($host, array(
-			'username' => 'wxs_admin',
-			'password' => '2hsufoe(7690&6*',
-			'db' => 'wxs_fucms'
+			'username' => $username,
+			'password' => $password,
+			'db' => 'admin'
 		));
 		$connection->initialize();
 		$dm = DocumentManager::create($connection, $config);

@@ -10,7 +10,7 @@ class AuthListener extends AbstractListenerAggregate
 	public function attach(EventManagerInterface $events)
 	{
 		$sharedEvents = $events->getSharedManager();
-		$this->listeners[] = $sharedEvents->attach(array('User'), 'dispatch', array($this, 'onAuth'), 100);
+		$this->listeners[] = $sharedEvents->attach(array('User', 'Promotion'), 'dispatch', array($this, 'onAuth'), 100);
 	}
 	
 	public function onAuth($mvcEvent)
@@ -27,8 +27,8 @@ class AuthListener extends AbstractListenerAggregate
     		$query = $mvcEvent->getRequest()->getQuery();
     		
     		if(isset($query['state']) && $query['state'] == 'access-openid') {
+    			// if the request comes from qq server, use code and componentAccessToken combined to get the user openId
     			if(isset($query['code'])) {
-    				
     				$requestUri = $router->getRequestUri();
     				
     				$code = $query['code'];
@@ -61,6 +61,7 @@ class AuthListener extends AbstractListenerAggregate
     				throw new \Exception('not allowed');
     			}
     		} else {
+    			// redirect to open.weixin.qq.com and ask for a code for the current user
     			$requestUri = $router->getRequestUri();
     			header("Location: https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx536a9272e58807e7&redirect_uri=".urlencode($requestUri)."&response_type=code&scope=snsapi_base&state=access-openid&component_appid=wx2ce4babba45b702d#wechat_redirect");
     			exit(0);

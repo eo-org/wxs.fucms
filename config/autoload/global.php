@@ -32,4 +32,9 @@ return array(
 			),
 		),
 	),
+	'account_fucms_db' => array(
+		'host'		=> '127.0.0.1',
+		'username'	=> 'craftgavin',
+		'password'	=> 'whothirstformagic?'
+	),
 );

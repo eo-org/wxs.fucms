@@ -52,7 +52,11 @@ return array(
 		)
 	),
 	'service_manager' => array(
+		'invokables' => array(
+			'Application\Service\CmsSiteService' => 'Application\Service\CmsSiteService'
+		),
 		'factories' => array(
+			'DocumentManager' => 'Application\Service\Db\DocumentManagerFactory',
 			'WxsDocumentManager' => 'Application\Service\Db\WxsDocumentManagerFactory',
 		)
 	)
