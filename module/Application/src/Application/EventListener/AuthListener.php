@@ -11,6 +11,7 @@ class AuthListener extends AbstractListenerAggregate
 	{
 		$sharedEvents = $events->getSharedManager();
 		$this->listeners[] = $sharedEvents->attach(array('User', 'Promotion'), 'dispatch', array($this, 'onAuth'), 100);
+		$this->listeners[] = $sharedEvents->attach(array('User', 'Promotion'), 'dispatch', array($this, 'onGetJsApiTicket'), 100);
 	}
 	
 	public function onAuth($mvcEvent)
@@ -21,7 +22,6 @@ class AuthListener extends AbstractListenerAggregate
     	$router =  $mvcEvent->getRouter();  
     	
     	$userAuth = $sm->get('User\Service\SessionAuth');
-    	
     	if(!$userAuth->isLogin()) {
     		
     		$query = $mvcEvent->getRequest()->getQuery();
@@ -67,5 +67,29 @@ class AuthListener extends AbstractListenerAggregate
     			exit(0);
     		}
     	}
+	}
+	
+	public function onGetJsApiTicket($mvcEvent)
+	{
+		$sm = $mvcEvent->getApplication()->getServiceManager();
+		
+		$rm = $mvcEvent->getRouteMatch();
+		$router =  $mvcEvent->getRouter();
+		$requestUri = $router->getRequestUri();		
+		$cmsSiteService = $sm->get('Application\Service\CmsSiteService');
+		
+		$websiteId = $cmsSiteService->getWebsiteId();		
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/jsApiTicket/'.$websiteId);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		$output = curl_exec($ch);
+		curl_close($ch);
+		
+		$jsApiTicketObj = json_decode($output);
+		$jsApiTicket = $jsApiTicketObj->jsApiTicket;
+		
+		$jsSignature = $sm->get('Application\Service\JsSignatureService');
+		$jsSignature->setJsApiTicket($jsApiTicket);
+		$jsSignature->setUrl($requestUri);
 	}
 }
