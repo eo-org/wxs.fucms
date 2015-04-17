@@ -53,11 +53,17 @@ return array(
 	),
 	'service_manager' => array(
 		'invokables' => array(
-			'Application\Service\CmsSiteService' => 'Application\Service\CmsSiteService'
+			'Application\Service\CmsSiteService' => 'Application\Service\CmsSiteService',
+			'Application\Service\JsSignatureService' => 'Application\Service\JsSignatureService'
 		),
 		'factories' => array(
 			'DocumentManager' => 'Application\Service\Db\DocumentManagerFactory',
 			'WxsDocumentManager' => 'Application\Service\Db\WxsDocumentManagerFactory',
 		)
-	)
+	),
+	'view_helpers' => array(
+		'invokables' => array(
+			'path' => 'Application\View\Helper\Path',
+		)
+	),
 );

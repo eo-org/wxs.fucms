@@ -7,12 +7,16 @@ class SmashingController extends AbstractActionController
 {
 	public function indexAction()
 	{
-		$userAuth = $this->getServiceLocator()->get('User\Service\SessionAuth');
+		$sm = $this->getServiceLocator();
+		$userAuth = $sm->get('User\Service\SessionAuth');
 		 
 		$openId = $userAuth->getOpenId();
 		
+		$jsSignature = $sm->get('Application\Service\JsSignatureService');
+		$wxConfigStr = $jsSignature->getJsSdkConfig();
 		return array(
-			'openId' => $openId
+			'openId' => $openId,
+			'wxConfig' => $wxConfigStr,
 		);
 	}
 	
