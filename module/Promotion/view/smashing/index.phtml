@@ -4,14 +4,9 @@
 <div class="main" style="text-align: center;position: absolute; left: 0; bottom: 0;width: 100%;">
 	<div class="smash-body" style="margin-bottom: 130px;">
 		<a href="javascript:;" style="display: block; width: 160px; height: 190px; margin: 0 auto;">
-			<img src="<?php echo $this->path('wxs.fucms')?>/smashing/images/egg_1.png" />
+			<img src="<?php echo $this->path('wxs.fucms')?>/smashing/images/egg1.png" data-src="<?php echo $this->path('wxs.fucms')?>/smashing/images/egg2.png"/>
 		</a>
 	</div>
 </div>
-<script>
-	wx.config(<?php echo $this->wxConfig?>);
-</script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script>
-	wx.hideOptionMenu();
-</script>
+<script src="<?php echo $this->path('wxs.fucms')?>/smashing/script/smashing.js"></script>

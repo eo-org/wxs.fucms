@@ -20,7 +20,8 @@ class Module
         return array(
             'Zend\Loader\StandardAutoloader' => array(
 				'namespaces' => array(
-					__NAMESPACE__	=> __DIR__ . '/src/' . __NAMESPACE__
+					__NAMESPACE__	=> __DIR__ . '/src/' . __NAMESPACE__,
+					'PromotionRest' => __DIR__ . '/src/PromotionRest',
 				)
             ),
         );

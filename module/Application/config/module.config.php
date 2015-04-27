@@ -34,7 +34,28 @@ return array(
             	'child_routes' => array(
             	)
             ),
-        	
+        	'wxsrs' => array (
+				'type' => 'literal',
+				'options' => array (
+					'route' => '/wxsrs',
+				),
+				'may_terminate' => true,
+				'child_routes' => array (
+					'restroutes' => array (
+						'type' => 'segment',
+						'options' => array (
+							'route' => '[/:controller].json[/:id]',
+							'constraints' => array (
+								'controller' => '[a-z-]*',
+								'id' => '[A-Za-z0-9-_]*'
+							),
+							'defaults' => array(
+								'format' => 'json'
+							)
+						)
+					)
+				)
+			),        	
         ),
     ),
 	'view_manager' => array(
@@ -49,6 +70,9 @@ return array(
 			'error/404'							=> __DIR__ . '/../view/error/404.phtml',
 			'application/index/index'			=> __DIR__ . '/../view/index/index.phtml',
 			'application/index/surrogate'		=> __DIR__ . '/../view/index/surrogate.phtml',
+		),
+		'strategies' => array(
+			'ViewJsonStrategy',
 		)
 	),
 	'service_manager' => array(
