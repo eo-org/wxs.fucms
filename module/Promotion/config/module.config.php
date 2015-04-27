@@ -23,7 +23,6 @@ return array(
             	'child_routes' => array(
             	)
             ),
-        	
         ),
     ),
 	'view_manager' => array(
