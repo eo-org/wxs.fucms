@@ -6,7 +6,7 @@ return array(
         	'smashing' => 'Promotion\Controller\SmashingController',
         	
         	/*************rest**************************/
-        	'/promotion/probability-check'=>'PromotionRest\Controller\ProbabilityCheckController'
+        	'promotion-probability-check'=>'PromotionRest\Controller\ProbabilityCheckController'
         ),
     ),
     'router' => array(
@@ -14,7 +14,7 @@ return array(
             'promotion' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/:websiteId/promotion/[:controller][/:action]',
+                    'route'    => '/:websiteId/promotion/[:controller][/:action][/:id]',
                 	'constraints' => array(
                 		'websiteId' => '[a-z0-9]{24}',
                 		'id' => '[a-z0-9]{24}',

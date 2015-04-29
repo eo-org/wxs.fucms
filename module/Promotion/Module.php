@@ -22,6 +22,7 @@ class Module
 				'namespaces' => array(
 					__NAMESPACE__	=> __DIR__ . '/src/' . __NAMESPACE__,
 					'PromotionRest' => __DIR__ . '/src/PromotionRest',
+					'Promotion' => __DIR__ . '/src/Promotion',
 				)
             ),
         );

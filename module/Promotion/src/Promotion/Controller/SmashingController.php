@@ -3,6 +3,7 @@ namespace Promotion\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
+use Promotion\Document\Smashing;
 
 class SmashingController extends AbstractActionController
 {
@@ -14,20 +15,27 @@ class SmashingController extends AbstractActionController
 // 		$openId = $userAuth->getOpenId();
 // 		$jsSignature = $sm->get('Application\Service\JsSignatureService');
 // 		$wxConfigStr = $jsSignature->getJsSdkConfig();
-		$demo = rand();
-		echo $demo;
-		die('ok');
 		
+		$postDataStr = null;
 		
-		//获取活动数据，检测活动有没有过期，以及中奖的数目
+		//获取活动数据，检测活动有没有过期	
+		$dm = $sm->get('DocumentManager');
+		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById($id);
+		$stauts = $smashingDoc->isActive();
+		$smashingData = $smashingDoc->getArrayCopy();		
+		if($stauts == 'active') {
+			$postData = array(
+				'openId' => $openId,
+				'promotion' => 'smashing',
+				'promotionId' => $id,
+			);
+			$postDataStr = json_encode($postData);
+		}else if($stauts == 'inactive' ) {
+			die('inactive');
+		}else {
+			die('ending');
+		}
 		
-		
-		$postData = array(
-			'openId' => $openId,
-			'promotion' => 'smashing',
-			'promotionId' => $id,
-		);
-		$postDataStr = json_encode($postData);
 		return array(
 			'openId' => $openId,
 			'wxConfig' => $wxConfigStr,

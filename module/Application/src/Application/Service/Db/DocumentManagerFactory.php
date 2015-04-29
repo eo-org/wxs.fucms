@@ -35,10 +35,10 @@ class DocumentManagerFactory implements FactoryInterface
 		$config->setHydratorDir(BASE_PATH . '/wxs.fucms/doctrineCache');
 		$config->setHydratorNamespace('DoctrineMongoHydrator');
 		$config->setMetadataDriverImpl(AnnotationDriver::create(BASE_PATH . '/class'));
-		if($env['usage']['server'] == 'production') {
-			$config->setAutoGenerateHydratorClasses(false);
-			$config->setAutoGenerateProxyClasses(false);
-		}
+// 		if($env['usage']['server'] == 'production') {
+// 			$config->setAutoGenerateHydratorClasses(false);
+// 			$config->setAutoGenerateProxyClasses(false);
+// 		}
 		$connection = new Connection($host, array(
 			'username' => $username,
 			'password' => $password,

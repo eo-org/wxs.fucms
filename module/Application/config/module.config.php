@@ -37,15 +37,16 @@ return array(
         	'wxsrs' => array (
 				'type' => 'literal',
 				'options' => array (
-					'route' => '/wxsrs',
+					'route' => '/wxsrs'
 				),
 				'may_terminate' => true,
 				'child_routes' => array (
 					'restroutes' => array (
 						'type' => 'segment',
 						'options' => array (
-							'route' => '[/:controller].json[/:id]',
+							'route' => '[/:websiteId][/:controller].json[/:id]',
 							'constraints' => array (
+								'websiteId' => '[a-z0-9]{24}',
 								'controller' => '[a-z-]*',
 								'id' => '[A-Za-z0-9-_]*'
 							),
@@ -58,6 +59,12 @@ return array(
 			),        	
         ),
     ),
+	'controller_plugins' => array(
+		'invokables' => array(
+			'formatData' => 'Core\Controller\Plugin\FormatData',
+			'formatData2' => 'Core\Controller\Plugin\FormatData2'
+		)
+	),
 	'view_manager' => array(
 		'display_not_found_reason' => true,
 		'display_exceptions'       => true,
@@ -78,7 +85,8 @@ return array(
 	'service_manager' => array(
 		'invokables' => array(
 			'Application\Service\CmsSiteService' => 'Application\Service\CmsSiteService',
-			'Application\Service\JsSignatureService' => 'Application\Service\JsSignatureService'
+			'Application\Service\JsSignatureService' => 'Application\Service\JsSignatureService',
+			'Promotion\Service\DrawCheck' => 'Promotion\Service\DrawCheck'
 		),
 		'factories' => array(
 			'DocumentManager' => 'Application\Service\Db\DocumentManagerFactory',
