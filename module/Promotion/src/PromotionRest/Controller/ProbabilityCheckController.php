@@ -64,7 +64,7 @@ class ProbabilityCheckController extends AbstractRestfulController
 				$dm->persist($snDoc);
 				
 				$result = array(
-					'status' => true,
+					'status' => 'success',
 					'msg' => array(
 						'snData' => $snData,
 						'prizeData' => $prizeData
@@ -74,7 +74,7 @@ class ProbabilityCheckController extends AbstractRestfulController
 				$probabilityCheckData['result'] = true;
 			}else {
 				$result = array(
-					'status' => false,
+					'status' => 'error',
 					'msg' => $drawCheckresult['msg']
 				);
 				$probabilityCheckData['result'] = false;
