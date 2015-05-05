@@ -5,7 +5,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * @ODM\Document(
- * collection="wx_sn"
+ * collection="wx_promotion_sn"
  * )
  */
 class Sn

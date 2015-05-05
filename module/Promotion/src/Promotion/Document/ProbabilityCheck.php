@@ -25,32 +25,17 @@ class ProbabilityCheck extends AbstractDocument
 	/**
 	 * @ODM\Field(type="string")
 	 */
-	protected $value;
-	
-	/**
-	 * @ODM\Field(type="string")
-	 */
-	protected $promotion;
-	
-	/**
-	 * @ODM\Field(type="string")
-	 */
 	protected $promotionId;
 	
 	/**
 	 * @ODM\Field(type="string")
 	 */
-	protected $promotionLabel;
+	protected $promotionType;
 	
 	/**
 	 * @ODM\Field(type="string")
 	 */
 	protected $sn;
-	
-	/**
-	 * @ODM\Field(type="string")
-	 */
-	protected $snLabel;
 	
 	/**
 	 * @ODM\Field(type="boolean")
@@ -68,28 +53,16 @@ class ProbabilityCheck extends AbstractDocument
 			$this->openId = $data['openId'];
 		}
 		
-		if(isset($data['value'])){
-			$this->value = $data['value'];
-		}
-		
-		if(isset($data['promotion'])){
-			$this->promotion = $data['promotion'];
-		}
-		
 		if(isset($data['promotionId'])){
 			$this->promotionId = $data['promotionId'];
 		}
 		
-		if(isset($data['promotionLabel'])){
-			$this->promotionLabel = $data['promotionLabel'];
+		if(isset($data['promotionType'])){
+			$this->promotionType = $data['promotionType'];
 		}
 		
 		if(isset($data['sn'])){
 			$this->sn = $data['sn'];
-		}
-		
-		if(isset($data['snLabel'])){
-			$this->snLabel = $data['snLabel'];
 		}
 		
 		if(isset($data['result'])){
@@ -105,14 +78,12 @@ class ProbabilityCheck extends AbstractDocument
 		return array(
 			'id' => $this->id,
 			'openId' => $this->openId,
-			'value'	=> $this->value,
-			'promotion'	=> $this->promotion,
 			'promotionId'	=> $this->promotionId,
-			'promotionLabel'	=> $this->promotionLabel,
+			'promotionType'	=> $this->promotionType,
 			'sn' => $this->sn,
-			'snLabel' => $this->snLabel,
 			'result' => $this->result,
 			'created' => $this->created,
+			'createdTimestamp' => $this->created->getTimestamp()
 		);
 	}
 }

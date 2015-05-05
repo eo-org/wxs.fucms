@@ -11,10 +11,10 @@ class SmashingController extends AbstractActionController
 	{
 		$id = $this->params()->fromRoute('id');
 		$sm = $this->getServiceLocator();
-// 		$userAuth = $sm->get('User\Service\SessionAuth');
-// 		$openId = $userAuth->getOpenId();
-// 		$jsSignature = $sm->get('Application\Service\JsSignatureService');
-// 		$wxConfigStr = $jsSignature->getJsSdkConfig();
+		$userAuth = $sm->get('User\Service\SessionAuth');
+		$openId = $userAuth->getOpenId();
+		$jsSignature = $sm->get('Application\Service\JsSignatureService');
+		$wxConfigStr = $jsSignature->getJsSdkConfig();
 		
 		$postDataStr = null;
 		
@@ -26,7 +26,7 @@ class SmashingController extends AbstractActionController
 		if($stauts == 'active') {
 			$postData = array(
 				'openId' => $openId,
-				'promotion' => 'smashing',
+				'promotionType' => 'smashing',
 				'promotionId' => $id,
 			);
 			$postDataStr = json_encode($postData);

@@ -10,8 +10,8 @@ class AuthListener extends AbstractListenerAggregate
 	public function attach(EventManagerInterface $events)
 	{
 		$sharedEvents = $events->getSharedManager();
-// 		$this->listeners[] = $sharedEvents->attach(array('User', 'Promotion'), 'dispatch', array($this, 'onAuth'), 100);
-// 		$this->listeners[] = $sharedEvents->attach(array('User', 'Promotion'), 'dispatch', array($this, 'onGetJsApiTicket'), 100);
+		$this->listeners[] = $sharedEvents->attach(array('User', 'Promotion'), 'dispatch', array($this, 'onAuth'), 100);
+		$this->listeners[] = $sharedEvents->attach(array('User', 'Promotion'), 'dispatch', array($this, 'onGetJsApiTicket'), 100);
 	}
 	
 	public function onAuth($mvcEvent)
