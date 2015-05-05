@@ -12,6 +12,7 @@
 	wx.config(<?php echo $this->wxConfig?>);
 	window.config = {
 		postData: <?php echo $this->postData?>,
+		postUrl: '<?php echo $this->postUrl?>'
 	}
 	wx.ready(function(){
 		alert('ready');

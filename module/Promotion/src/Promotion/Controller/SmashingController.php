@@ -10,6 +10,7 @@ class SmashingController extends AbstractActionController
 	public function indexAction()
 	{
 		$id = $this->params()->fromRoute('id');
+		$websiteId = $this->params()->fromRoute('websiteId');
 		$sm = $this->getServiceLocator();
 		$userAuth = $sm->get('User\Service\SessionAuth');
 		$openId = $userAuth->getOpenId();
@@ -40,6 +41,7 @@ class SmashingController extends AbstractActionController
 			'openId' => $openId,
 			'wxConfig' => $wxConfigStr,
 			'postData' => $postDataStr,
+			'postUrl' => '/wxsrs/'.$websiteId.'/promotion-probability-check.json',
 		);
 	}
 	
