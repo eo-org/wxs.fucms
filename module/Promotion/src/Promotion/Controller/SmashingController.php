@@ -15,7 +15,7 @@ class SmashingController extends AbstractActionController
 		$userAuth = $sm->get('User\Service\SessionAuth');
 		$openId = $userAuth->getOpenId();
 		$jsSignature = $sm->get('Application\Service\JsSignatureService');
-		$wxConfigStr = $jsSignature->getJsSdkConfig();
+// 		$wxConfigStr = $jsSignature->getJsSdkConfig();
 		
 		$postDataStr = null;
 		
@@ -39,7 +39,7 @@ class SmashingController extends AbstractActionController
 		
 		return array(
 			'openId' => $openId,
-			'wxConfig' => $wxConfigStr,
+// 			'wxConfig' => $wxConfigStr,
 			'postData' => $postDataStr,
 			'postUrl' => '/wxsrs/'.$websiteId.'/promotion-probability-check.json',
 		);
