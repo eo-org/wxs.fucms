@@ -15,14 +15,16 @@
 		postUrl: '<?php echo $this->postUrl?>'
 	}
 	$(document).ready(function(){
-	    var isDraw = false;
+		alert('1');
 		$('.smash-body > a').on('click', function(){
+			alert('2');
 	        var _this = $(this),
 	            eggImg = _this.children('img').eq(0),
 	            postData = window.config.postData;
+            alert('3');
 	        alert(window.config.postUrl);
 	        $.post(window.config.postUrl, postData, function(res){
-		        alert('aaaa');
+		        alert('4');
 	            if(res.status == 'success') {
 	                var newEggImgSrc = eggImg.attr('data-src');
 	                eggImg.attr('src', newEggImgSrc);
