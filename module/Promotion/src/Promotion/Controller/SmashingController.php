@@ -12,10 +12,10 @@ class SmashingController extends AbstractActionController
 		$id = $this->params()->fromRoute('id');
 		$websiteId = $this->params()->fromRoute('websiteId');
 		$sm = $this->getServiceLocator();
-		$userAuth = $sm->get('User\Service\SessionAuth');
-		$openId = $userAuth->getOpenId();
-		$jsSignature = $sm->get('Application\Service\JsSignatureService');
-		$wxConfigStr = $jsSignature->getJsSdkConfig();
+// 		$userAuth = $sm->get('User\Service\SessionAuth');
+// 		$openId = $userAuth->getOpenId();
+// 		$jsSignature = $sm->get('Application\Service\JsSignatureService');
+// 		$wxConfigStr = $jsSignature->getJsSdkConfig();
 		
 		$postDataStr = null;
 		
@@ -23,10 +23,10 @@ class SmashingController extends AbstractActionController
 		$dm = $sm->get('DocumentManager');
 		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById($id);
 		$stauts = $smashingDoc->isActive();
-		$smashingData = $smashingDoc->getArrayCopy();		
+		$smashingData = $smashingDoc->getArrayCopy();
 		if($stauts == 'active') {
 			$postData = array(
-				'openId' => $openId,
+// 				'openId' => $openId,
 				'promotionType' => 'smashing',
 				'promotionId' => $id,
 			);
@@ -38,8 +38,8 @@ class SmashingController extends AbstractActionController
 		}
 		
 		return array(
-			'openId' => $openId,
-			'wxConfig' => $wxConfigStr,
+			'openId' => 'localhost',
+// 			'wxConfig' => $wxConfigStr,
 			'postData' => $postDataStr,
 			'postUrl' => '/wxsrs/'.$websiteId.'/promotion-probability-check.json',
 		);
