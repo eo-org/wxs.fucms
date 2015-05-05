@@ -8,11 +8,12 @@
 		</a>
 	</div>
 </div>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
 	wx.config(<?php echo $this->wxConfig?>);
 	window.config = {
 		postData: <?php echo $this->postData?>,
 		postUrl: '<?php echo $this->postUrl?>'
-	}
+	};
 </script>
 <script src="<?php echo $this->path('wxs.fucms')?>/smashing/script/smashing.js?v=201505051430"></script>
