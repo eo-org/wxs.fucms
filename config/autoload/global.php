@@ -17,7 +17,8 @@ return array(
 			'compact' => 'http://lib-media.qiniudn.com/compact',
 			'aliyun' => 'http://en-developer.oss-cn-hangzhou.aliyuncs.com',
 			'qiniu' => 'http://en-developer.qiniudn.com',
-			'upyun' => 'http://en-developer.b0.upaiyun.com'
+			'upyun' => 'http://en-developer.b0.upaiyun.com',
+			'wxs.fucms' => 'http://lib-media.qiniudn.com/wxs.fucms',
 		),
 		'wx' => array(
 			'appId' => 'wx2ce4babba45b702d',
