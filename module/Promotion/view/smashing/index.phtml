@@ -14,5 +14,24 @@
 		postData: <?php echo $this->postData?>,
 		postUrl: '<?php echo $this->postUrl?>'
 	}
+	$(document).ready(function(){
+	    var isDraw = false;
+		$('.smash-body > a').on('click', function(){
+	        var _this = $(this),
+	            eggImg = _this.children('img').eq(0),
+	            postData = window.config.postData;
+	        alert(window.config.postUrl);
+	        $.post(window.config.postUrl, postData, function(res){
+		        alert('aaaa');
+	            if(res.status == 'success') {
+	                var newEggImgSrc = eggImg.attr('data-src');
+	                eggImg.attr('src', newEggImgSrc);
+	                alert('恭喜你中奖了，获得了'+res.msg.prizeData.name);
+	            }else if(res.status == 'error') {
+	                alert(res.msg);   
+	            }
+	        });
+			
+		})
+	});
 </script>
-<script src="<?php echo $this->path('wxs.fucms')?>/smashing/script/smashing.js?v=2323232111111"></script>
