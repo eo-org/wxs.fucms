@@ -2,7 +2,8 @@
 return array(
 	'controllers' => array(
         'invokables' => array(
-        	'User\Controller\IndexController' => 'User\Controller\IndexController'
+        	'User\Controller\IndexController'	=> 'User\Controller\IndexController',
+        	'user-sn'							=> 'User\Controller\SnController'
         ),
     ),
     'router' => array(
@@ -20,13 +21,35 @@ return array(
                 	)
                 ),
             	'may_terminate' => true,
+            	'child_routes' => array(
+            		'actionroutes' => array(
+            			'type' => 'segment',
+						'options' => array(
+							'route' => '/:controller[/:action]',
+							'constraints' => array(
+								'controller' => '[a-z-]*',
+								'action' => '[a-z-]*'
+							),
+							'defaults' => array(
+								'action' => 'index'
+							)
+						),
+						'may_terminate' => true,
+						'child_routes' => array(
+							'wildcard' => array(
+								'type' => 'wildcard'
+							)
+						)
+            		)	
+            	)
             ),
         	
         ),
     ),
 	'view_manager' => array(
 		'template_map' => array(
-			'user/index/index'			=> __DIR__ . '/../view/index/index.phtml',
+			'user/index/index'			=> __DIR__ . '/../view/user/index/index.phtml',
+			'user/sn/index'				=> __DIR__ . '/../view/user/sn/index.phtml'
 		)
 	),
 	'service_manager' => array(
