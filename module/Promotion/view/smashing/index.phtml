@@ -1,11 +1,16 @@
-<div class="instruction" style="height: 130px; margin: 20px 30px 0; background: #ccc;">
-	
-</div>
+<style>
+	* { margin: 0; padding: 0; box-sizing: border-box;}
+	body { background-size: cover;background-image:url(http://public-media.qiniudn.com/55249459bd04bfd40b8b4567/smashing-bg-draw.jpg?imageView2/2/w/320/interlace/1&v=212);} 
+</style>
 <div class="main" style="text-align: center;position: absolute; left: 0; bottom: 0;width: 100%;">
-	<div class="smash-body" style="margin-bottom: 130px;">
+	<div class="title" style="margin-bottom: 100px;color: #ffe500;"><h1><?php echo $this->smashingData['label']?></h1></div>
+	<div class="smash-body">
 		<a href="javascript:;" style="display: block; width: 160px; height: 190px; margin: 0 auto;">
 			<img src="<?php echo $this->path('wxs.fucms')?>/smashing/images/egg1.png" data-src="<?php echo $this->path('wxs.fucms')?>/smashing/images/egg2.png"/>
 		</a>
+	</div>
+	<div style="height: 180px; padding: 20px; text-align:left; color: #000; font:18px/22px '微软雅黑';">
+		<?php echo $this->smashingData['explain']?>
 	</div>
 </div>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -13,7 +18,8 @@
 	wx.config(<?php echo $this->wxConfig?>);
 	window.config = {
 		postData: <?php echo $this->postData?>,
-		postUrl: '<?php echo $this->postUrl?>'
+		postUrl: '<?php echo $this->postUrl?>',
+		snInfoUrl: '<?php echo $this->snInfoUrl?>'
 	};
 	wx.ready(function(){
 		wx.hideOptionMenu();

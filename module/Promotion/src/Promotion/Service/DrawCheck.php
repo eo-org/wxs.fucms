@@ -31,7 +31,7 @@ class DrawCheck implements ServiceLocatorAwareInterface
 		$params = $this->params;
 		$promotionId = $params['promotionId'];
 		$openId = $params['openId'];
-		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById($promotionId);
+		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById((int)$promotionId);
 		$promotionData = $smashingDoc->getArrayCopy();
 		
 		$this->promotionData = $promotionData;
@@ -98,19 +98,26 @@ class DrawCheck implements ServiceLocatorAwareInterface
 			foreach ($prizeDocs as $prizeData) {
 				$prizeTotality = $prizeTotality + $prizeData['quantity'];
 			}
-			$drawNumber = rand(1, $prizeTotality);
-			foreach ($prizeDocs as $prizeData) {
-				if($drawNumber <= $prizeData['quantity']){
-					$drawResult = $prizeData;
-					break;
-				}else {
-					$drawNumber = $drawNumber - $prizeData['quantity'];
+			if($prizeTotality == 0){
+				$result = array(
+					'status' => false,
+					'msg' => '很遗憾，你没有中奖',
+				);
+			}else {
+				$drawNumber = rand(1, $prizeTotality);
+				foreach ($prizeDocs as $prizeData) {
+					if($drawNumber <= $prizeData['quantity']){
+						$drawResult = $prizeData;
+						break;
+					}else {
+						$drawNumber = $drawNumber - $prizeData['quantity'];
+					}
 				}
+				$result = array(
+					'status' => true,
+					'prizeData' => $drawResult,
+				);
 			}			
-			$result = array(
-				'status' => true,
-				'prizeData' => $drawResult,
-			);
 		}else {
 			$result = array(
 				'status' => false,

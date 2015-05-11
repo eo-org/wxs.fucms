@@ -60,14 +60,15 @@ class ProbabilityCheckController extends AbstractRestfulController
 							->getQuery()->getSingleResult();
 				$snData = $snDoc->getArrayCopy();
 				$snDoc->setStatus('used');
+				$snDoc->setOpenId($openId);
 				$snDoc->setPrizeId($prizeId);
 				$dm->persist($snDoc);
 				
 				$result = array(
 					'status' => 'success',
 					'msg' => array(
-						'snData' => $snData,
-						'prizeData' => $prizeData
+						'prizeName' => $prizeData['name'],
+						'snId' => $snData['id']
 					),
 				);
 				$probabilityCheckData['sn'] = $snData['serialCode'];

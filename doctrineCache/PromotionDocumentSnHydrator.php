@@ -60,6 +60,14 @@ class PromotionDocumentSnHydrator implements HydratorInterface
         }
 
         /** @Field(type="string") */
+        if (isset($data['openId'])) {
+            $value = $data['openId'];
+            $return = (string) $value;
+            $this->class->reflFields['openId']->setValue($document, $return);
+            $hydratedData['openId'] = $return;
+        }
+
+        /** @Field(type="string") */
         if (isset($data['approvedByLabel'])) {
             $value = $data['approvedByLabel'];
             $return = (string) $value;
