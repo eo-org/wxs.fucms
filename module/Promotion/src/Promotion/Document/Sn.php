@@ -5,7 +5,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * @ODM\Document(
- * collection="wx_sn"
+ * collection="wx_promotion_sn"
  * )
  */
 class Sn
@@ -30,10 +30,10 @@ class Sn
 	 */
 	protected $serialCode;
 	
-// 	/**
-// 	 * @ODM\Field(type="string")
-// 	 */
-// 	protected $serialCode;
+	/**
+	 * @ODM\Field(type="string")
+	 */
+	protected $openId;
 	
 	/**
 	 * @ODM\Field(type="string")
@@ -54,6 +54,10 @@ class Sn
 		return array(
 			'id' => $this->id,
 			'serialCode' => $this->serialCode,
+			'prizeId' => $this->prizeId,
+			'openId' => $this->openId,
+			'status' => $this->status,
+			'approvedById' => $this->approvedById,
 		);
 	}
 	
@@ -70,5 +74,10 @@ class Sn
 	public function setStatus($value)
 	{
 		$this->status = $value;
+	}
+	
+	public function setOpenId($value)
+	{
+		$this->openId = $value;
 	}
 }

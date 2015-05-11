@@ -12,7 +12,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 class Smashing extends AbstractDocument
 {
 	/**
-	 * @ODM\Id
+	 * @ODM\Id(strategy="increment")
 	 */
 	protected $id;
 	
@@ -40,6 +40,11 @@ class Smashing extends AbstractDocument
 	 * @ODM\Field(type="string")
 	 */
 	protected $lotteryReply;
+	
+	/**
+	 * @ODM\Field(type="string")
+	 */
+	protected $endingViewImg;
 	
 	/**
 	 * @ODM\Field(type="hash")
@@ -139,6 +144,7 @@ class Smashing extends AbstractDocument
 			'drawLimitDaily' => $this->drawLimitDaily,
 			'startTime' => $this->startTime,
 			'endTime' => $this->endTime,
+			'endingViewImg' => $this->endingViewImg,
 		);
 	}
 	

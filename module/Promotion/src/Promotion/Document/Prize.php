@@ -4,7 +4,7 @@ namespace Promotion\Document;
 use Core\AbstractDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
-use Weixin\Document\Sn;
+use Promotion\Document\Sn;
 
 /**
  * @ODM\Document(
@@ -39,7 +39,7 @@ class Prize extends AbstractDocument
 	protected $remainderCounter;
 	
 	/**
-	 * @ODM\Field(type="string")
+	 * @ODM\Field(type="int")
 	 */
 	protected $promotionId;
 	

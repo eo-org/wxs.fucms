@@ -67,10 +67,10 @@ class PromotionDocumentPrizeHydrator implements HydratorInterface
             $hydratedData['remainderCounter'] = $return;
         }
 
-        /** @Field(type="string") */
+        /** @Field(type="int") */
         if (isset($data['promotionId'])) {
             $value = $data['promotionId'];
-            $return = (string) $value;
+            $return = (int) $value;
             $this->class->reflFields['promotionId']->setValue($document, $return);
             $hydratedData['promotionId'] = $return;
         }

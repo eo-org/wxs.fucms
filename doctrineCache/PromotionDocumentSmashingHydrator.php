@@ -27,10 +27,10 @@ class PromotionDocumentSmashingHydrator implements HydratorInterface
     {
         $hydratedData = array();
 
-        /** @Field(type="id") */
+        /** @Field(type="custom_id") */
         if (isset($data['_id'])) {
             $value = $data['_id'];
-            $return = $value instanceof \MongoId ? (string) $value : $value;
+            $return = $value;
             $this->class->reflFields['id']->setValue($document, $return);
             $hydratedData['id'] = $return;
         }
@@ -73,6 +73,14 @@ class PromotionDocumentSmashingHydrator implements HydratorInterface
             $return = (string) $value;
             $this->class->reflFields['lotteryReply']->setValue($document, $return);
             $hydratedData['lotteryReply'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['endingViewImg'])) {
+            $value = $data['endingViewImg'];
+            $return = (string) $value;
+            $this->class->reflFields['endingViewImg']->setValue($document, $return);
+            $hydratedData['endingViewImg'] = $return;
         }
 
         /** @Field(type="hash") */

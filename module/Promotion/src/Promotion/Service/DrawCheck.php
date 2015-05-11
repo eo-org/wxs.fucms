@@ -31,7 +31,7 @@ class DrawCheck implements ServiceLocatorAwareInterface
 		$params = $this->params;
 		$promotionId = $params['promotionId'];
 		$openId = $params['openId'];
-		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById($promotionId);
+		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById((int)$promotionId);
 		$promotionData = $smashingDoc->getArrayCopy();
 		
 		$this->promotionData = $promotionData;
@@ -41,26 +41,39 @@ class DrawCheck implements ServiceLocatorAwareInterface
 		$ProbabilityCheckDocs = $dm->createQueryBuilder('Promotion\Document\ProbabilityCheck')
 									->field('openId')->equals($openId)
 									->field('promotionId')->equals($promotionId)
-									->hydrate(false)
 									->getQuery()->execute();
 		
 		$drawNumber = intval($ProbabilityCheckDocs->count());
 		if($drawNumber < $drawLimit){
-			if($drawNumber > 0){
+			if($drawNumber > 0 && $drawNumber >= $drawLimitDaily){
 				$drawNumberDaily = 0;
-				$currentTime = new \DateTime();
-				$ProbabilityCheckDatas = $this->formatData($ProbabilityCheckDocs);
-				foreach ($ProbabilityCheckDatas as $ItemData) {
-					
+				$dayTimeStamp = mktime(0, 0, 0, date('m'), date('d'), date('Y'));
+				$dayTimeStamp2 = mktime(0, 0, 0, date('m'), date('d')+1, date('Y'));
+				foreach ($ProbabilityCheckDocs as $itemDoc) {
+					$itemData = $itemDoc->getArrayCopy();
+					$timeStamp = $itemData['createdTimestamp'];
+					if($dayTimeStamp < $timeStamp && $dayTimeStamp2 > $timeStamp){
+						$drawNumberDaily = $drawNumberDaily + 1;
+					}
+				}
+				if($drawNumberDaily < $drawLimitDaily){
+					$result = array(
+						'valid' => true
+					);
+				}else {
+					$result = array(
+						'valid' => false,
+						'msg' => '你当天的抽奖次数已使用完，明天请继续!'
+					);
 				}
 			}else {
 				$result = array(
-					'status' => false
+					'valid' => true
 				);
 			}
 		}else {
 			$result = array(
-				'status' => true,
+				'valid' => false,
 				'msg' => '您的抽奖次数已使用完，谢谢您的参与!'
 			);
 		}		
@@ -85,19 +98,26 @@ class DrawCheck implements ServiceLocatorAwareInterface
 			foreach ($prizeDocs as $prizeData) {
 				$prizeTotality = $prizeTotality + $prizeData['quantity'];
 			}
-			$drawNumber = rand(1, $prizeTotality);
-			foreach ($prizeDocs as $prizeData) {
-				if($drawNumber <= $prizeData['quantity']){
-					$drawResult = $prizeData;
-					break;
-				}else {
-					$drawNumber = $drawNumber - $prizeData['quantity'];
+			if($prizeTotality == 0){
+				$result = array(
+					'status' => false,
+					'msg' => '很遗憾，你没有中奖',
+				);
+			}else {
+				$drawNumber = rand(1, $prizeTotality);
+				foreach ($prizeDocs as $prizeData) {
+					if($drawNumber <= $prizeData['quantity']){
+						$drawResult = $prizeData;
+						break;
+					}else {
+						$drawNumber = $drawNumber - $prizeData['quantity'];
+					}
 				}
+				$result = array(
+					'status' => true,
+					'prizeData' => $drawResult,
+				);
 			}			
-			$result = array(
-				'status' => true,
-				'prizeData' => $drawResult,
-			);
 		}else {
 			$result = array(
 				'status' => false,
