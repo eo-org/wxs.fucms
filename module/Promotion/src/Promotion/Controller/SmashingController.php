@@ -43,7 +43,7 @@ class SmashingController extends AbstractActionController
 		$postDataStr = null;
 		
 		$postData = array(
-			'openId' => 'aa',
+			'openId' => $openId,
 			'promotionType' => 'smashing',
 			'promotionId' => $id,
 		);
