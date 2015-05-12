@@ -1,4 +1,12 @@
-<h1>This is a user page, auth required</h1>
-welcome user, your open id is : <?php echo  $this->openId ?>
+<div class='user-banner'>
 
-<div><a href='<?php echo $this->url('user/actionroutes', array('controller' => 'user-sn', 'action' => 'index'), true)?>'>我的兑换码</a></div>
+</div>
+<ul class='nav-list'>
+	<li>
+		<a href='<?php echo $this->url('user/actionroutes', array('controller' => 'user-sn', 'action' => 'index'), true)?>'>
+			<i class='icon-redeem pull-left'></i>
+			<div class='text'>我的兑换码</div>
+			<i class='icon-keyboard-arrow-right pull-right'></i>
+		</a>
+	</li>
+</ul>

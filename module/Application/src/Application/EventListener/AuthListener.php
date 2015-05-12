@@ -69,25 +69,25 @@ class AuthListener extends AbstractListenerAggregate
 	
 	public function onGetJsApiTicket($mvcEvent)
 	{
-		$sm = $mvcEvent->getApplication()->getServiceManager();
+// 		$sm = $mvcEvent->getApplication()->getServiceManager();
 		
-		$rm = $mvcEvent->getRouteMatch();
-		$router =  $mvcEvent->getRouter();
-		$requestUri = $router->getRequestUri();		
-		$cmsSiteService = $sm->get('Application\Service\CmsSiteService');
+// 		$rm = $mvcEvent->getRouteMatch();
+// 		$router =  $mvcEvent->getRouter();
+// 		$requestUri = $router->getRequestUri();		
+// 		$cmsSiteService = $sm->get('Application\Service\CmsSiteService');
 		
-		$websiteId = $cmsSiteService->getWebsiteId();		
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/jsApiTicket/'.$websiteId);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		$output = curl_exec($ch);
-		curl_close($ch);
+// 		$websiteId = $cmsSiteService->getWebsiteId();		
+// 		$ch = curl_init();
+// 		curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/jsApiTicket/'.$websiteId);
+// 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+// 		$output = curl_exec($ch);
+// 		curl_close($ch);
 		
-		$jsApiTicketObj = json_decode($output);
-		$jsApiTicket = $jsApiTicketObj->jsApiTicket;
+// 		$jsApiTicketObj = json_decode($output);
+// 		$jsApiTicket = $jsApiTicketObj->jsApiTicket;
 		
-		$jsSignature = $sm->get('Application\Service\JsSignatureService');
-		$jsSignature->setJsApiTicket($jsApiTicket);
-		$jsSignature->setUrl($requestUri);
+// 		$jsSignature = $sm->get('Application\Service\JsSignatureService');
+// 		$jsSignature->setJsApiTicket($jsApiTicket);
+// 		$jsSignature->setUrl($requestUri);
 	}
 }

@@ -1,11 +1,29 @@
-<ul>
-	
+<ul class='btn-group'>
+	<li class='btn-tab active'>未使用</li>
+	<li class='btn-tab'>已使用</li>
 </ul>
-<ul>
+<?php if(count($this->snDocs) == 0) {?>
+<div class='well'>
+	您暂时没有未使用的优惠码
+</div>
+<?php } else {?>
+<ul class='item-list'>
 	<?php foreach($this->snDocs as $sn) {?>
 	<li>
-		<h3><?php echo $sn->getSerialCode()?></h3>
-		<span></span>
+		<div class='pull-left'>
+			<h4 class='sn'><?php echo $sn->getSerialCode()?></h4>
+			<?php echo $sn->getLabel()?>
+		</div>
+		<div class='pull-right' style='margin-top: 25px;'><i class='icon-keyboard-arrow-right'></i></div>
 	</li>
 	<?php }?>
 </ul>
+<?php }?>
+
+<script>
+	$('.sn').each(function(idx, item) {
+		var sepStr = item.innerHTML.replace(/(\d{4}(?!\s))/g, "$1 ");
+		item.innerHTML = sepStr;
+	});
+console.log("123456789101112");
+</script>
