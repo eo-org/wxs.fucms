@@ -23,6 +23,11 @@ class Sn
 	/**
 	 * @ODM\Field(type="string")
 	 */
+	protected $label;
+	
+	/**
+	 * @ODM\Field(type="string")
+	 */
 	protected $status = 'new';
 	
 	/**
