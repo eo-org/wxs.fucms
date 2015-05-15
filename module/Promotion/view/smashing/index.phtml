@@ -30,5 +30,81 @@
 	wx.ready(function(){
 		wx.hideOptionMenu();
 	});
+
+
+
+
+
+
+	$(document).ready(function() {
+		var moveUp = true;
+		
+		function transit() {
+			moveUp = !moveUp;
+			if (!moveUp) {
+				$('.hammer').addClass('end-pos');	
+			} else {
+				$('.hammer').removeClass('end-pos');
+			}
+		}
+		transit();
+		var waveHammer = window.setInterval(function() { transit(); }, 1500);
+		
+	    var isNotDraw = true;
+	    $('.egg-container > a.egg').on('click', function() {
+			if(isNotDraw) {
+				var _this = $(this),
+				eggImg = _this.children('img').eq(0),
+				postData = window.config.postData;
+				$.post(window.config.postUrl, postData, function(res) {
+					
+					
+					alert(res.status);
+					
+					isNotDraw = false;
+					var newEggImgSrc = eggImg.attr('data-src');
+	    
+					if(res.status == 'success') {
+						$.dialog({
+							content	: '恭喜你中奖了，获得了'+res.msg.prizeName,
+							title	: "ok",
+							ok		: function() {
+								location.href = window.config.snInfoUrl+'/'+res.msg.snId;
+								return false;
+							},
+							okText	:'查看详情'
+						});
+						eggImg.attr('src', newEggImgSrc);
+						window.clearInterval(waveHammer);
+						$('.hammer').removeClass('end-pos');
+						$('.hammer').addClass('smash-pos');
+					} else if(res.status == 'error') {
+						$.dialog({
+							content	: res.msg,
+							title	: "alert",
+							time	: 5000
+						});
+						window.clearInterval(waveHammer);
+					}
+				});
+			}
+		})
+	});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 </script>
-<script src="<?php echo $this->path('wxs.fucms')?>/smashing/script/smashing.js?v=2015050516"></script>
+<!-- script src="<?php echo $this->path('wxs.fucms')?>/smashing/script/smashing.js?v=2015050516"></script -->
