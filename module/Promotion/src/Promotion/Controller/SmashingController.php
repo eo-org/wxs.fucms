@@ -21,7 +21,7 @@ class SmashingController extends AbstractActionController
 		$dm = $sm->get('DocumentManager');
 		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById((int)$id);
 		
-		if(empty($smashingDoc)){
+		if(empty($smashingDoc)) {
 			return false;
 		}
 		$stauts = $smashingDoc->isActive();

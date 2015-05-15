@@ -33,6 +33,7 @@ class SessionAuth
 		if($this->wxUser->openId) {
 			return true;
 		}
+		return false;
 	}
 	
 	public function setOpenId($openId)

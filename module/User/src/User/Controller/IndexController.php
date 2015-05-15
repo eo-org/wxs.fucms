@@ -7,7 +7,8 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
-    	$userAuth = $this->getServiceLocator()->get('User\Service\SessionAuth');
+    	$sm = $this->getServiceLocator();
+    	$userAuth = $sm->get('User\Service\SessionAuth');
     	
     	$openId = $userAuth->getOpenId();
     	

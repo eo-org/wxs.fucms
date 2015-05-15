@@ -10,11 +10,10 @@ class Module
 	{
 		$eventManager = $moduleManager->getEventManager();
 		$sharedEventManager = $eventManager->getSharedManager();
+		$sharedEventManager->attach('Zend\Mvc\Application', 'dispatch', array($this, 'setWebsiteId'), 1000);
 		
 		$authListener = new AuthListener();
 		$eventManager->attach($authListener);
-		
-		$sharedEventManager->attach('Zend\Mvc\Application', 'dispatch', array($this, 'setWebsiteId'), 1000);
 	}
 	
     public function getConfig()

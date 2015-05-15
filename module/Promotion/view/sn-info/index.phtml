@@ -1,16 +1,23 @@
-<style>
-	* {margin: 0; padding: 0;}
-	body { background-size: cover;background-image:url(http://public-media.qiniudn.com/55249459bd04bfd40b8b4567/smashing-bg-sn-info.jpg?imageView2/2/w/320/interlace/1&v=212);}
-	h1 { font: 28px/65px "微软雅黑"; color: #ffe500;}
-	h2 { font-size: 22px; line-height: 45px; color: #fff;}
-	h1,h2 {text-align: center;}
-	p { margin-top: 30px; font: 18px/32px "黑体"; color: #fff;}
-</style>
 <div class="sn-info">
-	<div style="margin-top: 250px; padding: 0 50px;">
-		<h1><?php echo $this->prizeType?></h1>
+	<div class='winning-banner'><div class='text'>恭喜您中奖了</div></div>
+	<div class='well'>
+		<?php echo $this->prizeType?>
+		<br /><br /><br />
 		<h2><?php echo $this->prizeName?></h2>
-		<h2><span>SN码:</span><?php echo $this->snCode?></h2>
-		<p><?php echo $this->awardInfo?></p>
+		<br />
+		<h2><span>兑奖密码: </span><?php echo $this->snCode?></h2>
+		<br /><br /><br />
+		<div class='account-link'>
+			您的兑奖密码已经保存到了 <a style='border-radius: 2px; background: #2CFC4D; display: inline-block;padding: 5px; color: white;' href='/<?php echo $this->websiteId?>/user'>我的账户</a>
+		</div>
+		<div class='panel' style='text-align: left; margin-top: 10px; padding: 10px;'>
+			<div class='panel-heading' style='border-bottom:  1px solid #ddd;padding: 10px 0;'>兑奖说明</div>
+			<div class='panel-body' style='line-height: 1.5em;padding: 10px 0;'>
+				<?php echo $this->awardInfo?>
+			</div>
+		</div>
+		
 	</div>
 </div>
+
+<?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/smashing/style/style.css'); ?>

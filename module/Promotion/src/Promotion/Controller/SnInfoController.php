@@ -9,6 +9,8 @@ class SnInfoController extends AbstractActionController
 {
 	public function indexAction()
 	{
+		$websiteId = $this->params()->fromRoute('websiteId');
+		
 		$id = $this->params()->fromRoute('id');
 		$sm = $this->getServiceLocator();
 		$dm = $sm->get('DocumentManager');
@@ -26,6 +28,7 @@ class SnInfoController extends AbstractActionController
 			'prizeType' => $prizeData['type'],
 			'snCode' => $snData['serialCode'],
 			'awardInfo' => $promotionData['awardInfo'],
+			'websiteId'	=> $websiteId
 		);
 		
 		return $result;

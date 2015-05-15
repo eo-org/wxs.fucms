@@ -44,6 +44,14 @@ class PromotionDocumentSnHydrator implements HydratorInterface
         }
 
         /** @Field(type="string") */
+        if (isset($data['label'])) {
+            $value = $data['label'];
+            $return = (string) $value;
+            $this->class->reflFields['label']->setValue($document, $return);
+            $hydratedData['label'] = $return;
+        }
+
+        /** @Field(type="string") */
         if (isset($data['status'])) {
             $value = $data['status'];
             $return = (string) $value;

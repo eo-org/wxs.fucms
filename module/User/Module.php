@@ -7,10 +7,6 @@ class Module
 {
 	public function init($moduleManager)
 	{
-		$eventManager = $moduleManager->getEventManager();
-		$sharedEventManager = $eventManager->getSharedManager();
-		
-		//$sharedEventManager->attach(__NAMESPACE__, 'dispatch', array($this, 'userAuth'), 100);
 	}
 	
     public function getConfig()
@@ -27,10 +23,5 @@ class Module
 				)
             ),
         );
-    }
-    
-    public function userAuth(MvcEvent $e)
-    {
-    	
     }
 }

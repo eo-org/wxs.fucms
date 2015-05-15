@@ -22,6 +22,12 @@ class AuthListener extends AbstractListenerAggregate
     	$router =  $mvcEvent->getRouter();  
     	
     	$userAuth = $sm->get('User\Service\SessionAuth');
+    	
+    	$config = $sm->get('Config');
+    	if($config['env']['usage']['server'] == 'development') {
+    		$userAuth->setOpenId('localtestor');
+    	}
+    	
     	if(!$userAuth->isLogin()) {
     		
     		$query = $mvcEvent->getRequest()->getQuery();
