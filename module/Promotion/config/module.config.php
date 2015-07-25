@@ -35,6 +35,7 @@ return array(
     ),
 	'service_manager' => array(
 		'invokables' => array(
+			'Promotion\Service\DrawCheck' => 'Promotion\Service\DrawCheck',
 			'Promotion\Service\DrawCheck\Smashing' => 'Promotion\Service\DrawCheck\Smashing'
 		)
 	),
