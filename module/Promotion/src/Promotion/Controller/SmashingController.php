@@ -3,7 +3,7 @@ namespace Promotion\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
-use Promotion\Document\Smashing;
+use WxDocument\Promotion\Smashing;
 
 class SmashingController extends AbstractActionController
 {
@@ -19,7 +19,7 @@ class SmashingController extends AbstractActionController
 		
 		//获取活动数据，检测活动有没有过期	
 		$dm = $sm->get('DocumentManager');
-		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById((int)$id);
+		$smashingDoc = $dm->getRepository('WxDocument\Promotion\Smashing')->findOneById((int)$id);
 		
 		if(empty($smashingDoc)) {
 			return false;
@@ -65,7 +65,7 @@ class SmashingController extends AbstractActionController
 		$sm = $this->getServiceLocator();
 		$dm = $sm->get('DocumentManager');
 		$id = $this->params()->fromRoute('id');
-		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById((int)$id);
+		$smashingDoc = $dm->getRepository('WxDocument\Promotion\Smashing')->findOneById((int)$id);
 		if(empty($smashingDoc)){
 			return false;
 		}
@@ -82,13 +82,13 @@ class SmashingController extends AbstractActionController
 		$sm = $this->getServiceLocator();
 		$dm = $sm->get('DocumentManager');
 		$id = $this->params()->fromRoute('id');
-		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById((int)$id);
+		$smashingDoc = $dm->getRepository('WxDocument\Promotion\Smashing')->findOneById((int)$id);
 		if(empty($smashingDoc)){
 			return false;
 		}
 		$smashingData = $smashingDoc->getArrayCopy();
 		return array(
-			'endingViewImg' => $smashingData['endingViewImg']
+			'endImg' => $smashingData['endImg']
 		);
 	}
 }

@@ -33,6 +33,11 @@ return array(
             ),
         ),
     ),
+	'service_manager' => array(
+		'invokables' => array(
+			'Promotion\Service\DrawCheck\Smashing' => 'Promotion\Service\DrawCheck\Smashing'
+		)
+	),
 	'view_manager' => array(
 		'template_map' => array(
 			'promotion/smashing/index'			=> __DIR__ . '/../view/smashing/index.phtml',

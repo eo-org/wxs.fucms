@@ -46,7 +46,7 @@ class ProbabilityCheckController extends AbstractRestfulController
 				$prizeId = $prizeData['_id'];
 			
 				//减少相应奖品的计数器
-				$prizeDoc = $dm->getRepository('Promotion\Document\Prize')->findOneById($prizeId);
+				$prizeDoc = $dm->getRepository('WxDocument\Promotion\Prize')->findOneById($prizeId);
 				$newRemainderCounter = $prizeData['remainderCounter'] - 1;
 				$prizeDoc->setRemainderCounter($newRemainderCounter);
 				$prizeData = $prizeDoc->getArrayCopy();
@@ -54,7 +54,7 @@ class ProbabilityCheckController extends AbstractRestfulController
 				$dm->persist($prizeDoc);
 			
 				//获取并设置SN号码
-				$snDoc = $dm->createQueryBuilder('Promotion\Document\Sn')
+				$snDoc = $dm->createQueryBuilder('WxDocument\Sn')
 							->field('status')->equals('new')
 							->field('prizeId')->equals($prizeId)
 							->getQuery()->getSingleResult();
