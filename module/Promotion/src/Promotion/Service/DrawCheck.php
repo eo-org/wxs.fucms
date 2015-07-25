@@ -31,7 +31,7 @@ class DrawCheck implements ServiceLocatorAwareInterface
 		$params = $this->params;
 		$promotionId = $params['promotionId'];
 		$openId = $params['openId'];
-		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById((int)$promotionId);
+		$smashingDoc = $dm->getRepository('WxDocument\Promotion\Smashing')->findOneById((int)$promotionId);
 		$promotionData = $smashingDoc->getArrayCopy();
 		
 		$this->promotionData = $promotionData;
@@ -89,7 +89,7 @@ class DrawCheck implements ServiceLocatorAwareInterface
 		$number = rand(0, 100);
 		if($number < $odds) {
 			$dm = $this->sm->get('DocumentManager');
-			$prizeDocs = $dm->createQueryBuilder('Promotion\Document\Prize')
+			$prizeDocs = $dm->createQueryBuilder('WxDocument\Promotion\Prize')
 									->field('remainderCounter')->gt(0)
 									->field('promotionId')->equals($promotionId)
 									->hydrate(false)
