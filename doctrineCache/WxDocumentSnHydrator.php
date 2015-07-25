@@ -36,19 +36,19 @@ class WxDocumentSnHydrator implements HydratorInterface
         }
 
         /** @Field(type="string") */
-        if (isset($data['label'])) {
-            $value = $data['label'];
-            $return = (string) $value;
-            $this->class->reflFields['label']->setValue($document, $return);
-            $hydratedData['label'] = $return;
-        }
-
-        /** @Field(type="string") */
         if (isset($data['prizeId'])) {
             $value = $data['prizeId'];
             $return = (string) $value;
             $this->class->reflFields['prizeId']->setValue($document, $return);
             $hydratedData['prizeId'] = $return;
+        }
+
+        /** @Field(type="string") */
+        if (isset($data['label'])) {
+            $value = $data['label'];
+            $return = (string) $value;
+            $this->class->reflFields['label']->setValue($document, $return);
+            $hydratedData['label'] = $return;
         }
 
         /** @Field(type="string") */
