@@ -7,7 +7,8 @@ return array(
         	'sn-info' => 'Promotion\Controller\SnInfoController',
         	
         	/*************rest**************************/
-        	'promotion-probability-check'=>'PromotionRest\Controller\ProbabilityCheckController'
+//         	'promotion-probability-check'=>'PromotionRest\Controller\ProbabilityCheckController',
+        	'promotion-probability-check-smashing'	=> 'PromotionRest\Controller\ProbabilityCheck\SmashingController',
         ),
     ),
     'router' => array(
@@ -35,7 +36,7 @@ return array(
     ),
 	'service_manager' => array(
 		'invokables' => array(
-			'Promotion\Service\DrawCheck' => 'Promotion\Service\DrawCheck',
+// 			'Promotion\Service\DrawCheck' => 'Promotion\Service\DrawCheck',
 			'Promotion\Service\DrawCheck\Smashing' => 'Promotion\Service\DrawCheck\Smashing'
 		)
 	),

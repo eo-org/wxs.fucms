@@ -9,40 +9,47 @@ class Smashing implements ServiceLocatorAwareInterface
 	protected $sm;
 	protected $params;
 	protected $promotionData;
-	
+
 	public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
 	{
 		$this->sm = $serviceLocator;
 	}
-	
+
 	public function getServiceLocator()
 	{
 		return $this->sm;
 	}
-	
+
 	public function setParams($params)
 	{
 		$this->params = $params;
 	}
-	
+
 	public function getDrawLimitCheckResult()
 	{
 		$dm = $this->sm->get('DocumentManager');
 		$params = $this->params;
 		$promotionId = $params['promotionId'];
 		$openId = $params['openId'];
-		$smashingDoc = $dm->getRepository('Promotion\Document\Smashing')->findOneById((int)$promotionId);
+		$smashingDoc = $dm->getRepository('WxDocument\Promotion\Smashing')->findOneById((int)$promotionId);
+		$smashingStatus = $smashingDoc->isActive();
+		if($smashingStatus == 'inactive'){
+			return array(
+				'valid' => false,
+				'msg' => '本次活动还未开始，敬请期待!'
+			);
+		}
 		$promotionData = $smashingDoc->getArrayCopy();
-		
+
 		$this->promotionData = $promotionData;
 		$drawLimit = $promotionData['drawLimit'];
 		$drawLimitDaily = $promotionData['drawLimitDaily'];
-		
+
 		$ProbabilityCheckDocs = $dm->createQueryBuilder('Promotion\Document\ProbabilityCheck')
-									->field('openId')->equals($openId)
-									->field('promotionId')->equals($promotionId)
-									->getQuery()->execute();
-		
+		->field('openId')->equals($openId)
+		->field('promotionId')->equals($promotionId)
+		->getQuery()->execute();
+
 		$drawNumber = intval($ProbabilityCheckDocs->count());
 		if($drawNumber < $drawLimit){
 			if($drawNumber > 0 && $drawNumber >= $drawLimitDaily){
@@ -76,10 +83,10 @@ class Smashing implements ServiceLocatorAwareInterface
 				'valid' => false,
 				'msg' => '您的抽奖次数已使用完，谢谢您的参与!'
 			);
-		}		
+		}
 		return $result;
 	}
-	
+
 	public function getDrawCheckResult()
 	{
 		$promotionData = $this->promotionData;
@@ -89,11 +96,11 @@ class Smashing implements ServiceLocatorAwareInterface
 		$number = rand(0, 100);
 		if($number < $odds) {
 			$dm = $this->sm->get('DocumentManager');
-			$prizeDocs = $dm->createQueryBuilder('Promotion\Document\Prize')
-									->field('remainderCounter')->gt(0)
-									->field('promotionId')->equals($promotionId)
-									->hydrate(false)
-									->getQuery()->execute();
+			$prizeDocs = $dm->createQueryBuilder('WxDocument\Promotion\Prize')
+			->field('remainderCounter')->gt(0)
+			->field('promotionId')->equals($promotionId)
+			->hydrate(false)
+			->getQuery()->execute();
 			$prizeTotality = 0;
 			foreach ($prizeDocs as $prizeData) {
 				$prizeTotality = $prizeTotality + $prizeData['quantity'];
@@ -117,13 +124,13 @@ class Smashing implements ServiceLocatorAwareInterface
 					'status' => true,
 					'prizeData' => $drawResult,
 				);
-			}			
+			}
 		}else {
 			$result = array(
 				'status' => false,
 				'msg' => '很遗憾，你没有中奖',
 			);
-		}		
+		}
 		return $result;
 	}
 }

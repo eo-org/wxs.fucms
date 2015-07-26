@@ -44,7 +44,7 @@ class ProbabilityCheckController extends AbstractRestfulController
 			if($drawCheckresult['status']){
 				$prizeData = $drawCheckresult['prizeData'];
 				$prizeId = $prizeData['_id'];
-			
+				
 				//减少相应奖品的计数器
 				$prizeDoc = $dm->getRepository('WxDocument\Promotion\Prize')->findOneById($prizeId);
 				$newRemainderCounter = $prizeData['remainderCounter'] - 1;

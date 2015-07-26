@@ -34,9 +34,9 @@ class SmashingController extends AbstractActionController
 				'promotionId' => $id,
 			);
 			$postDataStr = json_encode($postData);
-		}else if($stauts == 'inactive' ) {
-			return $this->redirect()->toUrl('/'.$websiteId.'/promotion/smashing/ending/'.$id);
-		}else {
+// 		}else if($stauts == 'inactive' ) {
+// 			return $this->redirect()->toUrl('/'.$websiteId.'/promotion/smashing/ending/'.$id);
+		}else if($stauts == 'ending') {
 			return $this->redirect()->toUrl('/'.$websiteId.'/promotion/smashing/ending/'.$id);
 		}
 		
@@ -53,7 +53,7 @@ class SmashingController extends AbstractActionController
 			'openId' => $openId,
 			'wxConfig' => $wxConfigStr,
 			'postData' => $postDataStr,
-			'postUrl' => '/wxsrs/'.$websiteId.'/promotion-probability-check.json',
+			'postUrl' => '/wxsrs/'.$websiteId.'/promotion-probability-check-smashing.json',
 			'snInfoUrl' => '/'.$websiteId.'/promotion/sn-info/index',
 			'smashingData' => $smashingData,
 		);
@@ -88,7 +88,9 @@ class SmashingController extends AbstractActionController
 		}
 		$smashingData = $smashingDoc->getArrayCopy();
 		return array(
-			'endImg' => $smashingData['endImg']
+			'endImg' => $smashingData['endImg'],
+			'label'	=> $smashingData['endLabel'],
+			'endExplain' => $smashingData['endExplain']
 		);
 	}
 }
