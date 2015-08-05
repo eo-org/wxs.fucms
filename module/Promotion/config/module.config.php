@@ -4,11 +4,13 @@ return array(
         'invokables' => array(
         	'Promotion\Controller\IndexController' => 'Promotion\Controller\IndexController',
         	'smashing' => 'Promotion\Controller\SmashingController',
+        	'assistance' => 'Promotion\Controller\AssistanceController',
         	'sn-info' => 'Promotion\Controller\SnInfoController',
         	
         	/*************rest**************************/
 //         	'promotion-probability-check'=>'PromotionRest\Controller\ProbabilityCheckController',
         	'promotion-probability-check-smashing'	=> 'PromotionRest\Controller\ProbabilityCheck\SmashingController',
+        	'promotion-probability-check-assistance'	=> 'PromotionRest\Controller\ProbabilityCheck\AssistanceController',
         ),
     ),
     'router' => array(
@@ -45,7 +47,10 @@ return array(
 			'promotion/smashing/index'			=> __DIR__ . '/../view/smashing/index.phtml',
 			'promotion/smashing/inactive'		=> __DIR__ . '/../view/smashing/inactive.phtml',
 			'promotion/smashing/ending'			=> __DIR__ . '/../view/smashing/ending.phtml',
-			'promotion/sn-info/index'			=> __DIR__ . '/../view/sn-info/index.phtml'
+			'promotion/sn-info/index'			=> __DIR__ . '/../view/sn-info/index.phtml',
+			
+			'promotion/assistance/index'		=> __DIR__ . '/../view/assistance/index.phtml',
+			'promotion/assistance/ending'		=> __DIR__ . '/../view/assistance/ending.phtml',
 		)
 	)
 );
