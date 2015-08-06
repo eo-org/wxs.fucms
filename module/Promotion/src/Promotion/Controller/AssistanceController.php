@@ -4,7 +4,6 @@ namespace Promotion\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
 use WxDocument\Promotion\Assistance;
-// use Cms\SiteConfig;
 
 class AssistanceController extends AbstractActionController
 {
@@ -18,6 +17,7 @@ class AssistanceController extends AbstractActionController
 		$jsSignature = $sm->get('Application\Service\JsSignatureService');
 		$wxConfigStr = $jsSignature->getJsSdkConfig();
 		
+		
 		/***get authorizer_access_koken**/
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/authorizerAccessToken/'.$websiteId);
@@ -27,6 +27,8 @@ class AssistanceController extends AbstractActionController
 		curl_close($ch);
 		$accessTokenResult = json_decode($output);
 		$authorizerAccessToken = $accessTokenResult->authorizerAccessToken;
+		
+		print($openId.'<br>'.$authorizerAccessToken.'<br>');
 		
 		$getUserInfoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$authorizerAccessToken.'&openid='.$openId.'&lang=zh_CN';
 		$ch = curl_init();
