@@ -12,37 +12,17 @@ class AssistanceController extends AbstractActionController
 		$id = $this->params()->fromRoute('id');
 		$websiteId = $this->params()->fromRoute('websiteId');
 		$sm = $this->getServiceLocator();
+		$dm = $sm->get('DocumentManager');
 		$userAuth = $sm->get('User\Service\SessionAuth');
 		$openId = $userAuth->getOpenId();
+		$userData = $userAuth->getUserData();
 		$jsSignature = $sm->get('Application\Service\JsSignatureService');
 		$wxConfigStr = $jsSignature->getJsSdkConfig();
-		
-		
-		/***get authorizer_access_koken**/
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/authorizerAccessToken/'.$websiteId);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		$output = curl_exec($ch);
-		curl_close($ch);
-		$accessTokenResult = json_decode($output);
-		$authorizerAccessToken = $accessTokenResult->authorizerAccessToken;
-		
-		print($openId.'<br>'.$authorizerAccessToken.'<br>');
-		
-		$getUserInfoUrl = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token='.$authorizerAccessToken.'&openid='.$openId.'&lang=zh_CN';
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $getUserInfoUrl);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($ch, CURLOPT_HEADER, 0);
-		$output = curl_exec($ch);
-		curl_close($ch);
-		$userData = json_decode($output, true);
 		
 		print_r($userData);
 		die();
 		//获取活动数据，检测活动有没有过期	
-		$dm = $sm->get('DocumentManager');
+		
 		$assistanceDoc = $dm->getRepository('WxDocument\Promotion\Assistance')->findOneById((int)$id);
 		
 		if(empty($assistanceDoc)) {

@@ -59,7 +59,16 @@ class AuthListener extends AbstractListenerAggregate
     				 
     				$openIdObj = json_decode($output);
     				$openId = $openIdObj->openid;
-    				 
+    				$accessToken = $openIdObj->access_token;
+    				
+    				$getUserInfoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$accessToken.'&openid='.$openId.'&lang=zh_CN';
+    				$ch = curl_init();
+    				curl_setopt($ch, CURLOPT_URL, $getUserInfoUrl);
+    				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    				$output = curl_exec($ch);
+    				curl_close($ch);
+    				$userData = json_decode($output, true);
+    				$userAuth->setUserData($userData);
     				$userAuth->setOpenId($openId);
     			} else {
     				throw new \Exception('not allowed');
@@ -67,7 +76,7 @@ class AuthListener extends AbstractListenerAggregate
     		} else {
     			// redirect to open.weixin.qq.com and ask for a code for the current user
     			$requestUri = $router->getRequestUri();
-    			header("Location: https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx536a9272e58807e7&redirect_uri=".urlencode($requestUri)."&response_type=code&scope=snsapi_base&state=access-openid&component_appid=wx2ce4babba45b702d#wechat_redirect");
+    			header("Location: https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx536a9272e58807e7&redirect_uri=".urlencode($requestUri)."&response_type=code&scope=snsapi_userinfo&state=access-openid&component_appid=wx2ce4babba45b702d#wechat_redirect");
     			exit(0);
     		}
     	}

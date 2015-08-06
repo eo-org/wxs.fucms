@@ -45,4 +45,14 @@ class SessionAuth
 	{
 		return $this->wxUser->openId;
 	}
+	
+	public function setUserData($data)
+	{
+		$this->wxUser->userData = $data;
+	}
+	
+	public function getUserData()
+	{
+		return $this->wxUser->userData;
+	}
 }
