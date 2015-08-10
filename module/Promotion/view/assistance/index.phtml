@@ -1,10 +1,10 @@
 <div class="user-info">
-	<div class="user-icon"><img src="http://7xkvrv.com1.z0.glb.clouddn.com/avatar.jpg"></div>
-	<div class="user-nickname">、葉先生</div>
+	<div class="user-icon"><img src="<?php echo $this->recordData['headimgurl']?>"></div>
+	<div class="user-nickname"><?php echo $this->recordData['nickname']?></div>
 	<div class="value">已获取<span><?php echo $this->recordData['value']?></span><?php echo $this->promotionData['unit']?></div>
 </div>
 <div class="button-main">	
-	<?php if($this->openId == $this->partakeInfo['fromId']){?>
+	<?php if($this->openId != $this->partakeInfo['fromId']){?>
 	<a class="btn" href="<?php echo $this->promostionUrl?>">我也来参与</a>
 	<?php }?>
 	<?php if(!$this->partakeInfo['status']){?>
@@ -49,4 +49,4 @@
 		
 	});
 </script>
-<script src="<?php echo $this->path('wxs.fucms')?>/promotion/assistance/script/index.js?v=20150810"></script>
+<script src="<?php echo $this->path('wxs.fucms')?>/promotion/assistance/script/index.js?v=20150811"></script>
