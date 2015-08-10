@@ -3,7 +3,7 @@ namespace Promotion\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\JsonModel;
-use WxDocument\Promotion\Assistance;
+use WxDocument\Promotion\AssistanceRecord;
 
 class AssistanceController extends AbstractActionController
 {
@@ -11,42 +11,77 @@ class AssistanceController extends AbstractActionController
 	{
 		$id = $this->params()->fromRoute('id');
 		$websiteId = $this->params()->fromRoute('websiteId');
+		$fromId = $this->params()->fromQuery('fromId');
 		$sm = $this->getServiceLocator();
 		$dm = $sm->get('DocumentManager');
 		$userAuth = $sm->get('User\Service\SessionAuth');
 		$openId = $userAuth->getOpenId();
+
+// 		$openId = 'localhost';
 		$userData = $userAuth->getUserData();
 		$jsSignature = $sm->get('Application\Service\JsSignatureService');
 		$wxConfigStr = $jsSignature->getJsSdkConfig();
 		
-		print_r($userData);
-		die();
-		//获取活动数据，检测活动有没有过期	
-		
-		$assistanceDoc = $dm->getRepository('WxDocument\Promotion\Assistance')->findOneById((int)$id);
-		
+		$assistanceDoc = $dm->getRepository('WxDocument\Promotion\Assistance')->findOneById((int)$id);		
 		if(empty($assistanceDoc)) {
 			return false;
 		}
-		$stauts = $assistanceDoc->isActive();		
+		$promotionData = $assistanceDoc->getArrayCopy();
+		$stauts = $assistanceDoc->isActive();
 		if($stauts == 'ending') {
 			return $this->redirect()->toUrl('/'.$websiteId.'/promotion/assistance/ending/'.$id);
 		}
-		$promotionData = $assistanceDoc->getArrayCopy();
+		
+		if(empty($fromId)){
+			$fromId = $openId;			
+		}
+		$partakeInfo = array(
+			'status' => false,
+			'fromId' => $fromId
+		);
+		$recordDoc = $dm->getRepository('WxDocument\Promotion\AssistanceRecord')->findOneByOpenId($fromId);
+		if(empty($recordDoc)) {
+			$recordData = array(
+				'openId' => $openId,
+				'nickname' => $userData['nickname'],
+				'headimgurl' => $userData['headimgurl'],
+				'value'	=> $promotionData['initialValue']
+			);
+			$assistanceRecordDoc = new AssistanceRecord();
+			$assistanceRecordDoc->exchangeArray($recordData);
+			$dm->persist($assistanceRecordDoc);
+			$dm->flush();
+		}else {
+			$recordData = $recordDoc->getArrayCopy();
+			if($recordDoc->isAid($openId)){
+				$partakeInfo = array(
+					'status' => true,
+					'value' => $recordData['aidSource'][$openId],
+					'fromId' => $fromId
+				);
+			}
+		}
 		$postData = array(
 			'openId' => $openId,
-			'promotionType' => 'assistance',
-			'promotionId' => $id,
+			'promotionData' => $promotionData
 		);
 		$postDataStr = json_encode($postData);
 		
-		$openId = 'aa';
+		$shareData = array(
+			'link'=> 'http://wxs.fucmsweb.com/'.$websiteId.'/promotion/assistance/index/'.$id,
+		);
+		$shareStr = json_encode($shareData);
 		return array(
+			'promostionUrl' => $shareData['link'],
 			'openId' => $openId,
-// 			'wxConfig' => $wxConfigStr,
+			'wxConfig' => $wxConfigStr,
 			'postData' => $postDataStr,
-			'postUrl' => '/wxsrs/'.$websiteId.'/promotion-probability-check-assistance.json',
+			'recordData' => $recordData,
+			'postUrl' => '/wxsrs/'.$websiteId.'/promotion-assistance.json/'.$fromId,
 			'promotionData' => $promotionData,
+			'partakeInfo'	=> $partakeInfo,
+			'shareData' => $shareStr,
+			'userData'	=> json_encode($userData)
 		);
 	}
 	

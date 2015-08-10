@@ -10,7 +10,7 @@ return array(
         	/*************rest**************************/
 //         	'promotion-probability-check'=>'PromotionRest\Controller\ProbabilityCheckController',
         	'promotion-probability-check-smashing'	=> 'PromotionRest\Controller\ProbabilityCheck\SmashingController',
-        	'promotion-probability-check-assistance'	=> 'PromotionRest\Controller\ProbabilityCheck\AssistanceController',
+        	'promotion-assistance'	=> 'PromotionRest\Controller\AssistanceController',
         ),
     ),
     'router' => array(

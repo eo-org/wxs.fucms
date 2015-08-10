@@ -1,0 +1,52 @@
+<div class="user-info">
+	<div class="user-icon"><img src="http://7xkvrv.com1.z0.glb.clouddn.com/avatar.jpg"></div>
+	<div class="user-nickname">、葉先生</div>
+	<div class="value">已获取<span><?php echo $this->recordData['value']?></span><?php echo $this->promotionData['unit']?></div>
+</div>
+<div class="button-main">	
+	<?php if($this->openId == $this->partakeInfo['fromId']){?>
+	<a class="btn" href="<?php echo $this->promostionUrl?>">我也来参与</a>
+	<?php }?>
+	<?php if(!$this->partakeInfo['status']){?>
+	<button class="btn" id="btn-post">为TA加油助力</button>
+	<?php }?>
+	<button class="btn" id="btn-help">找人来帮忙</button>
+</div>
+<div class="promotion-info">
+	<div class="promotion-title">
+		<h3><?php echo $this->promotionData['label']?></h3>
+	</div>
+	
+	<div>
+		<?php echo $this->promotionData['explain']?>
+	</div>
+</div>
+
+<?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/promotion/assistance/style/index.css?v=0810'); ?>
+
+
+<script src1="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	wx.config(<?php echo $this->wxConfig?>);
+	window.Config = {
+		postData: <?php echo $this->postData?>,
+		postUrl: '<?php echo $this->postUrl?>',
+		shareData: '<?php echo $this->shareData?>',
+		userData: '<?php echo $this->userData?>'
+	};
+	var setShareData;
+	wx.ready(function(){
+		setShareData = function(data){
+			wx.onMenuShareAppMessage({
+				title: '朋友们，快来帮我获取更多奖励吧！！',
+				desc: '<?php echo $this->promotionData['synopsis']?>', // 分享描述
+				link: data['link'], // 分享链接
+				imgUrl: data['imgUrl'],
+				success: data['successFn'] || function(){},
+				cancel: data['cancel'] || function(){},
+			});
+		}
+		
+	});
+</script>
+<script src="<?php echo $this->path('wxs.fucms')?>/promotion/assistance/script/index.js?v=20150810"></script>
