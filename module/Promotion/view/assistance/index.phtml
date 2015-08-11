@@ -25,21 +25,21 @@
 <?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/promotion/assistance/style/index.css?v=0810'); ?>
 
 
-<script src1="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
-//	wx.config(<?php echo $this->wxConfig?>);
+	wx.config(<?php echo $this->wxConfig?>);
 	window.Config = {
 		postData: <?php echo $this->postData?>,
 		postUrl: '<?php echo $this->postUrl?>',
 		shareData: '<?php echo $this->shareData?>',
 		userData: '<?php echo $this->userData?>'
 	};
-// 	wx.ready(function(){
-// 		alert('wx.ready');
-// 	});
-// 	wx.error(function(res){
-// 		alert('error');
-// 	});
+	wx.ready(function(){
+		alert('wx.ready');
+	});
+	wx.error(function(res){
+		alert('error');
+	});
 	document.querySelector('#btn-help').onclick = function(){
 		alert('click');
 		wx.onMenuShareAppMessage({
