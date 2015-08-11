@@ -4,13 +4,15 @@
 	<div class="value">已获取<span><?php echo $this->recordData['value']?></span><?php echo $this->promotionData['unit']?></div>
 </div>
 <div class="button-main">	
-	<?php if($this->openId != $this->partakeInfo['fromId']){?>
-	<a class="btn" href="<?php echo $this->promostionUrl?>">我也来参与</a>
-	<?php }?>
+	
 	<?php if(!$this->partakeInfo['status']){?>
 	<button class="btn" id="btn-post">为TA加油助力</button>
 	<?php }?>
+	<?php if($this->openId != $this->partakeInfo['fromId']){?>
+	<a class="btn" href="<?php echo $this->promostionUrl?>">我也来参与</a>
+	<?php }else{?>
 	<button class="btn" id="btn-help">找人来帮忙</button>
+	<?php }?>
 </div>
 <div class="promotion-info">
 	<div class="promotion-title">
