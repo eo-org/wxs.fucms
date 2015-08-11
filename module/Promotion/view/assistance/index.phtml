@@ -55,4 +55,24 @@
 		});
 		alert('注册成功');
 	}
+	$('#btn-post').on('click', function(){
+        alert('post');
+        $.ajax({
+            type: 'PUT',
+            url: window.Config.postUrl,
+            data: JSON.stringify(window.Config.postData),
+            contentType: 'application/json',
+            success: function(resp){
+                $.dialog({
+                    content	: '恭喜你成功为TA助力加油',
+                    title	: "ok",
+                    ok		: function() {
+                        location.reload();
+                        return false;
+                    },
+                    okText	:'确定'
+                });
+            }
+        })
+    });
 </script>
