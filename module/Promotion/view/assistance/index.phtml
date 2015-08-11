@@ -1,5 +1,5 @@
 <div class="user-info">
-	<div class="user-icon"><img src="<?php echo $this->recordData['headimgurl']?>"></div>
+	<div class="user-icon"><img width="100px" src="<?php echo $this->recordData['headimgurl']?>"></div>
 	<div class="user-nickname"><?php echo $this->recordData['nickname']?></div>
 	<div class="value">已获取<span><?php echo $this->recordData['value']?></span><?php echo $this->promotionData['unit']?></div>
 </div>
@@ -36,7 +36,18 @@
 	};
 	var setShareData;
 	wx.ready(function(){
+		var shareConfig = window.Config.shareData,
+       		userData = +window.Config.userData;
+		wx.onMenuShareAppMessage({
+			title: '朋友们，快来帮我获取更多奖励吧！！',
+			desc: '<?php echo $this->promotionData['synopsis']?>', // 分享描述
+			link: shareConfig['link']+'/'+userData['openid'], // 分享链接
+			imgUrl: userData['headimgurl'],
+			success: function(){},
+			cancel: function(){},
+		});
 		setShareData = function(data){
+			alert('setShareData');
 			wx.onMenuShareAppMessage({
 				title: '朋友们，快来帮我获取更多奖励吧！！',
 				desc: '<?php echo $this->promotionData['synopsis']?>', // 分享描述
@@ -49,4 +60,4 @@
 		
 	});
 </script>
-<script src="<?php echo $this->path('wxs.fucms')?>/promotion/assistance/script/index.js?v=20150811"></script>
+<script src="<?php echo $this->path('wxs.fucms')?>/promotion/assistance/script/index.js?v=2015081102"></script>
