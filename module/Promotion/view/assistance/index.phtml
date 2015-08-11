@@ -19,10 +19,6 @@
 	
 	<div>
 		<?php echo $this->promotionData['explain']?>
-		<br>
-		<?php echo $this->userData?>
-		<br>
-		<?php echo $this->shareData?>
 	</div>
 </div>
 
@@ -34,9 +30,9 @@
 	wx.config(<?php echo $this->wxConfig?>);
 	window.Config = {
 		postData: <?php echo $this->postData?>,
-		postUrl: '<?php echo $this->postUrl?>',
-		shareData: '<?php echo $this->shareData?>',
-		userData: '<?php echo $this->userData?>'
+		shareData: <?php echo $this->shareData?>,
+		userData: <?php echo $this->userData?>,
+		postUrl: '<?php echo $this->postUrl?>'		
 	};
 	
 	wx.ready(function(){
@@ -51,12 +47,21 @@
 		wx.onMenuShareAppMessage({
 			title: '朋友们，快来帮我获取更多奖励吧！！',
 			desc: '这里是一段分享描述，此处作为测试，固定数据', // 分享描述
-			link: '<?echo $this->promostionUrl?>?fromId='+userData['openid'], // 分享链接
-			imgUrl: userData['headimgurl'],
+			link: window.Config.shareData.link+'?fromId='+window.Config.userData.openid, // 分享链接
+			imgUrl: window.Config.userData.headimgurl,
 			success: function(){},
 			cancel: function(){},
 		});
-		alert('注册成功');
+
+		wx.onMenuShareTimeline({
+			title: '朋友们，快来帮我获取更多奖励吧！！',
+			link: window.Config.shareData.link+'?fromId='+window.Config.userData.openid, // 分享链接
+			imgUrl: window.Config.userData.headimgurl,
+			success: function(){},
+			cancel: function(){},
+		});
+		
+		alert('赶快点击右上角按钮，分享给朋友吧!');
 	}
 	$('#btn-post').on('click', function(){
         alert('post');
