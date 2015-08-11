@@ -36,28 +36,33 @@
 	};
 	var setShareData;
 	wx.ready(function(){
-		var shareConfig = window.Config.shareData,
-       		userData = +window.Config.userData;
+		alert('wx.ready');
 		wx.onMenuShareAppMessage({
 			title: '朋友们，快来帮我获取更多奖励吧！！',
-			desc: '<?php echo $this->promotionData['synopsis']?>', // 分享描述
-			link: shareConfig['link']+'/'+userData['openid'], // 分享链接
+			desc: '这里是一段分享描述，此处作为测试，固定数据', // 分享描述
+			link: shareConfig['link']+'?fromId='+userData['openid'], // 分享链接
 			imgUrl: userData['headimgurl'],
 			success: function(){},
 			cancel: function(){},
 		});
-		setShareData = function(data){
-			alert('setShareData');
-			wx.onMenuShareAppMessage({
-				title: '朋友们，快来帮我获取更多奖励吧！！',
-				desc: '<?php echo $this->promotionData['synopsis']?>', // 分享描述
-				link: data['link'], // 分享链接
-				imgUrl: data['imgUrl'],
-				success: data['successFn'] || function(){},
-				cancel: data['cancel'] || function(){},
-			});
-		}
-		
+	});
+	setShareData = function(data){
+		var shareConfig = window.Config.shareData,
+   			userData = +window.Config.userData;
+		wx.onMenuShareAppMessage({
+			title: data['title'],
+			desc: data['desc'] || <?php echo $this->promotionData['synopsis']?>, // 分享描述
+			link: shareConfig['link']+'?fromId='+userData['openid'], // 分享链接
+			imgUrl: userData['headimgurl'],
+			success: function(){},
+			cancel: function(){},
+		});
+	}
+	$(document).ready(function(){
+		$('#btn-help').on('click', function(){
+			alert(setShareData);
+			var demo = {title:'活动分享测试',desc:'活动分享描述测试'}
+			setShareData(demo);
+		});
 	});
 </script>
-<script src="<?php echo $this->path('wxs.fucms')?>/promotion/assistance/script/index.js?v=2015081102"></script>
