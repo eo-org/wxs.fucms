@@ -34,6 +34,25 @@ return array(
             	'child_routes' => array(
             	)
             ),
+        	'wxs' => array(
+        		'type'    => 'segment',
+        		'options' => array(
+        			'route'    => '/:websiteId/[:controller][/:action][/:id]',
+       				'constraints' => array(
+        				'websiteId' => '[a-z0-9]{24}',
+        				'id' => '[a-z0-9]+',
+        			),
+        			'defaults' => array(
+        				'action' => 'index'
+        			)
+        		),
+        		'may_terminate' => true,
+        		'child_routes' => array(
+        			'wildcard' => array(
+        				'type' => 'wildcard'
+        			)
+        		)
+        	),
         	'wxsrs' => array (
 				'type' => 'literal',
 				'options' => array (
