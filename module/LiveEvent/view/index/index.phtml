@@ -1,7 +1,15 @@
 aa
 
+<ul id='img-preview'>
+	<li></li>
+</ul>
+
+<div class='choose-image'>
+	选择图片
+</div>
+
 <div class='upload-image'>
-	上传照片
+	确定上传
 </div>
 
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -11,36 +19,54 @@ aa
 		alert('wx.ready');
 	});
 	wx.error(function(res){
-		alert('error');
-		alert(res.msg);
+		alert('auth required');
 	});
 
-	$('.upload-image').click(function() {
-		alert('btn-clicked');
+	var localIds;
+	
+	$('.choose-image').click(function() {
 		wx.chooseImage({
-		    count: 1, // 默认9
+		    count: 9, // 默认9
 		    sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
 		    sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
 		    success: function (res) {
-		        var localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
+		        localIds = res.localIds; // 返回选定照片的本地ID列表，localId可以作为img标签的src属性显示图片
 
-				alert(localIds);
-
-
-
-
-				wx.uploadImage({
-				    localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
-				    isShowProgressTips: 1, // 默认为1，显示进度提示
-				    success: function (res) {
-				        var serverId = res.serverId; // 返回图片的服务器端ID
-
-
-				        alert(serverId);
-				    }
+		        $('#img-preview').empty();
+				$.each(localIds, function(idx, item) {
+					$("<li><img src='" + item + "' /></li>").appendTo('#img-preview');
 				});
+
+				
+
+
+// 				wx.uploadImage({
+// 				    localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+// 				    isShowProgressTips: 1, // 默认为1，显示进度提示
+// 				    success: function (res) {
+// 				        var serverId = res.serverId; // 返回图片的服务器端ID
+
+
+// 				        alert(serverId);
+// 				    }
+// 				});
 		        
 		    }
+		});
+
+		
+	});
+
+	$('.upload-image').click(function() {
+		wx.uploadImage({
+			localId: localIds, // 需要上传的图片的本地ID，由chooseImage接口获得
+			isShowProgressTips: 1, // 默认为1，显示进度提示
+			success: function (res) {
+				var serverId = res.serverId; // 返回图片的服务器端ID
+
+
+				alert(serverId);
+			}
 		});
 	});
 </script>
