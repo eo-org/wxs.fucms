@@ -67,7 +67,7 @@ class CmsSiteService implements ServiceLocatorAwareInterface
 	    	}
 	    	
 	    	$server = $db->server->findOne(array(
-	    		'_id' => $siteArr['server']['$id']
+	    		'_id' => new \MongoId($siteArr['server']['$id'])
 	    	));
 	    	
 	    	$this->internalIpAddress = $server['internalIpAddress'];

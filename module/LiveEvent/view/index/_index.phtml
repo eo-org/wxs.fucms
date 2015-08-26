@@ -1,0 +1,543 @@
+<form id="uploadForm">
+	<div id='upload-bar'></div>
+	<div id='pickfiles' style='padding: 30px; broder: 2px dashed 777;'>UPLOAD FILES</div>
+	
+	
+</form>
+
+
+<script>
+/*
+var uptoken = "";
+function doUpload() {
+	$.ajax({  
+		url: '/wxsrs/<?php echo $this->websiteId?>/fr-qs-token.json/1',
+		type: 'GET',
+		success: function (data) {
+			//uptoken = 
+			Qiniu.token = data.uptoken;
+		}
+	});
+
+*/
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+// 	var formData = new FormData($( "#uploadForm" )[0]);  
+// 	$.ajax({  
+//		url: '/wxsrs/<?php echo $this->websiteId?>/fr-file.json' ,  
+// 		type: 'POST',  
+// 		data: formData,  
+// 		async: false,  
+// 		cache: false,  
+// 		contentType: false,  
+// 		processData: false,  
+// 		success: function (returndata) {
+// 			alert(returndata);
+// 		},
+// 		error: function (returndata) {
+// 			alert(returndata);
+// 		}
+// 	});  
+//}  
+
+</script>
+
+
+
+
+
+
+
+<script src="http://asd.fucmsweb.test/bower_components/cms/file/js/plupload.full.min.js"></script>
+<script src="http://asd.fucmsweb.test/bower_components/cms/file/js/qiniu.min.js"></script>
+
+<script>
+var websiteId = "<?php echo $this->websiteId?>";
+
+var browserBtn = $('#pickfiles');
+
+this.uploader = Qiniu.uploader({
+	runtimes: 'html5',
+	browse_button: browserBtn,
+	uptoken: '<?php echo $this->uptoken?>',
+	unique_names: false,
+	domain: '<?php echo $this->path('qiniu')?>',
+	max_file_size: '4mb',
+	max_retries: 1,
+	dragdrop: false,
+	chunk_size: '4mb',
+	auto_start: true,
+	init: {
+		'FilesAdded': function(up, files) {
+			var filenames = new Array();
+// 			for(var i = 0; i < files.length; i++) {
+// 				var file = files[i];
+// 				var filesize = file.size / 1024;
+// 				if(filesize > 800) {
+// 					filesize = filesize / 1024;
+// 					files[i].filesizeStr = filesize.toFixed(2) + 'MB';
+// 				} else {
+// 					files[i].filesizeStr = Math.ceil(filesize) + 'KB';
+// 				}
+// 				filenames.push(file.name);
+// 			}
+			
+// 			TH.files = files;
+// 			TH.$.tokenReader.body = JSON.stringify({'groupId': groupId, 'names': filenames});
+// 			TH.$.tokenReader.contentType = "application/json;charset=UTF-8";
+			
+// 			TH.$.tokenReader.generateRequest();
+
+
+
+			
+// 			$.ajax({  
+//				url: '/wxsrs/<?php echo $this->websiteId?>/fr-qs-token.json/1',
+// 				type: 'GET',
+// 				success: function (data) {
+// 					//uptoken = 
+// 					Qiniu.token = data.uptoken;
+
+// 					alert(Qiniu.token);
+// 				}
+// 			});
+		},
+		'BeforeUpload': function(up, file) {
+			alert('before upload');
+			//TH.fileUploading = {
+			//	name: file.name,
+			//	size: file.size
+			//}
+		},
+		'UploadProgress': function(up, file) {
+			$('#upload-bar').innerHTML = file.percent;
+			
+			//TH.uploadingPercent = file.percent;
+		},
+		'ChunkUploaded': function(up, file) {
+			
+		},
+		'FileUploaded': function(up, file, info) {
+
+			alert('uploaded');
+			
+// 			var domain = up.getOption('domain');
+// 			var infoObj = JSON.parse(info);
+// 			var sourceLink = domain + infoObj.key;
+// 			file.sourceLink = sourceLink;
+			
+// 			if(file.urlname == undefined) {
+// 				var ext = "";
+// 				var tempArr = file.name.split(".");
+// 				if (tempArr.length === 1 || (tempArr[0] === "" && tempArr.length === 2)) {
+// 					ext = "";
+// 				} else {
+// 					ext = tempArr.pop().toLowerCase();
+// 				}
+				
+// 				file.urlname = ext ? file.id + '.' + ext : file.id;
+// 			}
+// 			//var infoObj = JSON.parse(info);
+// 			var codec = null;
+// 			if(infoObj.avinfo != null && infoObj.avinfo.video != null) {
+// 				codec = infoObj.avinfo.video.codec_name;
+// 			}
+			
+// 			TH.$.fileCreator.body = JSON.stringify({
+// 				'groupId': TH.groupId,
+// 				'size': file.size,
+// 				'filename': file.name,
+// 				'urlname': file.urlname,
+// 				'mimeType': infoObj.mimeType,
+// 				'ext': infoObj.ext,
+// 				'codec': codec
+// 			});
+			
+// 			TH.$.fileCreator.contentType = "application/json;charset=UTF-8";
+// 			TH.$.fileCreator.generateRequest();
+		},
+		'UploadComplete': function() {
+			alert('all files uploaded');
+		},
+		'Key': function(up, file) {
+			var key, ext;
+			var ext;
+			var tempArr = file.name.split(".");
+			if (tempArr.length === 1 || (tempArr[0] === "" && tempArr.length === 2)) {
+				ext = "";
+			} else {
+				ext = tempArr.pop().toLowerCase();
+			}
+			key = ext ? file.id + '.' + ext : file.id;
+			
+			file.urlname = key;
+			alert(key);
+			return websiteId + '/' + key;
+		}
+	}
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+
+	Polymer({
+		is: 'cms-file-uploader',
+		properties: {
+			crudUrl: String,
+			websiteId:　String,
+			groupId: String,
+			data: {
+				type: Array,
+				notify: true
+			}
+		},
+		__tokenReaderResponse: function() {
+			this.tokenIdx = 0;
+			this.tokens = this.$.tokenReader.lastResponse.uptokenList;
+			Qiniu.token = this.tokens[this.tokenIdx];
+			
+			var TH = this;
+			
+			console.log(TH.websiteId + ':' + TH.groupId + ':' + TH.crudUrl);
+			
+			//this.uploader.start();
+		},
+		__fileCreatorResponse: function() {
+			this.tokenIdx++;
+			if(this.tokenIdx < this.tokens.length) {
+				Qiniu.token = this.tokens[this.tokenIdx];
+			}
+			this.shift('files');
+			
+			console.log(this.data);
+			
+			var newFileObj = this.$.fileCreator.lastResponse;
+			
+			this.unshift('data', newFileObj);
+		},
+		_onSelectFiles: function(e) {
+			
+			this.style.height = '240px';
+		},
+		_onClose: function() {
+			if(this.fileUploadInProgress) {
+				return false;
+			}
+			this.style.height = '40px';
+		},
+		ready: function() {
+			this.fileUploading = {
+				name: '',
+				size: 0
+			}
+			
+			var TH = this;
+			var browserBtn = this.$.pickfiles;
+			
+			this.uploader = Qiniu.uploader({
+				runtimes: 'html5, flash, html4',
+				browse_button: browserBtn,
+				uptoken: 'empty-token',
+				unique_names: false,
+				domain: 'http://lib-media.qiniudn.com/',
+				max_file_size: '300mb',
+				max_retries: 1,
+				dragdrop: false,
+				chunk_size: '4mb',
+				auto_start: false,
+				init: {
+					'FilesAdded': function(up, files) {
+						var groupId = TH.groupId;
+						var filenames = new Array();
+						
+						for(var i = 0; i < files.length; i++) {
+							var file = files[i];
+							var filesize = file.size / 1024;
+							if(filesize > 800) {
+								filesize = filesize / 1024;
+								files[i].filesizeStr = filesize.toFixed(2) + 'MB';
+							} else {
+								files[i].filesizeStr = Math.ceil(filesize) + 'KB';
+							}
+							filenames.push(file.name);
+						}
+						
+						TH.files = files;
+						TH.$.tokenReader.body = JSON.stringify({'groupId': groupId, 'names': filenames});
+						TH.$.tokenReader.contentType = "application/json;charset=UTF-8";
+						
+						TH.$.tokenReader.generateRequest();
+					},
+					'BeforeUpload': function(up, file) {
+						TH.fileUploading = {
+							name: file.name,
+							size: file.size
+						}
+					},
+					'UploadProgress': function(up, file) {
+						TH.uploadingPercent = file.percent;
+						//uploadService.updateProgress(file.percent);
+						//$rootScope.$apply();
+					},
+					'ChunkUploaded': function(up, file) {
+						
+					},
+					'FileUploaded': function(up, file, info) {
+						//file.displayState = 'uploaded';
+						
+						
+						
+						
+						var domain = up.getOption('domain');
+						var infoObj = JSON.parse(info);
+						var sourceLink = domain + infoObj.key;
+						file.sourceLink = sourceLink;
+						
+						//tokenIdx++;
+						//if(tokenIdx < tokens.length) {
+						//	Qiniu.token = tokens[tokenIdx];
+						//}
+						
+						if(file.urlname == undefined) {
+							var ext = "";
+							var tempArr = file.name.split(".");
+							if (tempArr.length === 1 || (tempArr[0] === "" && tempArr.length === 2)) {
+								ext = "";
+							} else {
+								ext = tempArr.pop().toLowerCase();
+							}
+							
+							file.urlname = ext ? file.id + '.' + ext : file.id;
+						}
+						//var infoObj = JSON.parse(info);
+						var codec = null;
+						if(infoObj.avinfo != null && infoObj.avinfo.video != null) {
+							codec = infoObj.avinfo.video.codec_name;
+						}
+						
+						
+						
+						
+						TH.$.fileCreator.body = JSON.stringify({
+							'groupId': TH.groupId,
+							'size': file.size,
+							'filename': file.name,
+							'urlname': file.urlname,
+							'mimeType': infoObj.mimeType,
+							'ext': infoObj.ext,
+							'codec': codec
+						});
+						
+						TH.$.fileCreator.contentType = "application/json;charset=UTF-8";
+						TH.$.fileCreator.generateRequest();
+						
+// 						$http.post('/admrs/filerest-qs-file.json', {
+// 							'groupId': groupId,
+// 							'filename': file.name,
+// 							'urlname': file.urlname,
+// 							'mimeType': infoObj.mimeType,
+// 							'ext': infoObj.ext,
+// 							'codec': codec
+// 						});
+// 						console.log(infoObj);
+					},
+// 			'Error': function(up, err, errTip) {
+// 				alert('upload error');
+// 			},
+					'UploadComplete': function() {
+		// 				tokenIdx = 0;
+		// 				tokens = [];
+		// 				uploadService.setFiles([]);
+		// 				uploadService.updateProgress(0);
+		// 				$rootScope.$apply();
+		//				window.parent.UpdateFileMainData();
+						alert('all files uploaded');
+					},
+					'Key': function(up, file) {
+						var key, ext;
+						if(TH.groupId == 'system') {
+							key = file.name;
+						} else {
+							var ext;
+							var tempArr = file.name.split(".");
+							if (tempArr.length === 1 || (tempArr[0] === "" && tempArr.length === 2)) {
+								ext = "";
+							} else {
+								ext = tempArr.pop().toLowerCase();
+							}
+							key = ext ? file.id + '.' + ext : file.id;
+						}
+						file.urlname = key;
+						
+						return TH.websiteId + '/' + key;
+					}
+				}
+			});
+			
+			
+			
+			
+		}
+	});
+	
+	
+*/
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<hr />
+
+
+
+
+
+<!-- 
+
+
+<ul id='img-preview'>
+	<li>aaaa</li>
+</ul>
+
+<div class='choose-image' style='padding: 15px;'>
+	选择图片
+</div>
+
+<div class='upload-image' style='padding: 15px;'>
+	确定上传
+</div>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+
+ -->
+<script>
+/*
+	wx.config(<?php echo $this->wxConfig?>);
+	wx.ready(function() {
+		
+	});
+	
+	wx.error(function(res){
+		alert('auth error, please refresh page');
+	});
+
+	var localIds;
+	$('.choose-image').on('click', function(e) {
+		wx.chooseImage({
+			count: 1,
+ 		    sizeType: ['original', 'compressed'],
+ 		    sourceType: ['album', 'camera'],
+ 		    success: function (res) {
+ 		    	localIds = res.localIds;
+				$('#img-preview').empty();
+
+ 				$.each(localIds, function(idx, item) {
+ 					$("<li style='float:left;'><img width='120' src='" + item + "' /></li>").appendTo('#img-preview');
+ 				});
+ 		    }
+ 		});
+	});
+
+ 	$('.upload-image').on('click', function(e) {
+		wx.uploadImage({
+			localId: localIds[0],
+			isShowProgressTips: 1,
+			success: function (res) {
+				var serverId = res.serverId;
+
+				alert('file uploaded');
+				
+				$.ajax({
+					type: 'POST',
+					url: '/wxsrs/<?php echo $this->websiteId?>/fr-file.json',
+					data: {mediaId: serverId, resourceType: 'liveEvent:signup', resourceId: '<?php echo '123'?>', openId: '<?php echo $this->openId?>'},
+					success: function(data) {
+						alert(data);
+					},
+					error: function() {
+
+
+						
+						alert('/wxsrs/<?php echo $this->websiteId?>/fr-file.json');
+					}
+				});
+				
+				
+			}
+		});
+ 	});
+ 	*/
+</script>

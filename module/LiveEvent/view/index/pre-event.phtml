@@ -1,0 +1,170 @@
+<style>
+	.event{padding: 15px;}
+	.step{border-bottom: 1px dashed #999;margin-top:40px;padding:5px;}
+	h3{margin-bottom: 10px;}
+	p{margin: 5px 0;}
+	hr{margin: 20px 0;}
+	ul.user-form li {padding:15px 5px;}
+	#save-user{background:green;font-size:18px;width:100%;padding:10px 0;color:white;border-radius:4px;border:none;box-shadow: 1px 1px 1px #777;}
+	.view-link{display:block;width:100%;padding:10px 0;text-align:center;text-decoration:underline;}
+</style>
+<div class='event'>
+	<h3>HUST AC0102 信息收集</h3>
+	<p>各位尊敬的大牛们，请完善自己的信息。姓名电话最重要，不要忘记点保存。功能很简单，大牛轻点玩，不要玩坏了。</p>
+	<p>各位多多上传近期照片，稍后我来整理一下放一个通讯录</p>
+	<p>特别是远在异国他乡的友人，务必多发几张图，<b>想死你们了！！！</b></p>
+
+	<div class='step'>Step One</div>
+	<p>提供一下个人信息呗，写好记得点绿色的保存按钮</p>
+	<form id="user-info">
+	<ul class='user-form'>
+		<li>
+		<label>尊姓大名
+			<input type='text' name='name' value='<?php echo $this->applicantInfo['name']?>' />
+		</label>
+		</li>
+		<li>
+		<label>联系电话
+			<input type='tel' name='mobile' value='<?php echo $this->applicantInfo['mobile']?>' />
+		</label>
+		</li>
+		<li>
+		<label>所在城市
+			<input type='text' name='city' value='<?php echo $this->applicantInfo['city']?>' />
+		</label>
+		</li>
+		<li>
+		<label>工作单位
+			<input type='text' name='work' value='<?php echo $this->applicantInfo['work']?>' />
+		</label>
+		</li>
+		<button id='save-user'>保存</button>
+	</form>
+	
+	<div class='step'>Step Two</div>
+	<p>一次只能上一张照片，多张照片多次上传哦</p>
+	<p>上传靓照，近期照片，家庭照片，或者以前的老照片，不要裸照！不然容易被封号</p>
+	<p>上传照片流量大，速度慢，请务必在wifi环境下完成(土豪请自动忽略此建议)</p>
+	<form id="upload-form">
+		<div id='pickfiles' style='padding:30px;border:2px dashed #777;'>UPLOAD FILES</div>
+		
+		<a class='view-link' href='<?php echo $this->url('wxs', array('action' => 'view-img'), true)?>'>查看我上传的照片 >></a>
+	</form>
+
+	<div id="replace-text" style='display:none;padding:30px;border:2px dashed #777;color:green;'>
+		文件上传中，请稍候
+	</div>
+</div>
+<script src="<?php echo $this->path('wxs.fucms')?>/file/js/plupload.full.min.js"></script>
+<script src="<?php echo $this->path('wxs.fucms')?>/file/js/qiniu.min.js"></script>
+
+<script>
+var applicantId = '<?php echo $this->applicantId?>';
+
+$('#save-user').on('click', function(e) {
+	e.preventDefault();
+	var applicantInfo = $('#user-info').serializeArray();
+
+	var postInfo = {};
+	for(var i = 0; i < applicantInfo.length; i++) {
+		postInfo[applicantInfo[i]['name']] = applicantInfo[i]['value'];
+	}
+
+	if(applicantId == '') {
+		$.post(
+			'/wxsrs/<?php echo $this->websiteId?>/lers-applicant.json',
+			{openId:'<?php echo $this->openId?>', eventId:'<?php echo $this->eventId?>', info:postInfo},
+			function(response) {
+				console.log(response);
+				applicantId = response.id;
+				alert('个人信息已保存，接下来多发一点图片吧！！');
+			}
+		);
+	} else {
+		$.ajax({
+			url: '/wxsrs/<?php echo $this->websiteId?>/lers-applicant.json/' + applicantId,  
+	 		type: 'PUT',  
+	 		data: {eventId:'<?php echo $this->eventId?>', info:postInfo},
+	 		success: function (response) {
+	 			alert('个人信息已更新');
+	 		},
+		});
+	}
+});
+
+var websiteId = "<?php echo $this->websiteId?>";
+
+var browserBtn = $('#pickfiles');
+
+var uploader = Qiniu.uploader({
+	runtimes: 'html5',
+	browse_button: browserBtn,
+	uptoken: '<?php echo $this->uptoken?>',
+	unique_names: false,
+	domain: '<?php echo $this->path('qiniu')?>',
+	max_file_size: '8mb',
+	max_retries: 0,
+	dragdrop: false,
+	chunk_size: '4mb',
+	auto_start: true,
+	init: {
+		'FilesAdded': function(up, files) {
+			//second in seq
+			var filenames = new Array();
+		},
+		'BeforeUpload': function(up, file) {
+			$('#upload-form').css('display', 'none');
+			$('#replace-text').css('display', 'block');
+		},
+		'UploadProgress': function(up, file) {
+			$('#upload-bar').innerHTML = file.percent;
+		},
+		'ChunkUploaded': function(up, file) {
+			
+		},
+		'FileUploaded': function(up, file, info) {
+			var infoObj = JSON.parse(info);
+			
+		 	$.ajax({  
+				url: '/wxsrs/<?php echo $this->websiteId?>/fr-file.json',
+		 		type: 'POST',
+		 		data: {
+			 		'resourceType': 'live-event:signup',
+					'resourceId': '<?php echo $this->eventId?>',
+					'filename': file.name,
+					'urlname': file.urlname,
+					'size': file.size,
+					'mimeType': infoObj.mimeType,
+					'ext': infoObj.ext
+			 	},
+		 		success: function (response) {
+		 			alert('照片上传成功');
+		 		},
+		 		error: function (response) {
+		 			alert('sorry, 图片上传失败');
+		 		}
+		 	});
+		},
+		'UploadComplete': function() {
+			$('#upload-form').css('display', 'block');
+			$('#replace-text').css('display', 'none');
+		},
+		'Key': function(up, file) {
+			//first in seq
+			var key, ext;
+			var ext;
+			var tempArr = file.name.split(".");
+			if (tempArr.length === 1 || (tempArr[0] === "" && tempArr.length === 2)) {
+				ext = "";
+			} else {
+				ext = tempArr.pop().toLowerCase();
+			}
+			key = ext ? file.id + '.' + ext : file.id;
+			
+			file.urlname = key;
+			
+			return websiteId + '/' + key;
+		}
+	}
+});
+</script>

@@ -1,0 +1,56 @@
+aa
+
+<ul id='img-preview'>
+	<li>aaaa</li>
+</ul>
+
+<div class='choose-image' style='padding: 15px;'>
+	选择图片
+</div>
+
+<div class='upload-image' style='padding: 15px;'>
+	确定上传
+</div>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+	wx.config(<?php echo $this->wxConfig?>);
+	wx.ready(function() {
+		
+	});
+	
+	wx.error(function(res){
+		alert('auth error, please refresh page');
+	});
+
+	var localIds;
+	$('.choose-image').on('click', function(e) {
+		wx.chooseImage({
+			count: 9,
+ 		    sizeType: ['original', 'compressed'],
+ 		    sourceType: ['album', 'camera'],
+ 		    success: function (res) {
+ 		    	localIds = res.localIds;
+				$('#img-preview').empty();
+
+ 				$.each(localIds, function(idx, item) {
+ 					$("<li style='float:left;'><img width='120' src='" + item + "' /></li>").appendTo('#img-preview');
+ 				});
+ 		    }
+ 		});
+	});
+
+ 	$('.upload-image').on('click', function(e) {
+ 		alert('start upload');
+		wx.uploadImage({
+			localId: localIds[0], // 需要上传的图片的本地ID，由chooseImage接口获得
+			isShowProgressTips: 1, // 默认为1，显示进度提示
+			success: function (res) {
+				var serverId = res.serverId; // 返回图片的服务器端ID
+				
+
+				alert(serverId);
+			}
+		});
+ 	});
+</script>

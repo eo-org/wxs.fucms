@@ -1,0 +1,6 @@
+<p>您近期上传的图片如下</p>
+<ul>
+	<?php foreach($this->uploadedImgs as $img) {?>
+	<li><img src='<?php echo $this->path('qiniu')?>/<?php echo $this->websiteId?>/<?php echo $img->getUrlname()?>?imageView2/1/w/180/h/150/interlace/1' /></li>
+	<?php }?>
+</ul>

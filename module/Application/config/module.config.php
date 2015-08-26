@@ -15,8 +15,7 @@ return array(
         				'controller'    => 'Application\Controller\IndexController',
         				'action'        => 'surrogate',
         			)
-        		),
-        		'may_terminate' => true,
+        		)
         	),
             'application' => array(
                 'type'    => 'segment',
@@ -30,16 +29,14 @@ return array(
                 		'websiteId' => '[a-z0-9]{24}',
 					)
                 ),
-            	'may_terminate' => true,
-            	'child_routes' => array(
-            	)
             ),
         	'wxs' => array(
         		'type'    => 'segment',
         		'options' => array(
-        			'route'    => '/:websiteId/[:controller][/:action][/:id]',
+        			'route'    => '/[:websiteId]/[:controller][/:action][/:id]',
        				'constraints' => array(
         				'websiteId' => '[a-z0-9]{24}',
+       					'action' => '[a-z-]+',
         				'id' => '[a-z0-9]+',
         			),
         			'defaults' => array(
@@ -63,14 +60,11 @@ return array(
 					'restroutes' => array (
 						'type' => 'segment',
 						'options' => array (
-							'route' => '[/:websiteId][/:controller].json[/:id]',
+							'route' => '/[:websiteId]/[:controller].json[/:id]',
 							'constraints' => array (
 								'websiteId' => '[a-z0-9]{24}',
 								'controller' => '[a-z-]*',
 								'id' => '[A-Za-z0-9-_]*'
-							),
-							'defaults' => array(
-								'format' => 'json'
 							)
 						)
 					)

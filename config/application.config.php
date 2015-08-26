@@ -6,6 +6,7 @@ return array(
 		 */
 		'Application',
 		'User',
+		'File',
 		'Promotion',
 		'LiveEvent'
 	),

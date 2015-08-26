@@ -12,14 +12,11 @@ return array(
 			'db' => 'admin'
 		),
 		'path' => array(
-			'fucms' => 'http://lib-media.qiniudn.com/fucms',
-			'src'	=> 'http://lib-media.qiniudn.com/src',
-			'compact' => 'http://lib-media.qiniudn.com/compact',
-//			'aliyun' => 'http://en-developer.oss-cn-hangzhou.aliyuncs.com',
-			'qiniu' => 'http://en-developer.qiniudn.com',
-//			'upyun' => 'http://en-developer.b0.upaiyun.com'
-			'wxs.fucms' => 'http://lib-media.qiniudn.com/wxs.fucms',
-
+			'fucms'		=> 'http://qs-lib.fucms.com/fucms',
+			'src'		=> 'http://qs-lib.fucms.com/src',
+			'compact'	=> 'http://qs-lib.fucms.com/compact',
+			'wxs.fucms' => 'http://qs-lib.fucms.com/wxs.fucms',
+			'qiniu'		=> 'http://7fvjw0.com1.z0.glb.clouddn.com',
 		),
 		'wx' => array(
 			'appId' => 'wx2ce4babba45b702d',
@@ -32,6 +29,12 @@ return array(
 				'preAuthCode' => 'https://api.weixin.qq.com/cgi-bin/component/api_create_preauthcode?component_access_token=',				
 				'authInfo' => 'https://api.weixin.qq.com/cgi-bin/component/api_query_auth?component_access_token=',
 			),
+		),
+		// developer qiniu key and bucket
+		'qiniu' => array(
+			'keyId' => 'xo6Ap0TOfDWSNQtSYCdeb4nSg-1oilUgJ4i27GsK',
+			'keySecret' => 'K2j2Vq9uizQcjemFkRBTOlTAQ5v1rkZYnVaXWyog',
+			'bucket' => 'en-developer'
 		),
 	),
 	'account_fucms_db' => array(

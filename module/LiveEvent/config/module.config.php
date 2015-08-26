@@ -2,7 +2,8 @@
 return array(
 	'controllers' => array(
         'invokables' => array(
-        	'live-event-index' => 'LiveEvent\Controller\IndexController'
+        	'live-event-index'	=> 'LiveEvent\Controller\IndexController',
+        	'lers-applicant'	=> 'LiveEventRest\Controller\ApplicantController'
         ),
     ),
 //     'router' => array(
@@ -39,6 +40,7 @@ return array(
 			'live-event/index/pre-event'	=> __DIR__ . '/../view/index/pre-event.phtml',
 			'live-event/index/post-event'	=> __DIR__ . '/../view/index/post-event.phtml',
 			'live-event/index/live-sign'	=> __DIR__ . '/../view/index/live-sign.phtml',
+			'live-event/index/view-img'		=> __DIR__ . '/../view/index/view-img.phtml',
 			
 			'live-event/review/index'		=> __DIR__ . '/../view/assistance/index.phtml',
 			'live-event/review/ending'		=> __DIR__ . '/../view/assistance/ending.phtml',
