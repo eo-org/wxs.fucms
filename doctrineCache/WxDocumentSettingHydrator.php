@@ -67,10 +67,10 @@ class WxDocumentSettingHydrator implements HydratorInterface
             $hydratedData['isAddFriendReplyOpen'] = $return;
         }
 
-        /** @Field(type="hash") */
+        /** @Field(type="string") */
         if (isset($data['addFriendAutoreplyInfo'])) {
             $value = $data['addFriendAutoreplyInfo'];
-            $return = $value;
+            $return = (string) $value;
             $this->class->reflFields['addFriendAutoreplyInfo']->setValue($document, $return);
             $hydratedData['addFriendAutoreplyInfo'] = $return;
         }

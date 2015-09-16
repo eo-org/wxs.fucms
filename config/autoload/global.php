@@ -30,6 +30,12 @@ return array(
 				'authInfo' => 'https://api.weixin.qq.com/cgi-bin/component/api_query_auth?component_access_token=',
 			),
 		),
+		
+		
+		
+		
+		
+		
 		// developer qiniu key and bucket
 		'qiniu' => array(
 			'keyId' => 'xo6Ap0TOfDWSNQtSYCdeb4nSg-1oilUgJ4i27GsK',
