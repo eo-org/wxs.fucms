@@ -36,11 +36,11 @@ class WxDocumentLiveEventApplicantHydrator implements HydratorInterface
         }
 
         /** @Field(type="string") */
-        if (isset($data['openId'])) {
-            $value = $data['openId'];
+        if (isset($data['openid'])) {
+            $value = $data['openid'];
             $return = (string) $value;
-            $this->class->reflFields['openId']->setValue($document, $return);
-            $hydratedData['openId'] = $return;
+            $this->class->reflFields['openid']->setValue($document, $return);
+            $hydratedData['openid'] = $return;
         }
 
         /** @Field(type="string") */

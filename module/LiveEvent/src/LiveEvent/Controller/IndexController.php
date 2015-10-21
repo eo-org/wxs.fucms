@@ -29,12 +29,22 @@ class IndexController extends AbstractActionController
     	$openid = $userAuth->getOpenid();
     	$dm = $sm->get('DocumentManager');
     	
-    	
-    	
     	$userDoc = $dm->getRepository('User\Document\User')->findOneByOpenid($openid);
     	$fcUserId = $userDoc->getFcUserId();
     	if(empty($fcUserId)) {
     		die('请先绑定网站用户');
+    	}
+    	
+    	$applicantDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\Applicant')
+    		->field('openid')->equals($openid)
+    		->field('eventId')->equals($eventId)
+    		->getQuery()
+    		
+    		->getSingleResult();
+    	if($applicantDoc) {
+    		$vm = new ViewModel();
+    		$vm->setTemplate('live-event/index/success');
+    		return $vm;
     	}
     	
     	if($this->getRequest()->isPost()) {
@@ -42,6 +52,8 @@ class IndexController extends AbstractActionController
     		$sex = $this->params()->fromPost('sex');
     		$idNumber = $this->params()->fromPost('idNumber');
     		$address = $this->params()->fromPost('address');
+    		
+    		print_r($this->params()->fromPost());
     		
     		if(empty($name) || empty($sex) || empty($idNumber) || empty($address)) {
     			$errorMsg = "请填写所有信息";
@@ -57,15 +69,11 @@ class IndexController extends AbstractActionController
 		    		'address' => $address,
     			));
     			
-    			
     			$dm->persist($applicantDoc);
     			$dm->flush();
     			
-    			
-    			
     			$vm = new ViewModel();
     			$vm->setTemplate('live-event/index/success');
-    			
     			return $vm;
     		}
     	}

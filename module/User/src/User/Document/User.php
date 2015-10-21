@@ -25,6 +25,11 @@ class User
 	 */
 	protected $fcUserId;
 	
+	/**
+	 * @ODM\Field(type="string")
+	 */
+	protected $fcUserLoginName;
+	
 	public function getId()
 	{
 		return $this->id;
@@ -40,8 +45,18 @@ class User
 		$this->fcUserId = $id;
 	}
 	
+	public function setFcUserLoginName($fcUserLoginName)
+	{
+		$this->fcUserLoginName = $fcUserLoginName;
+	}
+	
 	public function getFcUserId()
 	{
 		return $this->fcUserId;
+	}
+	
+	public function getFcUserLoginName()
+	{
+		return $this->fcUserLoginName;
 	}
 }

@@ -22,14 +22,26 @@ class FcUserBindController extends AbstractActionController
     	$dm = $sm->get('DocumentManager');
     	
     	$userDoc = $dm->getRepository('User\Document\User')->findOneByOpenid($openid);
-    	$fcUserId = $userDoc->getFcUserId();
-    	if(!empty($fcUserId)) {
-    		$this->_jump();
+    	
+    	if($userDoc) {
+    		$fcUserId = $userDoc->getFcUserId();
+	    	if(!empty($fcUserId)) {
+	    		$this->_jump();
+	    	}
     	}
     	
     	if($this->getRequest()->isPost()) {
-    		$loginName = $this->params()->fromPost('loginName');
+    		$loginName = trim($this->params()->fromPost('loginName'));
     		$password = $this->params()->fromPost('password');
+    		
+    		$userDoc = $dm->getRepository('User\Document\User')->findOneByFcUserLoginName($loginName);
+    		
+    		if($userDoc) {
+    			return array(
+    				'errorMsg' => $loginName.'已经绑定微信号！此帐号不能重复绑定',
+    				'loginName' => $loginName
+    			);
+    		}
     		
     		$fcUserDoc = $dm->createQueryBuilder('User\Document\CmsUser')
     			->field('loginName')->equals($loginName)
@@ -45,6 +57,7 @@ class FcUserBindController extends AbstractActionController
     			$userDoc = new User();
     			$userDoc->setOpenid($openid);
     			$userDoc->setFcUserId($fcUserDoc->getId());
+    			$userDoc->setFcUserLoginName($loginName);
     			$dm->persist($userDoc);
     			$dm->flush();
     			

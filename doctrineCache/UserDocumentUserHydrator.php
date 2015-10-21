@@ -50,6 +50,14 @@ class UserDocumentUserHydrator implements HydratorInterface
             $this->class->reflFields['fcUserId']->setValue($document, $return);
             $hydratedData['fcUserId'] = $return;
         }
+
+        /** @Field(type="string") */
+        if (isset($data['fcUserLoginName'])) {
+            $value = $data['fcUserLoginName'];
+            $return = (string) $value;
+            $this->class->reflFields['fcUserLoginName']->setValue($document, $return);
+            $hydratedData['fcUserLoginName'] = $return;
+        }
         return $hydratedData;
     }
 }
