@@ -11,32 +11,37 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 class User
 {
 	/**
-	 * @ODM\Id((strategy="none"))
+	 * @ODM\Id
 	 */
 	protected $id;
 	
 	/**
 	 * @ODM\Field(type="string")
 	 */
-	protected $name;
+	protected $openid;
 	
 	/**
 	 * @ODM\Field(type="string")
 	 */
 	protected $fcUserId;
 	
-	public function exchangeArray($data)
+	public function getId()
 	{
-		$this->name = $data['name'];
+		return $this->id;
 	}
 	
-	public function setId($id)
+	public function setOpenid($id)
 	{
-		$this->id = $id;
+		$this->openid = $id;
 	}
 	
 	public function setFcUserId($id)
 	{
 		$this->fcUserId = $id;
+	}
+	
+	public function getFcUserId()
+	{
+		return $this->fcUserId;
 	}
 }

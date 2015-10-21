@@ -22,7 +22,7 @@ class AuthListener extends AbstractListenerAggregate
     	
     	$sessionUser = $sm->get('User\Service\SessionAuth');
     	
-    	if(!$sessionUser->isLogin() || true) {
+    	if(!$sessionUser->isLogin()) {
     		$dm = $sm->get('DocumentManager');
     		$wxSetting = $dm->createQueryBuilder('WxDocument\Setting')
 	    		->select('authorization_info.authorizer_appid')
@@ -36,7 +36,7 @@ class AuthListener extends AbstractListenerAggregate
     		$query = $mvcEvent->getRequest()->getQuery();
     		
     		if(isset($query['state'])) {
-    			// if the request comes from qq server, use code and componentAccessToken combined to get the user openId
+    			// if the request comes from qq server, use code and componentAccessToken combined to get the user openid
     			// code params will be set if use allow the app to access its info
     			if(isset($query['code'])) {
     				if($query['state'] == 'access-user-info') {
@@ -49,7 +49,7 @@ class AuthListener extends AbstractListenerAggregate
 	    				curl_close($ch);
 	    				
 	    				$userData = json_decode($output, true);
-	    				$sessionUser->setOpenId($userData['openid']);
+	    				$sessionUser->setOpenid($userData['openid']);
 	    				
 	    				$sessionUser->setUserData($userData);
     				} else if($query['state'] == 'access-user-base') {
@@ -63,7 +63,7 @@ class AuthListener extends AbstractListenerAggregate
     					curl_close($ch);
     					 
     					$userData = json_decode($output, true);
-    					$sessionUser->setOpenId($userData['openId']);
+    					$sessionUser->setOpenid($userData['openid']);
     					
     					$sessionUser->setUserData($userData);
     				}

@@ -21,12 +21,12 @@ class FileController extends AbstractRestfulController
 	{
 		$sm = $this->getServiceLocator();
 		$userAuth = $sm->get('User\Service\SessionAuth');
-		$openId = $userAuth->getOpenId();
+		$openid = $userAuth->getOpenid();
 		
 		$dm = $sm->get('DocumentManager');
 		
 		$fileDoc = new File();
-		$fileDoc->setOpenId($openId);
+		$fileDoc->setOpenid($openid);
 		$fileDoc->exchangeArray($data);
 		$dm->persist($fileDoc);
 		$dm->flush();

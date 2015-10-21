@@ -10,14 +10,14 @@ class IndexController extends AbstractActionController
     	$sm = $this->getServiceLocator();
     	
     	$userAuth = $sm->get('User\Service\SessionAuth');
-    	$openId = $userAuth->getOpenId();
+    	$openid = $userAuth->getOpenid();
     	
     	$userData = $userAuth->getUserData();
     	$jsSignature = $sm->get('Application\Service\JsSignatureService');
     	$wxConfigStr = $jsSignature->getJsSdkConfig();
     	
     	return array(
-    		'openId' => $openId,
+    		'openid' => $openid,
     		'wxConfig' => $wxConfigStr,
     		'userData'	=> json_encode($userData)
     	);

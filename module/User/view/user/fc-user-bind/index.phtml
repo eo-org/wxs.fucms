@@ -1,13 +1,14 @@
+<?php if($this->errorMsg != "") {?>
 <div class="weui_cell weui_cell_warn">
 	<div class="weui_cell_bd weui_cell_primary">
-		<p style="color: #F43530;">错误信息!</p>
+		<p style="color: #F43530;"><?php echo $this->errorMsg?></p>
 	</div>
 	<div class="weui_cell_ft">
 	<i class="weui_icon_warn"></i>
 	</div>
 </div>
-
-<form>
+<?php }?>
+<form method='post' action=''>
 	<div class="weui_cells_title">关联账号</div>
 	<div class="weui_cells weui_cells_form">
 		<div class="weui_cell">
@@ -15,7 +16,7 @@
 				<label for="loginName" class="weui_label">用户名:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<input id="loginName" class="weui_input" name="loginName" type="text" placeholder="请输入用户名">
+				<input id="loginName" class="weui_input" name="loginName" value="<?php echo $this->loginName?>" type="text" placeholder="请输入用户名">
 			</div>
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>
@@ -32,6 +33,7 @@
 				<i class="weui_icon_warn"></i>
 			</div>
 		</div>
+		<br />
 		<div class="weui_btn_area"><button class="weui_btn weui_btn_primary">绑定用户</button></div>
 	</div>
 </form>

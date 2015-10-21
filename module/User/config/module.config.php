@@ -2,9 +2,9 @@
 return array(
 	'controllers' => array(
         'invokables' => array(
-        	'User\Controller\IndexController'	=> 'User\Controller\IndexController',
-        	'user-sn'							=> 'User\Controller\SnController',
-        	'fc-user-bind'						=> 'User\Controller\FcUserBindController'
+        	'user-index'	=> 'User\Controller\IndexController',
+        	'user-sn'		=> 'User\Controller\SnController',
+        	'fc-user-bind'	=> 'User\Controller\FcUserBindController'
         ),
     ),
     'router' => array(
@@ -14,7 +14,7 @@ return array(
                 'options' => array(
                     'route'    => '/:websiteId/user',
                     'defaults' => array(
-                        'controller'    => 'User\Controller\IndexController',
+                        'controller'    => 'user-index',
                         'action'        => 'index',
                     ),
                 	'constraints' => array(

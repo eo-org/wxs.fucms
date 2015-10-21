@@ -10,10 +10,10 @@ class IndexController extends AbstractActionController
     	$sm = $this->getServiceLocator();
     	$userAuth = $sm->get('User\Service\SessionAuth');
     	
-    	$openId = $userAuth->getOpenId();
+    	$openid = $userAuth->getOpenid();
     	
     	return array(
-    		'openId' => $openId
+    		'openid' => $openid
     	);	
     }
 }

@@ -12,7 +12,7 @@ return array(
 			'file' => array(
 				'type'    => 'segment',
 				'options' => array(
-					'route'    => '/:websiteId/:resourceType/:resourceId/:openId',
+					'route'    => '/:websiteId/:resourceType/:resourceId/:openid',
 					'defaults' => array(
 						'controller'    => 'Application\Controller\IndexController',
 						'action'        => 'index',

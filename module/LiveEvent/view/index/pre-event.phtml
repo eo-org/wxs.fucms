@@ -73,9 +73,8 @@ $('#save-user').on('click', function(e) {
 	if(applicantId == '') {
 		$.post(
 			'/wxsrs/<?php echo $this->websiteId?>/lers-applicant.json',
-			{openId:'<?php echo $this->openId?>', eventId:'<?php echo $this->eventId?>', info:postInfo},
+			{openid:'<?php echo $this->openid?>', eventId:'<?php echo $this->eventId?>', info:postInfo},
 			function(response) {
-				console.log(response);
 				applicantId = response.id;
 				alert('个人信息已保存，接下来多发一点图片吧！！');
 			}

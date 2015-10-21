@@ -2,7 +2,6 @@
 namespace User\Document;
 
 use Zend\InputFilter\Factory as FilterFactory, Zend\InputFilter\InputFilter;
-use Core\AbstractDocument;
 use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
@@ -10,7 +9,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
  * collection="user"
  * )
  */
-class CmsUser extends AbstractDocument
+class CmsUser
 {
 	/**
 	 * @ODM\Id
@@ -98,10 +97,12 @@ class CmsUser extends AbstractDocument
 	protected $created;
 	protected $inputFilter;
 	protected $dm;
+	
 	public function setDocumentManager($dm)
 	{
 		$this->dm = $dm;
 	}
+	
 	public function getInputFilter()
 	{
 		if(! $this->inputFilter) {
@@ -155,6 +156,7 @@ class CmsUser extends AbstractDocument
 		}
 		return $this->inputFilter;
 	}
+	
 	public function exchangeArray($data)
 	{
 		$detailedAddress;
@@ -219,6 +221,7 @@ class CmsUser extends AbstractDocument
 		// }
 		// $this->data = $dataArr;
 	}
+	
 	public function getArrayCopy()
 	{
 		$dataArr = array(
@@ -242,8 +245,14 @@ class CmsUser extends AbstractDocument
 		}
 		return $dataArr;
 	}
+	
 	public function setLink($key, $data)
 	{
 		$this->link[$key] = $data;
+	}
+	
+	public function getId()
+	{
+		return $this->id;
 	}
 }

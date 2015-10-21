@@ -30,20 +30,20 @@ class SessionAuth
 	
 	public function isLogin()
 	{
-		if($this->wxUser->openId) {
+		if($this->wxUser->openid) {
 			return true;
 		}
 		return false;
 	}
 	
-	public function setOpenId($openId)
+	public function setOpenid($openid)
 	{
-		$this->wxUser->openId = $openId;
+		$this->wxUser->openid = $openid;
 	}
 	
-	public function getOpenId()
+	public function getOpenid()
 	{
-		return $this->wxUser->openId;
+		return $this->wxUser->openid;
 	}
 	
 	public function setUserData($data)

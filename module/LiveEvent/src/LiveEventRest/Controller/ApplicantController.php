@@ -21,12 +21,12 @@ class ApplicantController extends AbstractRestfulController
 	{
 		$sm = $this->getServiceLocator();
 		$userAuth = $sm->get('User\Service\SessionAuth');
-		$openId = $userAuth->getOpenId();
+		$openid = $userAuth->getOpenid();
 		
 		$dm = $sm->get('DocumentManager');
 		$applicantDoc = new Applicant();
 		$applicantDoc->exchangeArray($data);
-		$applicantDoc->setOpenId($openId);
+		$applicantDoc->setOpenid($openid);
 		$dm->persist($applicantDoc);
 		$dm->flush();
 		

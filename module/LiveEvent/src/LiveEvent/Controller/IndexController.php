@@ -33,11 +33,11 @@ class IndexController extends AbstractActionController
     	$uptoken = $putPolicy->Token(null);
     	  
     	$userAuth = $sm->get('User\Service\SessionAuth');
-    	$openId = $userAuth->getOpenId();
+    	$openid = $userAuth->getOpenid();
 		
     	$applicantDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\Applicant')
 	    	->select('info')
-	    	->field('openId')->equals($openId)
+	    	->field('openid')->equals($openid)
 	    	->field('eventId')->equals($eventId)
 	    	->getQuery()
 	    	->getSingleResult();
@@ -59,7 +59,7 @@ class IndexController extends AbstractActionController
     	return array(
     		'websiteId'		=> $websiteId,
     		'uptoken'		=> $uptoken,
-    		'openId'		=> $openId,
+    		'openid'		=> $openid,
     		'eventId'		=> $eventId,
     		'applicantId'	=> $applicantId,
     		//'userData'	=> json_encode($userData),
@@ -79,12 +79,12 @@ class IndexController extends AbstractActionController
     	$eventId = 'hust-reunion';
     	$sm = $this->getServiceLocator();
     	$userAuth = $sm->get('User\Service\SessionAuth');
-    	$openId = $userAuth->getOpenId();
+    	$openid = $userAuth->getOpenid();
     	
     	$dm = $sm->get('DocumentManager');
     	
     	$uploadedImgs = $dm->createQueryBuilder('WxDocument\File')
-    		->field('openId')->equals($openId)
+    		->field('openid')->equals($openid)
     		->field('resourceId')->equals($eventId)
     		->getQuery()
     		->execute();
