@@ -54,7 +54,7 @@ class FcUserBindController extends AbstractActionController
     	return array(
     		'errorMsg' => $errorMsg,
     		'loginName' => $loginName
-		);	
+		);
 	}
 	
 	protected function _jump()
@@ -62,7 +62,7 @@ class FcUserBindController extends AbstractActionController
 		if(empty($this->redirect)) {
 			$this->redirect()->toRoute('user', array(), array(), true);
 		} else {
-			$this->redirect()->toUrl($redirect);
+			$this->redirect()->toUrl($this->redirect);
 		}
 	}
 }

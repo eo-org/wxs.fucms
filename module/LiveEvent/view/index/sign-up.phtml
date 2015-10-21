@@ -1,4 +1,15 @@
-<form name="enrollment">
+<?php if($this->errorMsg != "") {?>
+<div class="weui_cell weui_cell_warn">
+	<div class="weui_cell_bd weui_cell_primary">
+		<p style="color: #F43530;"><?php echo $this->errorMsg?></p>
+	</div>
+	<div class="weui_cell_ft">
+	<i class="weui_icon_warn"></i>
+	</div>
+</div>
+<?php }?>
+
+<form name="sign-up" method='post' action=''>
 	<div class="weui_cells_title">报名信息:</div>
 	<div class="weui_cells weui_cells_form">
 		<div class="weui_cell">
@@ -6,7 +17,7 @@
 				<label for="name" class="weui-label">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<input class="weui_input" type="text" id="name" name="name" placeholder="请输入您的姓名" required>
+				<input class="weui_input" type="text" id="name" name="name" value="<?php echo $this->name?>" placeholder="请输入您的姓名" required>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>
@@ -26,10 +37,10 @@
 		</div>
 		<div class="weui_cell">
 			<div class="weui_cell_hd">
-				<label for="id" class="weui-label">身份证号:</label>
+				<label for="id-number" class="weui-label">身份证号:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<input class="weui_input" type="text" id="id" name="id" placeholder="请输入您的身份证号码" required>
+				<input class="weui_input" type="text" id="id-number" name="idNumber" value="<?php echo $this->idNumber?>" placeholder="请输入您的身份证号码" required>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>
@@ -40,7 +51,7 @@
 				<label for="address" class="weui-label">家庭住址:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<input class="weui_input" type="text" id="address" name="address" placeholder="请输入您的住址" required>
+				<input class="weui_input" type="text" id="address" name="address" value="<?php echo $this->address?>" placeholder="请输入您的住址" required>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>

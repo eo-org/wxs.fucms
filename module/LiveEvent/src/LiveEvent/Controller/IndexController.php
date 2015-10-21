@@ -1,7 +1,9 @@
 <?php
 namespace LiveEvent\Controller;
 
+use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
+use WxDocument\LiveEvent\Applicant;
 
 require_once (BASE_PATH . "/inc/Qiniu/rs.php");
 class IndexController extends AbstractActionController
@@ -9,6 +11,71 @@ class IndexController extends AbstractActionController
     public function indexAction()
     {
     	
+    }
+    
+    public function signUpAction()
+    {
+    	$eventId = "hsy";
+    	
+    	$errorMsg = "";
+    	$name = "";
+    	$sex = "";
+    	$idNumber = "";
+    	$address = "";
+    	
+    	$sm = $this->getServiceLocator();
+    	$userAuth = $sm->get('User\Service\SessionAuth');
+    	
+    	$openid = $userAuth->getOpenid();
+    	$dm = $sm->get('DocumentManager');
+    	
+    	
+    	
+    	$userDoc = $dm->getRepository('User\Document\User')->findOneByOpenid($openid);
+    	$fcUserId = $userDoc->getFcUserId();
+    	if(empty($fcUserId)) {
+    		die('请先绑定网站用户');
+    	}
+    	
+    	if($this->getRequest()->isPost()) {
+    		$name = $this->params()->fromPost('name');
+    		$sex = $this->params()->fromPost('sex');
+    		$idNumber = $this->params()->fromPost('idNumber');
+    		$address = $this->params()->fromPost('address');
+    		
+    		if(empty($name) || empty($sex) || empty($idNumber) || empty($address)) {
+    			$errorMsg = "请填写所有信息";
+    		} else {
+    			$dm->clear();
+    			$applicantDoc = new Applicant();
+    			$applicantDoc->setOpenid($openid);
+    			$applicantDoc->setEventId($eventId);
+    			$applicantDoc->setInfo(array(
+    				'name' => $name,
+		    		'sex' => $sex,
+		    		'idNumber' => $idNumber,
+		    		'address' => $address,
+    			));
+    			
+    			
+    			$dm->persist($applicantDoc);
+    			$dm->flush();
+    			
+    			
+    			
+    			$vm = new ViewModel();
+    			$vm->setTemplate('live-event/index/success');
+    			
+    			return $vm;
+    		}
+    	}
+    	return array(
+    		'errorMsg' => $errorMsg,
+    		'name' => $name,
+    		'sex' => $sex,
+    		'idNumber' => $idNumber,
+    		'address' => $address,
+    	);
     }
     
     public function preEventAction()

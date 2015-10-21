@@ -41,6 +41,9 @@ return array(
 			'live-event/index/post-event'	=> __DIR__ . '/../view/index/post-event.phtml',
 			'live-event/index/live-sign'	=> __DIR__ . '/../view/index/live-sign.phtml',
 			'live-event/index/view-img'		=> __DIR__ . '/../view/index/view-img.phtml',
+			'live-event/index/sign-up'		=> __DIR__ . '/../view/index/sign-up.phtml',
+			'live-event/index/success'		=> __DIR__ . '/../view/index/success.phtml',
+			
 			
 			'live-event/review/index'		=> __DIR__ . '/../view/assistance/index.phtml',
 			'live-event/review/ending'		=> __DIR__ . '/../view/assistance/ending.phtml',
