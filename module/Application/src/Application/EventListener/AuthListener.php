@@ -3,7 +3,6 @@ namespace Application\EventListener;
 
 use Zend\EventManager\AbstractListenerAggregate;
 use Zend\EventManager\EventManagerInterface;
-use Cms\Document\SubsiteInterface;
 
 class AuthListener extends AbstractListenerAggregate
 {
@@ -40,165 +39,33 @@ class AuthListener extends AbstractListenerAggregate
     			// if the request comes from qq server, use code and componentAccessToken combined to get the user openId
     			// code params will be set if use allow the app to access its info
     			if(isset($query['code'])) {
-    				
     				if($query['state'] == 'access-user-info') {
-    				
 	    				$code = $query['code'];
 	    				
 	    				$ch = curl_init();
 	    				curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/user-info?appId='.$appId.'&code='.$code);
-	    				//curl_setopt($ch, CURLOPT_POST, 1 );
 	    				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-	    				//curl_setopt($ch, CURLOPT_POSTFIELDS, $postVar);
 	    				$output = curl_exec($ch);
 	    				curl_close($ch);
-    				
 	    				
 	    				$userData = json_decode($output, true);
-	    				
-	    				
-	    				print_r($userData);
-	    				
-	    				
-	    				
-	    				$sessionUser->setOpenId($userData['openId']);
-	    				
+	    				$sessionUser->setOpenId($userData['openid']);
 	    				
 	    				$sessionUser->setUserData($userData);
-	    				
-	    				
-	    				
-//     				print_r($output);
-    				
-//     				die();
-    				
-//    				print_r($output);
-//     				$tokenObj = json_decode($output);
-    				
-//     				print_r($tokenObj);
-    				
-//    				die();
-    				
-    				
-//     				$ch = curl_init();
-//     				curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/component-access-token');
-//     				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//     				$output = curl_exec($ch);
-//     				curl_close($ch);
-    				 
-//     				$tokenObj = json_decode($output);
-    				 
-//     				$componentAccessToken = $tokenObj->componentAccessToken;
-    				 
-    				 
-//     				$url = "https://api.weixin.qq.com/sns/oauth2/component/access_token      ?appid=wx536a9272e58807e7&code=".$code."&grant_type=authorization_code&component_appid=wx2ce4babba45b702d&component_access_token=".$componentAccessToken;
-    				
-//     				$ch = curl_init();
-//     				curl_setopt($ch, CURLOPT_URL, $url);
-//     				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//     				$output = curl_exec($ch);
-//     				curl_close($ch);
-    				
-    				 
-//     				$openIdObj = json_decode($output);
-//     				$openId = $openIdObj->openid;
-//     				$accessToken = $openIdObj->access_token;
-    				
-//     				$getUserInfoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$accessToken.'&openid='.$openId.'&lang=zh_CN';
-//     				$ch = curl_init();
-//     				curl_setopt($ch, CURLOPT_URL, $getUserInfoUrl);
-//     				curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//     				$output = curl_exec($ch);
-//     				curl_close($ch);
-    				
-//     				$userData = json_decode($output, true);
-//     				$sessionUser->setOpenId($userData['openId']);
-    				
-    				
-//     				$sessionUser->setUserData($userData);
-    				
-    				
-//     				if($userData['scope'] == 'snsapi_userinfo') {
-    					
-    					
-    					
-//     					$ch = curl_init();
-//     					curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/component-access-token');
-//     					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//     					$output = curl_exec($ch);
-//     					curl_close($ch);
-    						
-//     					$tokenObj = json_decode($output);
-    						
-//     					$componentAccessToken = $tokenObj->componentAccessToken;
-    					
-//     					$url = "https://api.weixin.qq.com/sns/oauth2/component/access_token?appid=".$appId."&code=".$code."&grant_type=authorization_code&component_appid=".$comAppId."&component_access_token=".$componentAccessToken;
-    					
-    					
-    					
-//     					$ch = curl_init();
-//     					curl_setopt($ch, CURLOPT_URL, $url);
-//     					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//     					$output = curl_exec($ch);
-//     					curl_close($ch);
-    					
-    					
-//     					print_r($output);
-//     					die('ffff');
-    						
-//     					$openIdObj = json_decode($output);
-//     					$openId = $openIdObj->openid;
-//     					$accessToken = $openIdObj->access_token;
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-    					
-//     					$getUserInfoUrl = 'https://api.weixin.qq.com/sns/userinfo?access_token='.$accessToken.'&openid='.$openId.'&lang=zh_CN';
-//     					$ch = curl_init();
-//     					curl_setopt($ch, CURLOPT_URL, $getUserInfoUrl);
-//     					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-//     					$output = curl_exec($ch);
-//     					curl_close($ch);
-    					
-    					
-//     					print_r($output);
-//     					die();
-//     					$sessionUser->setUserData($userData);
-//     				}
     				} else if($query['state'] == 'access-user-base') {
-    					
     					$code = $query['code'];
     					
     					$ch = curl_init();
     					curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/user-base?appId='.$appId.'&code='.$code);
-    					//curl_setopt($ch, CURLOPT_POST, 1 );
+    					
     					curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    					//curl_setopt($ch, CURLOPT_POSTFIELDS, $postVar);
     					$output = curl_exec($ch);
     					curl_close($ch);
-    					
     					 
     					$userData = json_decode($output, true);
     					$sessionUser->setOpenId($userData['openId']);
-    					 
-    					 
+    					
     					$sessionUser->setUserData($userData);
-    					
-    					
     				}
     			} else {
     				throw new \Exception('not allowed');

@@ -3,7 +3,8 @@ return array(
 	'controllers' => array(
         'invokables' => array(
         	'User\Controller\IndexController'	=> 'User\Controller\IndexController',
-        	'user-sn'							=> 'User\Controller\SnController'
+        	'user-sn'							=> 'User\Controller\SnController',
+        	'fc-user-bind'						=> 'User\Controller\FcUserBindController'
         ),
     ),
     'router' => array(
@@ -49,7 +50,8 @@ return array(
 	'view_manager' => array(
 		'template_map' => array(
 			'user/index/index'			=> __DIR__ . '/../view/user/index/index.phtml',
-			'user/sn/index'				=> __DIR__ . '/../view/user/sn/index.phtml'
+			'user/sn/index'				=> __DIR__ . '/../view/user/sn/index.phtml',
+			'user/fc-user-bind/index'	=> __DIR__ . '/../view/user/fc-user-bind/index.phtml'
 		)
 	),
 	'service_manager' => array(

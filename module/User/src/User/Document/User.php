@@ -19,4 +19,24 @@ class User
 	 * @ODM\Field(type="string")
 	 */
 	protected $name;
+	
+	/**
+	 * @ODM\Field(type="string")
+	 */
+	protected $fcUserId;
+	
+	public function exchangeArray($data)
+	{
+		$this->name = $data['name'];
+	}
+	
+	public function setId($id)
+	{
+		$this->id = $id;
+	}
+	
+	public function setFcUserId($id)
+	{
+		$this->fcUserId = $id;
+	}
 }

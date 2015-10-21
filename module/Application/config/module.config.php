@@ -102,8 +102,8 @@ return array(
 			'Promotion\Service\DrawCheck' => 'Promotion\Service\DrawCheck'
 		),
 		'factories' => array(
-			'DocumentManager' => 'Application\Service\Db\DocumentManagerFactory',
-			'WxsDocumentManager' => 'Application\Service\Db\WxsDocumentManagerFactory',
+			'DocumentManager'		=> 'Application\Service\Db\DocumentManagerFactory',
+			'WxsDocumentManager'	=> 'Application\Service\Db\WxsDocumentManagerFactory',
 		)
 	),
 	'view_helpers' => array(
