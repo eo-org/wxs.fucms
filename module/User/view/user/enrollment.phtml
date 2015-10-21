@@ -1,0 +1,171 @@
+<form name="enrollment">
+	<div class="weui_cells_title">报名信息:</div>
+	<div class="weui_cells weui_cells_form">
+		<div class="weui_cell">
+			<div class="weui_cell_hd">
+				<label for="name" class="weui-label">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
+			</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="text" id="name" name="name" placeholder="请输入您的姓名" required>
+			</div>			
+			<div class="weui_cell_ft">
+				<i class="weui_icon_warn"></i>
+			</div>
+		</div>
+		<div class="weui_cell weui_cell_select">
+			<div class="weui_cell_hd weui_select_after">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<select class="weui_select" name="sex">
+					<option value="0">男</option>
+					<option value="1">女</option>
+				</select>
+			</div>			
+			<div class="weui_cell_ft">
+				<i class="weui_icon_warn"></i>
+			</div>
+		</div>
+		<div class="weui_cell">
+			<div class="weui_cell_hd">
+				<label for="id" class="weui-label">身份证号:</label>
+			</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="text" id="id" name="id" placeholder="请输入您的身份证号码" required>
+			</div>			
+			<div class="weui_cell_ft">
+				<i class="weui_icon_warn"></i>
+			</div>
+		</div>
+		<div class="weui_cell">
+			<div class="weui_cell_hd">
+				<label for="address" class="weui-label">家庭住址:</label>
+			</div>
+			<div class="weui_cell_bd weui_cell_primary">
+				<input class="weui_input" type="text" id="address" name="address" placeholder="请输入您的住址" required>
+			</div>			
+			<div class="weui_cell_ft">
+				<i class="weui_icon_warn"></i>
+			</div>
+		</div>
+		<div class="weui_cell">
+			<form id="upload-form">
+				<div id='pickfiles' style='padding:30px;border:2px dashed #777;'>UPLOAD FILES</div>
+				
+				<a class='view-link' href='<?php echo $this->url('wxs', array('action' => 'view-img'), true)?>'>查看我上传的照片 >></a>
+			</form>
+		</div>
+		<div class="weui_btn_area"><button class="weui_btn weui_btn_primary">提交信息</button></div>
+	</div>
+</form>
+<script src="<?php echo $this->path('wxs.fucms')?>/file/js/plupload.full.min.js"></script>
+<script src="<?php echo $this->path('wxs.fucms')?>/file/js/qiniu.min.js"></script>
+
+<script>
+var applicantId = '<?php echo $this->applicantId?>';
+
+$('#save-user').on('click', function(e) {
+	e.preventDefault();
+	var applicantInfo = $('#user-info').serializeArray();
+
+	var postInfo = {};
+	for(var i = 0; i < applicantInfo.length; i++) {
+		postInfo[applicantInfo[i]['name']] = applicantInfo[i]['value'];
+	}
+
+	if(applicantId == '') {
+		$.post(
+			'/wxsrs/<?php echo $this->websiteId?>/lers-applicant.json',
+			{openId:'<?php echo $this->openId?>', eventId:'<?php echo $this->eventId?>', info:postInfo},
+			function(response) {
+				console.log(response);
+				applicantId = response.id;
+				alert('个人信息已保存，接下来多发一点图片吧！！');
+			}
+		);
+	} else {
+		$.ajax({
+			url: '/wxsrs/<?php echo $this->websiteId?>/lers-applicant.json/' + applicantId,  
+	 		type: 'PUT',  
+	 		data: {eventId:'<?php echo $this->eventId?>', info:postInfo},
+	 		success: function (response) {
+	 			alert('个人信息已更新');
+	 		},
+		});
+	}
+});
+
+var websiteId = "<?php echo $this->websiteId?>";
+
+var browserBtn = $('#pickfiles');
+
+var uploader = Qiniu.uploader({
+	runtimes: 'html5',
+	browse_button: browserBtn,
+	uptoken: '<?php echo $this->uptoken?>',
+	unique_names: false,
+	domain: '<?php echo $this->path('qiniu')?>',
+	max_file_size: '8mb',
+	max_retries: 0,
+	dragdrop: false,
+	chunk_size: '4mb',
+	auto_start: true,
+	init: {
+		'FilesAdded': function(up, files) {
+			//second in seq
+			var filenames = new Array();
+		},
+		'BeforeUpload': function(up, file) {
+			$('#upload-form').css('display', 'none');
+			$('#replace-text').css('display', 'block');
+		},
+		'UploadProgress': function(up, file) {
+			$('#upload-bar').innerHTML = file.percent;
+		},
+		'ChunkUploaded': function(up, file) {
+			
+		},
+		'FileUploaded': function(up, file, info) {
+			var infoObj = JSON.parse(info);
+			
+		 	$.ajax({  
+				url: '/wxsrs/<?php echo $this->websiteId?>/fr-file.json',
+		 		type: 'POST',
+		 		data: {
+			 		'resourceType': 'live-event:signup',
+					'resourceId': '<?php echo $this->eventId?>',
+					'filename': file.name,
+					'urlname': file.urlname,
+					'size': file.size,
+					'mimeType': infoObj.mimeType,
+					'ext': infoObj.ext
+			 	},
+		 		success: function (response) {
+		 			alert('照片上传成功');
+		 		},
+		 		error: function (response) {
+		 			alert('sorry, 图片上传失败');
+		 		}
+		 	});
+		},
+		'UploadComplete': function() {
+			$('#upload-form').css('display', 'block');
+			$('#replace-text').css('display', 'none');
+		},
+		'Key': function(up, file) {
+			//first in seq
+			var key, ext;
+			var ext;
+			var tempArr = file.name.split(".");
+			if (tempArr.length === 1 || (tempArr[0] === "" && tempArr.length === 2)) {
+				ext = "";
+			} else {
+				ext = tempArr.pop().toLowerCase();
+			}
+			key = ext ? file.id + '.' + ext : file.id;
+			
+			file.urlname = key;
+			
+			return websiteId + '/' + key;
+		}
+	}
+});
+</script>
