@@ -34,7 +34,7 @@ class IndexController extends AbstractActionController
     	  
     	$userAuth = $sm->get('User\Service\SessionAuth');
     	$openId = $userAuth->getOpenId();
-    	 
+		
     	$applicantDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\Applicant')
 	    	->select('info')
 	    	->field('openId')->equals($openId)
