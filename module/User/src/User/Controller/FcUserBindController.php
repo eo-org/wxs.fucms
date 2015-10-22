@@ -7,6 +7,9 @@ use User\Document\User;
 
 class FcUserBindController extends AbstractActionController
 {
+	private static $_md5salt1 = 'Hgoc&639Jgo';
+	private static $_md5salt2 = 'bis^%Jfn)32n';
+	
 	protected $redirect = "";
 	
     public function indexAction()
@@ -33,7 +36,7 @@ class FcUserBindController extends AbstractActionController
     	if($this->getRequest()->isPost()) {
     		$loginName = trim($this->params()->fromPost('loginName'));
     		$password = $this->params()->fromPost('password');
-    		
+    		$md5Password = $this->getMd5Password($password);
     		$userDoc = $dm->getRepository('User\Document\User')->findOneByFcUserLoginName($loginName);
     		
     		if($userDoc) {
@@ -45,7 +48,7 @@ class FcUserBindController extends AbstractActionController
     		
     		$fcUserDoc = $dm->createQueryBuilder('User\Document\CmsUser')
     			->field('loginName')->equals($loginName)
-    			->field('password')->equals($password)
+    			->field('password')->equals($md5Password)
     			->getQuery()
     			->execute()
     			->getSingleResult();
@@ -77,5 +80,10 @@ class FcUserBindController extends AbstractActionController
 		} else {
 			$this->redirect()->toUrl($this->redirect);
 		}
+	}
+	
+	public function getMd5Password($password)
+	{
+		return md5(self::$_md5salt1 . $password . self::$_md5salt2);
 	}
 }

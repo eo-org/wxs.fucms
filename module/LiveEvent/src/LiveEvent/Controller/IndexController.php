@@ -52,9 +52,6 @@ class IndexController extends AbstractActionController
     		$sex = $this->params()->fromPost('sex');
     		$idNumber = $this->params()->fromPost('idNumber');
     		$address = $this->params()->fromPost('address');
-    		
-    		print_r($this->params()->fromPost());
-    		
     		if(empty($name) || empty($sex) || empty($idNumber) || empty($address)) {
     			$errorMsg = "请填写所有信息";
     		} else {
