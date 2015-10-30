@@ -19,14 +19,13 @@
 </form>
 
 <form name="sign-up" method='post' action=''>
-	<div class="weui_cells_title">人气榜信息:</div>
 	<div class="weui_cells weui_cells_form">
 		<div class="weui_cell">
 			<div class="weui_cell_hd">
-				<label for="name" class="weui-label">榜单名:</label>
+				<label for="nickname" class="weui-label">会员名:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<input class="weui_input" type="text" id="nickname" name="nickname" value="<?php echo $this->nickname?>" placeholder="请输入您会员名" required>
+				<input class="weui_input" type="text" id="nickname" name="nickname" value="<?php echo $this->candidateDoc->getNickname()?>" placeholder="请输入您会员名" required>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>
@@ -34,10 +33,10 @@
 		</div>
 		<div class="weui_cell">
 			<div class="weui_cell_hd">
-				<label for="decription" class="weui-label">简介:</label>
+				<label for="brief" class="weui-label">简介:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<textarea class='weui_textarea' id='decription' name='decription'><?php echo $this->description?></textarea>
+				<textarea class='weui_textarea' id='brief' name='brief'><?php echo $this->candidateDoc->getBrief()?></textarea>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>
@@ -74,42 +73,11 @@
 <script src="<?php echo $this->path('wxs.fucms')?>/file/js/qiniu.min.js"></script>
 
 <script>
-var candidateId = '<?php echo $this->candidateId?>';
-
-$('#save-user').on('click', function(e) {
-	e.preventDefault();
-	var candidateInfo = $('#user-info').serializeArray();
-
-// 	var postInfo = {};
-// 	for(var i = 0; i < applicantInfo.length; i++) {
-// 		postInfo[applicantInfo[i]['name']] = applicantInfo[i]['value'];
-// 	}
-
-	if(candidateId == '') {
-		$.post(
-			'/wxsrs/<?php echo $this->websiteId?>/lers-vote-candidate.json',
-			{openid:'<?php echo $this->openid?>', eventId:'<?php echo $this->eventId?>', info:postInfo},
-			function(response) {
-				candidateId = response.id;
-				alert('人气榜信息已保存！！');
-			}
-		);
-	} else {
-		$.ajax({
-			url: '/wxsrs/<?php echo $this->websiteId?>/lers-vote-candidate.json/' + candidateId,  
-	 		type: 'PUT',  
-	 		data: {eventId:'<?php echo $this->eventId?>', info:postInfo},
-	 		success: function (response) {
-	 			alert('人气榜信息已更新');
-	 		},
-		});
-	}
-});
-
 var websiteId = "<?php echo $this->websiteId?>";
+var eventId = "<?php echo $this->eventId?>";
+var applicantId = '<?php echo $this->applicantId?>';
 
 var browserBtn = $('#pickfiles');
-
 var uploader = Qiniu.uploader({
 	runtimes: 'html5',
 	browse_button: browserBtn,
@@ -144,7 +112,7 @@ var uploader = Qiniu.uploader({
 		 		type: 'POST',
 		 		data: {
 			 		'resourceType': 'live-event:candidate:cover',
-					'resourceId': '<?php echo $this->eventId?>',
+					'resourceId': eventId.':'.applicantId,
 					'filename': file.name,
 					'urlname': file.urlname,
 					'size': file.size,

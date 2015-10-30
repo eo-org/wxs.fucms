@@ -94,11 +94,11 @@ class VoteCandidateController extends AbstractActionController
     		$dm->persist($candidateDoc);
     		$dm->flush();
     		
-    		return $this->redirect()->toRoute('wxs', array(
+    		return $this->redirect()->toRoute('wxs/wildcard', array(
     			'controller' => 'le-index',
     			'action' => 'index',
     			'eventId' => $eventId
-    		));
+    		), true);
     	}
     	
     	

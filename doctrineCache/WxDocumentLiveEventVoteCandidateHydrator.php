@@ -52,6 +52,14 @@ class WxDocumentLiveEventVoteCandidateHydrator implements HydratorInterface
         }
 
         /** @Field(type="string") */
+        if (isset($data['cover'])) {
+            $value = $data['cover'];
+            $return = (string) $value;
+            $this->class->reflFields['cover']->setValue($document, $return);
+            $hydratedData['cover'] = $return;
+        }
+
+        /** @Field(type="string") */
         if (isset($data['nickname'])) {
             $value = $data['nickname'];
             $return = (string) $value;
@@ -60,11 +68,11 @@ class WxDocumentLiveEventVoteCandidateHydrator implements HydratorInterface
         }
 
         /** @Field(type="string") */
-        if (isset($data['cover'])) {
-            $value = $data['cover'];
+        if (isset($data['brief'])) {
+            $value = $data['brief'];
             $return = (string) $value;
-            $this->class->reflFields['cover']->setValue($document, $return);
-            $hydratedData['cover'] = $return;
+            $this->class->reflFields['brief']->setValue($document, $return);
+            $hydratedData['brief'] = $return;
         }
 
         /** @Field(type="hash") */
