@@ -2,8 +2,13 @@
 return array(
 	'controllers' => array(
         'invokables' => array(
-        	'live-event-index'	=> 'LiveEvent\Controller\IndexController',
-        	'lers-applicant'	=> 'LiveEventRest\Controller\ApplicantController'
+        	'le-index'			=> 'LiveEvent\Controller\IndexController',
+        	'le-applicant'		=> 'LiveEvent\Controller\ApplicantController',
+        	'le-vote-candidate'	=> 'LiveEvent\Controller\VoteCandidateController',
+        	
+        	'lers-applicant'		=> 'LiveEventRest\Controller\ApplicantController',
+        	'lers-vote-candidate'	=> 'LiveEventRest\Controller\VoteCandidateController',
+        	'lers-vote-ticket'		=> 'LiveEventRest\Controller\VoteTicketController'
         ),
     ),
 //     'router' => array(
@@ -47,6 +52,8 @@ return array(
 			
 			'live-event/review/index'		=> __DIR__ . '/../view/assistance/index.phtml',
 			'live-event/review/ending'		=> __DIR__ . '/../view/assistance/ending.phtml',
+			
+			'live-event/vote-candidate/edit'	=> __DIR__ . '/../view/vote-candidate/edit.phtml',
 		)
 	)
 );

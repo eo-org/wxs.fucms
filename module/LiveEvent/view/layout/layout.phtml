@@ -1,0 +1,33 @@
+<?php echo $this->doctype(); ?>
+
+<html>
+<head>
+	<title><?php echo $this->title ?></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<meta name="renderer" content="webkit" />
+	<meta name="format-detection" content="telephone=no" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+	
+	<script src="<?php echo $this->path('src')?>/zepto/1.1.4/zepto.min.js"></script>
+	<script src="<?php echo $this->path('src')?>/zepto/1.1.4/zepto.fx.js"></script>
+	<script src="<?php echo $this->path('src')?>/zepto/plugin/tiny-alert/zepto.alert.js"></script>
+	
+	<link href="<?php echo $this->path('src')?>/zepto/plugin/tiny-alert/zepto.alert.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo $this->path('wxs.fucms')?>/common/style/style.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo $this->path('wxs.fucms')?>/common/style/weui.min.css" rel="stylesheet" type="text/css">
+	<link href="<?php echo $this->path('wxs.fucms')?>/icomoon/style.css" rel="stylesheet" type="text/css">
+	
+	<?php echo $this->headLink()?>
+</head>
+<body>
+	<header>
+		<img src='<?php echo $this->outputImage($this->filename)?>' />
+	</header>
+	<content>
+	<?php echo $this->content; ?>
+	</content>
+	<footer>
+	
+	</footer>
+</body>
+</html>

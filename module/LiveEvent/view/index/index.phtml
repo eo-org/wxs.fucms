@@ -1,1 +1,36 @@
-HELLO
+<?php
+if($this->voteActivated) {
+?>
+<div>为我拉票</div>
+
+<?php if($this->voteConfig['candidateStatus'] == 'not-found') {?>
+在正式为您自己拉票之前，需要创建一份拉票的档案，此档案中的内容会向公众公开
+<a href="<?php echo $this->url('wxs/wildcard', array('websiteId' => $this->websiteId, 'controller' => 'le-vote-candidate', 'action' => 'edit', 'eventId' => $this->eventId))?>" class="weui_btn weui_btn_mini weui_btn_default">创建档案</a>
+<?php }?>
+
+<?php if($this->voteConfig['candidateStatus'] == 'not-complete') {?>
+<?php }?>
+
+<?php if($this->voteConfig['candidateStatus'] == 'complete') {?>
+<img src='<?php echo $this->candidateDoc->getThumb()?>' />
+<div>
+	<?php echo $this->candidateDoc->getNickname()?>
+</div>
+<?php }?>
+
+<div><?php echo $this->eventDoc->getDescription()?></div>
+<?php
+}
+?>
+
+<?php if($this->wallActivated) {?>
+<div>
+	
+</div>
+<?php }?>
+
+<?php if($this->checkInActivated) {?>
+<div>
+	
+</div>
+<?php }?>

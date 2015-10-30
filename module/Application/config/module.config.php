@@ -33,11 +33,10 @@ return array(
         	'wxs' => array(
         		'type'    => 'segment',
         		'options' => array(
-        			'route'    => '/[:websiteId]/[:controller][/:action][/:id]',
+        			'route'    => '/[:websiteId]/[:controller][/:action]',
        				'constraints' => array(
         				'websiteId' => '[a-z0-9]{24}',
-       					'action' => '[a-z-]+',
-        				'id' => '[a-z0-9]+',
+       					'action' => '[a-z-]+'
         			),
         			'defaults' => array(
         				'action' => 'index'
@@ -109,6 +108,7 @@ return array(
 	'view_helpers' => array(
 		'invokables' => array(
 			'path' => 'Application\View\Helper\Path',
+			'outputImage' => 'Application\View\Helper\OutputImage'
 		)
 	),
 );

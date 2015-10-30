@@ -10,7 +10,22 @@ class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
+    	$websiteId = $this->params()->fromRoute('websiteId');
+    	$id = $this->params()->fromRoute('id');
     	
+    	$sm = $this->getServiceLocator();
+    	$dm = $sm->get('DocumentManager');
+    	$eventDoc = $dm->getRepository('WxDocument\LiveEvent')->findOneById($id);
+    	
+    	$candidateStatus = 'not-found';
+    	
+    	return array(
+    		'websiteId' => $websiteId,
+    		'eventId' => $id,
+    		'eventDoc' => $eventDoc,
+    		'voteActivated' => true,
+    		'voteConfig' => array('candidateStatus' => $candidateStatus)
+    	);
     }
     
     public function signUpAction()
