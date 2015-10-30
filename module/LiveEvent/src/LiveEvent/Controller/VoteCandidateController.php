@@ -96,8 +96,9 @@ class VoteCandidateController extends AbstractActionController
     		
     		return $this->redirect()->toRoute('wxs', array(
     			'controller' => 'le-index',
-    			'action' => 'index'
-    		), true);
+    			'action' => 'index',
+    			'eventId' => $eventId
+    		));
     	}
     	
     	

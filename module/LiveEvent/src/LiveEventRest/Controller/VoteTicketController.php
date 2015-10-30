@@ -69,7 +69,7 @@ class VoteTicketController extends AbstractRestfulController
 		$candiateDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\VoteCandidate')
 			->findAndUpdate()
 			->field('id')->equals($candidateId)
-			->field('totalTicket')->inc(1)
+			->field('ticketCount')->inc(1)
 			->getQuery()
 			->execute();
 		
