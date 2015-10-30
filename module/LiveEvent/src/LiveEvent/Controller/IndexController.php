@@ -40,12 +40,25 @@ class IndexController extends AbstractActionController
     		return $vm;
     	}
     	
-    	$candidateStatus = 'not-found';
+    	$candidateDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\VoteCandidate')
+   			->field('openid')->equals($openid)
+   			->field('eventId')->equals($eventId)
+   			->getQuery()
+   			->getSingleResult();
+    	if(is_null($candidateDoc)) {
+    		$candidateStatus = 'not-found';
+    	} elseif($candidateDoc->isComplete()) {
+    		$candidateStatus = 'complete';
+    	} else {
+    		$candidateStatus = 'not-complete';
+    	}
     	
     	return array(
     		'websiteId' => $websiteId,
     		'eventId' => $eventId,
     		'eventDoc' => $eventDoc,
+    		'applicantDoc' => $applicantDoc,
+    		'applicantInfo' => $applicantDoc->getInfo(),
     		'voteActivated' => true,
     		'voteConfig' => array(
     			'candidateStatus' => $candidateStatus

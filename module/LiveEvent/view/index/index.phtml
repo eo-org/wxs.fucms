@@ -10,13 +10,13 @@
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>姓名</p>
 			</div>
-			<div class="weui_cell_ft"><?php echo "叶凡"?></div>
+			<div class="weui_cell_ft"><?php echo $this->applicantInfo['name']?></div>
 		</div>
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>身份证号</p>
 			</div>
-			<div class="weui_cell_ft"><?php echo "420111********319"?></div>
+			<div class="weui_cell_ft"><?php echo $this->applicantInfo['idNumber']?></div>
 		</div>
 	</div>
 	<div class="weui_cells">
@@ -24,13 +24,13 @@
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>性别</p>
 			</div>
-			<div class="weui_cell_ft"><?php echo "男"?></div>
+			<div class="weui_cell_ft"><?php echo $this->applicantInfo['sex']?></div>
 		</div>
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
-				<p>住址</p>
+				<p>电话</p>
 			</div>
-			<div class="weui_cell_ft"><?php echo "湖北省武汉市"?></div>
+			<div class="weui_cell_ft"><?php echo $this->applicantDoc->getMobile()?></div>
 		</div>
 	</div>
 </div>
@@ -42,10 +42,13 @@ if($this->voteActivated) {
 
 <?php if($this->voteConfig['candidateStatus'] == 'not-found') {?>
 在正式为您自己拉票之前，需要创建一份拉票的档案，此档案中的内容会向公众公开
-<a href="<?php echo $this->url('wxs/wildcard', array('websiteId' => $this->websiteId, 'controller' => 'le-vote-candidate', 'action' => 'edit', 'eventId' => $this->eventId))?>" class="weui_btn weui_btn_mini weui_btn_default">创建档案</a>
+<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">创建档案</a>
 <?php }?>
 
 <?php if($this->voteConfig['candidateStatus'] == 'not-complete') {?>
+人气榜拉票信息没有填写完整，
+<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">完善信息</a>
+只有完整的信息才会在人气排行中显示
 <?php }?>
 
 <?php if($this->voteConfig['candidateStatus'] == 'complete') {?>
@@ -53,6 +56,8 @@ if($this->voteActivated) {
 <div>
 	<?php echo $this->candidateDoc->getNickname()?>
 </div>
+<a href='<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'index', 'candidateId' => $this->candidateId), true)?>'>分享拉票</a>
+<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">修改信息</a>
 <?php }?>
 <?php
 }
