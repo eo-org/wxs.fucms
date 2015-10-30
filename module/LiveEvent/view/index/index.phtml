@@ -1,3 +1,40 @@
+<div class="profile-box">
+	<div class="weui_cells">
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p>头像</p>
+			</div>
+			<div class="weui_cell_ft"><img width="55px" src="http://7fvjw0.com1.z0.glb.clouddn.com/547d70e3ce2350bc0d000029/avatar.jpg" alt="avatar.jpg"></div>
+		</div>
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p>姓名</p>
+			</div>
+			<div class="weui_cell_ft"><?php echo "叶凡"?></div>
+		</div>
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p>身份证号</p>
+			</div>
+			<div class="weui_cell_ft"><?php echo "420111********319"?></div>
+		</div>
+	</div>
+	<div class="weui_cells">
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p>性别</p>
+			</div>
+			<div class="weui_cell_ft"><?php echo "男"?></div>
+		</div>
+		<div class="weui_cell">
+			<div class="weui_cell_bd weui_cell_primary">
+				<p>住址</p>
+			</div>
+			<div class="weui_cell_ft"><?php echo "湖北省武汉市"?></div>
+		</div>
+	</div>
+</div>
+
 <?php
 if($this->voteActivated) {
 ?>
@@ -17,8 +54,6 @@ if($this->voteActivated) {
 	<?php echo $this->candidateDoc->getNickname()?>
 </div>
 <?php }?>
-
-<div><?php echo $this->eventDoc->getDescription()?></div>
 <?php
 }
 ?>
