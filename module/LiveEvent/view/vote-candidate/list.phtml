@@ -1,0 +1,39 @@
+<div class="candidate-list" style="background-color: <?php echo "#000" ?>">
+	<img class="logo" alt="logo.jpg" src="http://wxres.skwy.com/page/img/shpaint/header.jpg">
+	<div class="warp">
+		<div class="vote-box">
+			<div class="vote-button">
+				<div class="button-group">
+					<div class="button-box">
+						<a class="weui_btn weui_btn_primary" href="">我也要报名</a>
+					</div>
+					<div class="button-box">
+						<a class="weui_btn weui_btn_plain_default" href="">比赛规则</a>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="vote-list">
+			<?php ?>
+			<div class="vote-item">
+				<a class="vote-view" href="">
+					<img src="https://dn-skwy-p01.qbox.me/editorp/1445993274.jpeg-thumbnail160" alt="">
+					<span class="number">112</span>
+					<div class="ballot-info">
+						<span class="mc">第一名</span>
+						<div class="ps">票数:2805</div>
+					</div>
+				</a>
+				<div class="info-box">
+					<div class="name"><strong>叶凡</strong></div>
+					<div class="title">《白自在》</div>
+					<div class="button-box">
+						<a class="weui_btn weui_btn_plain_primary" href="">支持TA</a>
+					</div>
+				</div>
+			</div>
+			<?php ?>
+		</div>
+	</div>
+</div>
+<?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/live-event/style/candidate.css'); ?>
