@@ -1,9 +1,8 @@
 <?php
 namespace LiveEvent\Controller;
 
-use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
-use WxDocument\LiveEvent\VoteCandidate;
+use Zend\View\Model\ViewModel;
 
 require_once (BASE_PATH . "/inc/Qiniu/rs.php");
 class VoteCandidateController extends AbstractActionController
@@ -58,14 +57,68 @@ class VoteCandidateController extends AbstractActionController
     
     public function editAction()
     {
+    	$websiteId = $this->params()->fromRoute('websiteId');
     	$eventId = $this->params()->fromRoute('eventId');
     	
     	$sm = $this->getServiceLocator();
-    	$userAuth = $sm->get('User\Service\SessionAuth');
+    	$dm = $sm->get('DocumentManager');
     	
+    	$userAuth = $sm->get('User\Service\SessionAuth');
     	$openid = $userAuth->getOpenid();
     	
+    	$applicantDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\Applicant')
+    		->field('openid')->equals($openid)
+    		->field('eventId')->equals($eventId)
+    		->getQuery()
+    		->getSingleResult();
+    	if(is_null($applicantDoc)) {
+    		throw new \Exception('applicante document not found!');
+    	}
+    	
+    	$candidateDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\VoteCandidate')
+    		->field('openid')->equals($openid)
+    		->field('eventId')->equals($eventId)
+    		->getQuery()
+    		->getSingleResult();
+    	if(is_null($candidateDoc)) {
+    		$candidateDoc = new \WxDocument\LiveEvent\VoteCandidate();
+    	}
+    	
+    	if($this->getRequest()->isPost()) {
+    		$data = $this->getRequest()->getPost();
+    		
+    		$candidateDoc->exchangeArray($data);
+    		$candidateDoc->setOpenid($openid);
+    		$candidateDoc->setEventId($eventId);
+    		
+    		$dm->persist($candidateDoc);
+    		$dm->flush();
+    		
+    		return $this->redirect()->toRoute('wxs', array(
+    			'controller' => 'le-index',
+    			'action' => 'index'
+    		), true);
+    	}
     	
     	
+    	$config = $this->getServiceLocator()->get('Config');
+    	$bucket = $config['env']['qiniu']['bucket'];
+    	$accessKey = $config['env']['qiniu']['keyId'];
+    	$secretKey = $config['env']['qiniu']['keySecret'];
+    	
+    	Qiniu_SetKeys($accessKey, $secretKey);
+    	
+    	$putPolicy = new \Qiniu_RS_PutPolicy($bucket);
+    	$putPolicy->insertOnly = 1;
+    	$putPolicy->Expires = 10800;
+    	$putPolicy->ReturnBody = '{"key":$(key), "mimeType": $(mimeType), "ext": $(ext)}';
+    	$uptoken = $putPolicy->Token(null);
+    	
+    	return array(
+    		'websiteId'		=> $websiteId,
+    		'uptoken'		=> $uptoken,
+    		'candidateDoc'	=> $candidateDoc,
+    		'candidateId'	=> $candidateDoc->getId()
+    	);
     }
 }

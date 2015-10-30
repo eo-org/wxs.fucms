@@ -13,7 +13,7 @@ class Module
 		$sharedEventManager->attach('Zend\Mvc\Application', 'dispatch', array($this, 'setWebsiteId'), 1000);
 		
 		$authListener = new AuthListener();
-		//$eventManager->attach($authListener);
+		$eventManager->attach($authListener);
 	}
 	
     public function getConfig()

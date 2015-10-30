@@ -4,27 +4,52 @@ namespace LiveEvent\Controller;
 use Zend\View\Model\ViewModel;
 use Zend\Mvc\Controller\AbstractActionController;
 use WxDocument\LiveEvent\Applicant;
+use Zend\View\Model\Zend\View\Model;
 
-require_once (BASE_PATH . "/inc/Qiniu/rs.php");
 class IndexController extends AbstractActionController
 {
     public function indexAction()
     {
     	$websiteId = $this->params()->fromRoute('websiteId');
-    	$id = $this->params()->fromRoute('id');
+    	$eventId = $this->params()->fromRoute('eventId');
     	
     	$sm = $this->getServiceLocator();
     	$dm = $sm->get('DocumentManager');
-    	$eventDoc = $dm->getRepository('WxDocument\LiveEvent')->findOneById($id);
+    	$userAuth = $sm->get('User\Service\SessionAuth');
+    	$openid = $userAuth->getOpenid();
+    	
+    	$eventDoc = $dm->getRepository('WxDocument\LiveEvent')->findOneById($eventId);
+    	
+    	if(is_null($eventDoc)) {
+    		throw new \Exception('event not found');
+    	}
+    	
+    	$applicantDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\Applicant')
+   			->field('openid')->equals($openid)
+   			->field('eventId')->equals($eventId)
+   			->getQuery()
+   			->getSingleResult();
+    	if(is_null($applicantDoc)) {
+    		$vm = new ViewModel();
+    		$vm->setTemplate('live-event/index/apply');
+    		$vm->setVariables(array(
+    			'websiteId' => $websiteId,
+    			'eventId' => $eventId,
+    			'eventDoc' => $eventDoc,
+    		));
+    		return $vm;
+    	}
     	
     	$candidateStatus = 'not-found';
     	
     	return array(
     		'websiteId' => $websiteId,
-    		'eventId' => $id,
+    		'eventId' => $eventId,
     		'eventDoc' => $eventDoc,
     		'voteActivated' => true,
-    		'voteConfig' => array('candidateStatus' => $candidateStatus)
+    		'voteConfig' => array(
+    			'candidateStatus' => $candidateStatus
+    		)
     	);
     }
     
@@ -39,10 +64,9 @@ class IndexController extends AbstractActionController
     	$address = "";
     	
     	$sm = $this->getServiceLocator();
-    	$userAuth = $sm->get('User\Service\SessionAuth');
-    	
-    	$openid = $userAuth->getOpenid();
     	$dm = $sm->get('DocumentManager');
+    	$userAuth = $sm->get('User\Service\SessionAuth'); 
+    	$openid = $userAuth->getOpenid();
     	
     	$userDoc = $dm->getRepository('User\Document\User')->findOneByOpenid($openid);
     	$fcUserId = $userDoc->getFcUserId();

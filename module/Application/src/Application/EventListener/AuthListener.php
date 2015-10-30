@@ -22,6 +22,10 @@ class AuthListener extends AbstractListenerAggregate
     	
     	$sessionUser = $sm->get('User\Service\SessionAuth');
     	
+    	if(true) {
+    		$sessionUser->setOpenid('gavinlocaltestor');
+    	}
+    	
     	if(!$sessionUser->isLogin()) {
     		$dm = $sm->get('DocumentManager');
     		$wxSetting = $dm->createQueryBuilder('WxDocument\Setting')
