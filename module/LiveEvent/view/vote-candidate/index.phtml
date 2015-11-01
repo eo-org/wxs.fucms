@@ -10,11 +10,15 @@
 				</div>
 				<div class="vote-title">《唱响中国》</div>
 				<div class="vote-button">
-					<a class="weui_btn weui_btn_primary J-vote-btn">支持TA</a>
+					<button
+						id='j_vote_btn-<?php echo $this->candidateDoc->getId()?>'
+						vote-url='<?php echo $this->url('wxsrs/restroutes', array('controller' => 'ler-vote-ticket', 'id' => $this->candidateDoc->getId()), true)?>'
+						class="weui_btn weui_btn_primary J-vote-btn"
+					>支持TA</button>
 				</div>
 				<div class="vote-info">
 					<div class="count">
-						<div id="J-votes-id"><?php echo $this->candidateDoc->getTicketCount()?></div>
+						<div id="j_vote_disp-<?php echo $this->candidateDoc->getId()?>"><?php echo $this->candidateDoc->getTicketCount()?></div>
 						<p>已得票数</p>
 					</div>
 				</div>

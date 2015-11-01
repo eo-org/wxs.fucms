@@ -20,18 +20,19 @@ class VoteTicketController extends AbstractRestfulController
 	
 	public function create($data)
 	{
-		$eventId = $data['eventId'];
 		$candidateId = $data['candidateId'];
 		
 		$sm = $this->getServiceLocator();
 		$dm = $sm->get('DocumentManager');
 		
-		$eventDoc = $dm->getRepository('WxDocument\LiveEvent')->findOneById($eventId);
-		if(is_null($eventDoc)) {
-			throw new PageNotFoundException();
-		}
 		$candiateDoc = $dm->getRepository('WxDocument\LiveEvent\VoteCandidate')->findOneById($candidateId);
 		if(is_null($candiateDoc)) {
+			throw new PageNotFoundException();
+		}
+		
+		$eventId = $candiateDoc->getEventId();
+		$eventDoc = $dm->getRepository('WxDocument\LiveEvent')->findOneById($eventId);
+		if(is_null($eventDoc)) {
 			throw new PageNotFoundException();
 		}
 		
@@ -44,7 +45,7 @@ class VoteTicketController extends AbstractRestfulController
 		
 		if($ticketCount >= 3) {
 			$response = $this->getResponse();
-			$response->setStatusCode(220);
+			$response->setStatusCode(203);
 			return new JsonModel(array(
 				'errorMsg' => '每天仅有三次投票机会，请明天再来吧！'
 			));
@@ -55,15 +56,16 @@ class VoteTicketController extends AbstractRestfulController
 		} else {
 			if(true) {//one candidate gets one ticket at most
 				$range = $redisClient->lRange($key, 0, -1);
+				
 				if(in_array($candidateId, $range)) {
 					$response = $this->getResponse();
-					$response->setStatusCode(220);
+					$response->setStatusCode(203);
 					return new JsonModel(array(
-						'errorMsg' => '每天仅有三次投票机会，请明天再来吧！'
+						'errorMsg' => '每天只能为同一个选手投票一次！'
 					));
 				}
 			}
-			$redisClient->rpush($key, 'voteCandidateId');
+			$redisClient->rpush($key, $candidateId);
 		}
 		
 		$candiateDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\VoteCandidate')

@@ -48,7 +48,7 @@ class VoteCandidateController extends AbstractActionController
     	}
     	
     	$candidateDocs = $dm->createQueryBuilder('WxDocument\LiveEvent\VoteCandidate')
-    		->select('id', 'nickname', 'cover', 'totalTicket')
+    		->select('id', 'nickname', 'cover', 'ticketCount')
     		->field('eventId')->equals($eventId)
     		->getQuery()
     		->execute();

@@ -1,5 +1,11 @@
 <?php
 return array(
+	'auth' => array(
+		'redis'	=> array(
+			'host' => '54.248.218.96',
+			'pass' => 'whothirstformagic?MagicBreaker',
+		)
+	),
 	'env' => array(
 		'usage' => array(
 			'server' => 'production',

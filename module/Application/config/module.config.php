@@ -103,6 +103,7 @@ return array(
 		'factories' => array(
 			'DocumentManager'		=> 'Application\Service\Db\DocumentManagerFactory',
 			'WxsDocumentManager'	=> 'Application\Service\Db\WxsDocumentManagerFactory',
+			'RedisClient' => 'Application\Service\Db\RedisClientFactory',
 		)
 	),
 	'view_helpers' => array(
