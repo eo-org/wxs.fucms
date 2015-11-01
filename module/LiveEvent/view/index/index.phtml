@@ -1,30 +1,18 @@
 <div class="profile-box">
 	<div class="weui_cells">
+		<!-- 
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>头像</p>
 			</div>
 			<div class="weui_cell_ft"><img width="55px" src="http://7fvjw0.com1.z0.glb.clouddn.com/547d70e3ce2350bc0d000029/avatar.jpg" alt="avatar.jpg"></div>
 		</div>
+		 -->
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>姓名</p>
 			</div>
-			<div class="weui_cell_ft"><?php echo $this->applicantInfo['name']?></div>
-		</div>
-		<div class="weui_cell">
-			<div class="weui_cell_bd weui_cell_primary">
-				<p>身份证号</p>
-			</div>
-			<div class="weui_cell_ft"><?php echo $this->applicantInfo['idNumber']?></div>
-		</div>
-	</div>
-	<div class="weui_cells">
-		<div class="weui_cell">
-			<div class="weui_cell_bd weui_cell_primary">
-				<p>性别</p>
-			</div>
-			<div class="weui_cell_ft"><?php echo $this->applicantInfo['sex']?></div>
+			<div class="weui_cell_ft"><?php echo $this->applicantDoc->getName()?></div>
 		</div>
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
@@ -32,46 +20,65 @@
 			</div>
 			<div class="weui_cell_ft"><?php echo $this->applicantDoc->getMobile()?></div>
 		</div>
+		
 	</div>
 </div>
 
+<article class="weui_article">
+	<h1>线下互动</h1>
 <?php
 if($this->voteActivated) {
 ?>
-<div>为我拉票</div>
-
-<?php if($this->voteConfig['candidateStatus'] == 'not-found') {?>
-在正式为您自己拉票之前，需要创建一份拉票的档案，此档案中的内容会向公众公开
-<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">创建档案</a>
-<?php }?>
-
-<?php if($this->voteConfig['candidateStatus'] == 'not-complete') {?>
-人气榜拉票信息没有填写完整，
-<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">完善信息</a>
-只有完整的信息才会在人气排行中显示
-<?php }?>
-
-<?php if($this->voteConfig['candidateStatus'] == 'complete') {?>
-<img src='<?php echo $this->outputImage($this->voteConfig['candidateDoc']->getCover(), 100, 100)?>' />
-<div>
-	<?php echo $this->voteConfig['candidateDoc']->getNickname()?>
-</div>
-<a href='<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'index', 'candidateId' => $this->voteConfig['candidateId']), true)?>'>分享拉票</a>
-<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">修改信息</a>
-<?php }?>
-
+	<section>
+		<h2 class='title'>为我拉票</h2>
+		<?php if($this->voteConfig['candidateStatus'] == 'not-found') {?>
+		<!-- no document found -->
+		<p>
+			加入人气榜，为自己拉票，海选期间获得最多票数的参赛者可以在最终环节获得部分优势哦。
+			<ul>
+				<li>可以自由选择导师</li>
+				<li>可以获得VIP资格</li>
+				<li>有机会获得簰洲酒特别合约</li>
+			</ul>
+		</p>
+		<a class="weui_btn weui_btn_primary" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">创建档案</a>
+		
+		<p>
+			在正式为您自己拉票之前，需要创建一份拉票的档案，此档案中的内容会向公众公开
+		</p>
+		<?php }?>
+		
+		<?php if($this->voteConfig['candidateStatus'] == 'not-complete') {?>
+		<!-- partial document found -->
+		<p>人气榜拉票信息没有填写完整，只有完整的信息才会在人气排行中显示</p>
+		<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">完善信息</a>
+		<?php }?>
+	
+		<?php if($this->voteConfig['candidateStatus'] == 'complete') {?>
+		<!-- document completed -->
+		<p>
+			您的榜单信息如下，请分享给您的粉丝，每位粉丝每天有三张选票可以选择他们最喜欢的歌手。
+		</p>
+		<p>
+			如果您的排名靠前，将在比赛中拥有很大优势哦
+		</p>
+		<div style='overflow: auto;'>
+			<img style='display:block;float: left; border: 1px solid #777;' src='<?php echo $this->outputImage($this->voteConfig['candidateDoc']->getCover(), 100, 100)?>' />
+			<div style='float: left;'>
+				<?php echo $this->voteConfig['candidateDoc']->getNickname()?>
+			</div>
+			<a style='float:right;' class="weui_btn weui_btn_mini weui_btn_default" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">修改信息</a>
+		</div>
+		<div style='margin: 2em 0;'>
+			<a class="weui_btn weui_btn_plain_default" href='<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'index', 'candidateId' => $this->voteConfig['candidateId']), true)?>'>分享拉票</a>
+		</div>
+		<?php }?>
+		
+	<section>
 <?php
 }
 ?>
 
-<?php if($this->wallActivated) {?>
-<div>
-	
-</div>
-<?php }?>
-
-<?php if($this->checkInActivated) {?>
-<div>
-	
-</div>
-<?php }?>
+<?php if($this->wallActivated) {}?>
+<?php if($this->checkInActivated) {}?>
+</article>

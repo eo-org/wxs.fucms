@@ -7,7 +7,9 @@ class Module
 {
 	public function init($moduleManager)
 	{
-		
+		$eventManager = $moduleManager->getEventManager();
+		$sharedEventManager = $eventManager->getSharedManager();
+		$sharedEventManager->attach('LiveEvent', 'dispatch', array($this, 'setLayout'), 1000);
 	}
 	
     public function getConfig()
@@ -25,5 +27,14 @@ class Module
 				)
             ),
         );
+    }
+    
+    public function setLayout(MvcEvent $e)
+    {
+    	$layout = $e->getViewModel();
+    	$layout->setTemplate('live-event/layout');
+    	$layout->setVariables(array(
+    		'wx_header' => 'wx_header.jpg'
+    	));
     }
 }

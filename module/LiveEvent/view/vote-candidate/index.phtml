@@ -1,10 +1,7 @@
 <div class="candidate" style="background-color: <?php echo "#000" ?>">
-	<img class="logo" alt="logo.jpg" src="http://wxres.skwy.com/page/img/shpaint/header.jpg">
 	<div class="warp">
 		<div class="vote-box">
 			<div class="vote-top-bar">
-				<span class="vote-number">98</span>
-				<span class="vote-number-text">号</span>
 				<strong class="name"><?php echo $this->candidateDoc->getNickname()?></strong>
 			</div>
 			<div class="vote-main">
@@ -17,7 +14,7 @@
 				</div>
 				<div class="vote-info">
 					<div class="count">
-						<div id="J-votes-id">2698</div>
+						<div id="J-votes-id"><?php echo $this->candidateDoc->getTicketCount()?></div>
 						<p>已得票数</p>
 					</div>
 				</div>

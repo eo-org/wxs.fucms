@@ -49,17 +49,25 @@ class IndexController extends AbstractActionController
 	   			->getSingleResult();
 	    	if(is_null($candidateDoc)) {
 	    		$candidateStatus = 'not-found';
+	    		$voteConfig = array(
+	    			'candidateStatus' => $candidateStatus,
+	    			'candidateDoc' => $candidateDoc
+	    		);
 	    	} elseif($candidateDoc->isComplete()) {
 	    		$candidateStatus = 'complete';
+	    		$voteConfig = array(
+	    			'candidateStatus' => $candidateStatus,
+	    			'candidateId' => $candidateDoc->getId(),
+	    			'candidateDoc' => $candidateDoc
+	    		);
 	    	} else {
 	    		$candidateStatus = 'not-complete';
+	    		$voteConfig = array(
+	    			'candidateStatus' => $candidateStatus,
+	    			'candidateId' => $candidateDoc->getId(),
+	    			'candidateDoc' => $candidateDoc
+	    		);
 	    	}
-	    	
-	    	$voteConfig = array(
-	    		'candidateStatus' => $candidateStatus,
-	    		'candidateId' => $candidateDoc->getId(),
-	    		'candidateDoc' => $candidateDoc
-	    	);
     	}
     	
     	return array(

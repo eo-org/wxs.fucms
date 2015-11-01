@@ -41,6 +41,8 @@ return array(
 // 	),
 	'view_manager' => array(
 		'template_map' => array(
+			'live-event/layout'				=> __DIR__ . '/../view/layout/layout.phtml',
+			
 			'live-event/index/index'		=> __DIR__ . '/../view/index/index.phtml',
 			'live-event/index/pre-event'	=> __DIR__ . '/../view/index/pre-event.phtml',
 			'live-event/index/post-event'	=> __DIR__ . '/../view/index/post-event.phtml',

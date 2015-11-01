@@ -43,12 +43,19 @@ class ApplicantController extends AbstractActionController
     		$dm->flush();
     		
     		if(true) {//nothing wrong, let's presume nothing is wrong at the moment
-    			$vm = new ViewModel();
+    			
     			if(true) {//open event
-    				$vm->setTemplate('live-event/applicant/success');
-    			} else {
-    				$vm->setTemplate('live-event/applicant/waiting-approve');
+    				
+    				return $this->redirect()->toRoute('wxs/wildcard', array(
+		    			'controller' => 'le-index',
+		    			'action' => 'index',
+		    			'eventId' => $eventId
+		    		), true);
+    				
     			}
+    			
+    			$vm = new ViewModel();
+    			$vm->setTemplate('live-event/applicant/waiting-approve');
     			
     			$vm->setVariables(array(
     				'websiteId' => $websiteId,

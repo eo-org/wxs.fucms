@@ -60,6 +60,14 @@ class WxDocumentLiveEventApplicantHydrator implements HydratorInterface
         }
 
         /** @Field(type="string") */
+        if (isset($data['name'])) {
+            $value = $data['name'];
+            $return = (string) $value;
+            $this->class->reflFields['name']->setValue($document, $return);
+            $hydratedData['name'] = $return;
+        }
+
+        /** @Field(type="string") */
         if (isset($data['mobile'])) {
             $value = $data['mobile'];
             $return = (string) $value;

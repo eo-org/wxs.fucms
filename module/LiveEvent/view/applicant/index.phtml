@@ -9,12 +9,16 @@
 </div>
 <?php }?>
 
+<div>
+	您的报名信息我们不会向任何无关个人或单位泄漏，此信息仅供中国好声音湖北赛区联系和验证身份使用，请务必填写真实信息以免联系不上。
+</div>
+
 <form name="sign-up" method='post' action=''>
 	<div class="weui_cells_title">报名信息:</div>
 	<div class="weui_cells weui_cells_form">
 		<div class="weui_cell">
 			<div class="weui_cell_hd">
-				<label for="name" class="weui-label">姓&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;名:</label>
+				<label for="name" class="weui-label">姓名:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<input class="weui_input" type="text" id="name" name="name" value="<?php echo $this->name?>" placeholder="请输入您的姓名" required>
@@ -25,22 +29,10 @@
 		</div>
 		<div class="weui_cell">
 			<div class="weui_cell_hd">
-				<label for="cell" class="weui-label">电话号码:</label>
+				<label for="mobile" class="weui-label">电话号码:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<input class="weui_input" type="text" id="cell" name="cell" value="<?php echo $this->cell?>" placeholder="请输入您的电话号码" required>
-			</div>			
-			<div class="weui_cell_ft">
-				<i class="weui_icon_warn"></i>
-			</div>
-		</div>
-		<div class="weui_cell weui_cell_select">
-			<div class="weui_cell_hd weui_select_after">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别:</div>
-			<div class="weui_cell_bd weui_cell_primary">
-				<select class="weui_select" name="sex">
-					<option value="male">男</option>
-					<option value="female">女</option>
-				</select>
+				<input class="weui_input" type="text" id="mobile" name="mobile" value="<?php echo $this->mobile?>" placeholder="请输入您的电话号码" required>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>
@@ -51,7 +43,7 @@
 				<label for="id-number" class="weui-label">身份证号:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<input class="weui_input" type="text" id="id-number" name="idNumber" value="<?php echo $this->idNumber?>" placeholder="请输入您的身份证号码" required>
+				<input class="weui_input" type="text" id="id-number" name="info_idNumber" value="<?php echo $this->info_idNumber?>" placeholder="请输入您的身份证号码" required>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>
