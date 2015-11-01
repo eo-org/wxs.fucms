@@ -40,17 +40,26 @@ class IndexController extends AbstractActionController
     		return $vm;
     	}
     	
-    	$candidateDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\VoteCandidate')
-   			->field('openid')->equals($openid)
-   			->field('eventId')->equals($eventId)
-   			->getQuery()
-   			->getSingleResult();
-    	if(is_null($candidateDoc)) {
-    		$candidateStatus = 'not-found';
-    	} elseif($candidateDoc->isComplete()) {
-    		$candidateStatus = 'complete';
-    	} else {
-    		$candidateStatus = 'not-complete';
+    	$voteActivated = true;
+    	if($voteActivated) {
+	    	$candidateDoc = $dm->createQueryBuilder('WxDocument\LiveEvent\VoteCandidate')
+	   			->field('openid')->equals($openid)
+	   			->field('eventId')->equals($eventId)
+	   			->getQuery()
+	   			->getSingleResult();
+	    	if(is_null($candidateDoc)) {
+	    		$candidateStatus = 'not-found';
+	    	} elseif($candidateDoc->isComplete()) {
+	    		$candidateStatus = 'complete';
+	    	} else {
+	    		$candidateStatus = 'not-complete';
+	    	}
+	    	
+	    	$voteConfig = array(
+	    		'candidateStatus' => $candidateStatus,
+	    		'candidateId' => $candidateDoc->getId(),
+	    		'candidateDoc' => $candidateDoc
+	    	);
     	}
     	
     	return array(
@@ -59,10 +68,9 @@ class IndexController extends AbstractActionController
     		'eventDoc' => $eventDoc,
     		'applicantDoc' => $applicantDoc,
     		'applicantInfo' => $applicantDoc->getInfo(),
-    		'voteActivated' => true,
-    		'voteConfig' => array(
-    			'candidateStatus' => $candidateStatus
-    		)
+    		
+    		'voteActivated' => $voteActivated,
+    		'voteConfig' => $voteConfig
     	);
     }
     

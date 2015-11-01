@@ -4,7 +4,7 @@ namespace Application\View\Helper;
 use Zend\View\Helper\AbstractHelper;
 use Zend\ServiceManager\ServiceLocatorAwareInterface;
 
-class Path extends AbstractHelper implements ServiceLocatorAwareInterface
+class OutputImage extends AbstractHelper implements ServiceLocatorAwareInterface
 {
 	use \Zend\ServiceManager\ServiceLocatorAwareTrait;
 	

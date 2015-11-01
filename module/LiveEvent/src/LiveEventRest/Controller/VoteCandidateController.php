@@ -4,10 +4,8 @@ namespace LiveEventRest\Controller;
 use Cms\Exception\PageNotFoundException, Cms\Exception\DocumentNotFoundException;
 use Zend\Mvc\Controller\AbstractRestfulController;
 use Zend\View\Model\JsonModel;
-use Zend\View\Model\Zend\View\Model;
-use Zend\Config\Reader\Json;
 
-class VoteTicketController extends AbstractRestfulController
+class VoteCandidateController extends AbstractRestfulController
 {
 	public function getList()
 	{

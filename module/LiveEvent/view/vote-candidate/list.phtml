@@ -14,25 +14,24 @@
 			</div>
 		</div>
 		<div class="vote-list">
-			<?php ?>
+			<?php foreach($this->candidateDocs as $candidateDoc) {?>
 			<div class="vote-item">
-				<a class="vote-view" href="">
-					<img src="https://dn-skwy-p01.qbox.me/editorp/1445993274.jpeg-thumbnail160" alt="">
+				<a class="vote-view" href="<?php //echo $this->url('wxs/wildcard', array('websiteId')?>">
+					<img src="<?php echo $this->outputImage($candidateDoc->getCover(), 160, 240) ?>" alt="">
 					<span class="number">112</span>
 					<div class="ballot-info">
 						<span class="mc">第一名</span>
-						<div class="ps">票数:2805</div>
+						<div class="ps">票数:<?php echo $candidateDoc->getTicketCount()?></div>
 					</div>
 				</a>
 				<div class="info-box">
-					<div class="name"><strong>叶凡</strong></div>
-					<div class="title">《白自在》</div>
+					<div class="name"><strong><?php echo $candidateDoc->getNickname()?></strong></div>
 					<div class="button-box">
 						<a class="weui_btn weui_btn_plain_primary" href="">支持TA</a>
 					</div>
 				</div>
 			</div>
-			<?php ?>
+			<?php }?>
 		</div>
 	</div>
 </div>

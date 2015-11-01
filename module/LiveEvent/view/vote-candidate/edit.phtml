@@ -13,7 +13,13 @@
 	<div class="weui_cells_title">人气榜封面:</div>
 	<div class="weui_cells weui_cells_form">
 		<div class="weui_cell">
-			<div id='pickfiles' style='padding:30px;border:2px dashed #777;'>UPLOAD FILES</div>
+			<div id='pickfiles' style='padding:30px;border:2px dashed #777;'>
+				<?php if($this->candidateDoc->getCover() == "") {?>
+				<img id='candidate-cover' src='<?php echo $this->outputImage('default-cover.jpg', 200, 200)?>' />
+				<?php } else {?>
+				<img id='candidate-cover' src='<?php echo $this->outputImage($this->candidateDoc->getCover(), 200, 200)?>' />
+				<?php }?>
+			</div>
 		</div>
 	</div>
 </form>
@@ -77,13 +83,16 @@ var websiteId = "<?php echo $this->websiteId?>";
 var eventId = "<?php echo $this->eventId?>";
 var applicantId = '<?php echo $this->applicantId?>';
 
+var qiniuDomain = "<?php echo $this->path('qiniu')?>";
+var fileResourceId = eventId + ':' + applicantId;
+
 var browserBtn = $('#pickfiles');
 var uploader = Qiniu.uploader({
 	runtimes: 'html5',
 	browse_button: browserBtn,
 	uptoken: '<?php echo $this->uptoken?>',
 	unique_names: false,
-	domain: '<?php echo $this->path('qiniu')?>',
+	domain: qiniuDomain,
 	max_file_size: '8mb',
 	max_retries: 0,
 	dragdrop: false,
@@ -107,29 +116,53 @@ var uploader = Qiniu.uploader({
 		'FileUploaded': function(up, file, info) {
 			var infoObj = JSON.parse(info);
 			
-		 	$.ajax({  
-				url: '/wxsrs/<?php echo $this->websiteId?>/fr-file.json',
-		 		type: 'POST',
+		 	$.ajax({
+				url: '/wxsrs/<?php echo $this->websiteId?>/ler-vote-candidate.json/<?php echo $this->candidateId?>',
+		 		type: 'PUT',
 		 		data: {
 			 		'resourceType': 'live-event:candidate:cover',
-					'resourceId': eventId.':'.applicantId,
+					'resourceId': fileResourceId,
 					'filename': file.name,
 					'urlname': file.urlname,
 					'size': file.size,
 					'mimeType': infoObj.mimeType,
-					'ext': infoObj.ext
+					'ext': infoObj.ext,
+					'cover': file.urlname
 			 	},
 		 		success: function (response) {
-		 			alert('照片上传成功');
+		 			$('#candidate-cover').attr('src', qiniuDomain + '/' + websiteId + '/' + file.urlname + '?imageView2/1/w/200/h/200');
+			 		
+		 			//alert('照片上传成功');
 		 		},
 		 		error: function (response) {
 		 			alert('sorry, 图片上传失败');
 		 		}
 		 	});
+
+// 			$ajax({
+//				url: '/wxsrs/<?php echo $this->websiteId?>/lers-vote-candidate.json/',
+// 		 		type: 'POST',
+// 		 		data: {
+// 					'cover': file.urlname
+// 			 	},
+// 		 		success: function (response) {
+			 		
+// 			 		$('#candidate-cover').attr('src', qiniuDomain + '/' + websiteId + '/' + file.urlname + '?imageView2/1/w/200/h/200');
+// 		 			//alert('照片上传成功');
+// 		 		},
+// 		 		error: function (response) {
+// 		 			alert('sorry, 图片上传失败');
+// 		 		}
+// 			});
+		 	
 		},
 		'UploadComplete': function() {
 			$('#upload-form').css('display', 'block');
 			$('#replace-text').css('display', 'none');
+
+
+			//$('#')
+			
 		},
 		'Key': function(up, file) {
 			//first in seq

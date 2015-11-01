@@ -5,11 +5,11 @@
 			<div class="vote-top-bar">
 				<span class="vote-number">98</span>
 				<span class="vote-number-text">号</span>
-				<strong class="name">叶凡</strong>
+				<strong class="name"><?php echo $this->candidateDoc->getNickname()?></strong>
 			</div>
 			<div class="vote-main">
 				<div class="vote-img">
-					<img src="https://dn-skwy-p01.qbox.me/editorp/1445958460.jpeg-thumbnail320">
+					<img src="<?php echo $this->outputImage($this->candidateDoc->getCover(), 320, 480)?>">
 				</div>
 				<div class="vote-title">《唱响中国》</div>
 				<div class="vote-button">
@@ -24,10 +24,18 @@
 			</div>
 			                
 			<div class="vote-button">
-				<a class="back-button weui_btn weui_btn_default" href="">前往投票广场</a>
+				<a class="back-button weui_btn weui_btn_default"
+				href="<?php echo $this->url('wxs/wildcard', array('websiteId' => $this->websiteId, 'controller' => 'le-vote-candidate', 'action' => 'list', 'eventId' => $this->eventId))?>"
+				>
+					前往人气榜
+				</a>
 				<div class="button-group">
 					<div class="button-box">
-						<a class="weui_btn weui_btn_plain_primary" href="">我也要报名</a>
+						<a class="weui_btn weui_btn_plain_primary"
+						href="<?php echo $this->url('wxs/wildcard', array('websiteId' => $this->websiteId, 'controller' => 'le-index', 'action' => 'index', 'eventId' => $this->eventId))?>"
+						>
+							我也要报名
+						</a>
 					</div>
 					<div class="button-box">
 						<a class="weui_btn weui_btn_plain_default" href="">比赛规则</a>

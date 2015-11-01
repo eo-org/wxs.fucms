@@ -9,7 +9,9 @@ class VoteCandidateController extends AbstractActionController
 {
     public function indexAction()
     {
-    	$candidateId = $this->params()-fromRoute('candidateId');
+    	$websiteId = $this->params()->fromRoute('websiteId');
+    	$eventId = $this->params()->fromRoute('eventId');
+    	$candidateId = $this->params()->fromRoute('candidateId');
     	
     	$sm = $this->getServiceLocator();
     	$dm = $sm->get('DocumentManager');
@@ -26,6 +28,8 @@ class VoteCandidateController extends AbstractActionController
     	}
     	
     	return array(
+    		'websiteId' => $websiteId,
+    		'eventId' => $eventId,
     		'candidateDoc' => $candidateDoc,
     		'eventDoc' => $eventDoc
     	);
@@ -33,7 +37,7 @@ class VoteCandidateController extends AbstractActionController
     
     public function listAction()
     {
-    	$eventId = $this->params()-fromQuery('eventId');
+    	$eventId = $this->params()->fromRoute('eventId');
     	
     	$sm = $this->getServiceLocator();
     	$dm = $sm->get('DocumentManager');
@@ -82,15 +86,16 @@ class VoteCandidateController extends AbstractActionController
     		->getSingleResult();
     	if(is_null($candidateDoc)) {
     		$candidateDoc = new \WxDocument\LiveEvent\VoteCandidate();
+    		$candidateDoc->setOpenid($openid);
+    		$candidateDoc->setEventId($eventId);
+    		$dm->persist($candidateDoc);
+    		$dm->flush();
     	}
     	
     	if($this->getRequest()->isPost()) {
     		$data = $this->getRequest()->getPost();
     		
     		$candidateDoc->exchangeArray($data);
-    		$candidateDoc->setOpenid($openid);
-    		$candidateDoc->setEventId($eventId);
-    		
     		$dm->persist($candidateDoc);
     		$dm->flush();
     		

@@ -6,9 +6,9 @@ return array(
         	'le-applicant'		=> 'LiveEvent\Controller\ApplicantController',
         	'le-vote-candidate'	=> 'LiveEvent\Controller\VoteCandidateController',
         	
-        	'lers-applicant'		=> 'LiveEventRest\Controller\ApplicantController',
-        	'lers-vote-candidate'	=> 'LiveEventRest\Controller\VoteCandidateController',
-        	'lers-vote-ticket'		=> 'LiveEventRest\Controller\VoteTicketController'
+        	'ler-applicant'			=> 'LiveEventRest\Controller\ApplicantController',
+        	'ler-vote-candidate'	=> 'LiveEventRest\Controller\VoteCandidateController',
+        	'ler-vote-ticket'		=> 'LiveEventRest\Controller\VoteTicketController'
         ),
     ),
 //     'router' => array(
