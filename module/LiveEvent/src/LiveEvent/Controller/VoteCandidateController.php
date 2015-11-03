@@ -38,7 +38,7 @@ class VoteCandidateController extends AbstractActionController
     public function listAction()
     {
     	$eventId = $this->params()->fromRoute('eventId');
-    	
+    	$websiteId = $this->params()->fromRoute('websiteId');
     	$sm = $this->getServiceLocator();
     	$dm = $sm->get('DocumentManager');
     	
@@ -55,7 +55,9 @@ class VoteCandidateController extends AbstractActionController
     	
     	return array(
     		'eventDoc'	=> $eventDoc,
-    		'candidateDocs' => $candidateDocs
+    		'candidateDocs' => $candidateDocs,
+    		'websiteId' => $websiteId,
+    		'eventId' => $eventId,
     	);
     }
     

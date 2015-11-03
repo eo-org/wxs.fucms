@@ -1,4 +1,4 @@
-<div class="candidate" style="background-color: <?php echo "#000" ?>">
+<div class="candidate">
 	<div class="warp">
 		<div class="vote-box">
 			<div class="vote-top-bar">
@@ -6,15 +6,7 @@
 			</div>
 			<div class="vote-main">
 				<div class="vote-img">
-					<img src="<?php echo $this->outputImage($this->candidateDoc->getCover(), 320, 480)?>">
-				</div>
-				<div class="vote-title">《唱响中国》</div>
-				<div class="vote-button">
-					<button
-						id='j_vote_btn-<?php echo $this->candidateDoc->getId()?>'
-						vote-url='<?php echo $this->url('wxsrs/restroutes', array('controller' => 'ler-vote-ticket', 'id' => $this->candidateDoc->getId()), true)?>'
-						class="weui_btn weui_btn_primary J-vote-btn"
-					>支持TA</button>
+					<img width="100%" src="<?php echo $this->outputImage($this->candidateDoc->getCover(), 320, 480)?>">
 				</div>
 				<div class="vote-info">
 					<div class="count">
@@ -22,28 +14,34 @@
 						<p>已得票数</p>
 					</div>
 				</div>
+				<div class="vote-button">
+					<button
+						id='j_vote_btn-<?php echo $this->candidateDoc->getId()?>'
+						vote-url='<?php echo $this->url('wxsrs/restroutes', array('controller' => 'ler-vote-ticket', 'id' => $this->candidateDoc->getId()), true)?>'
+						class="weui_btn wx-btn-primary"
+					>支持TA</button>
+				</div>
 			</div>
-			                
 			<div class="vote-button">
-				<a class="back-button weui_btn weui_btn_default"
+				<a class="back-button weui_btn wx-btn-default"
 				href="<?php echo $this->url('wxs/wildcard', array('websiteId' => $this->websiteId, 'controller' => 'le-vote-candidate', 'action' => 'list', 'eventId' => $this->eventId))?>"
 				>
 					前往人气榜
 				</a>
 				<div class="button-group">
 					<div class="button-box">
-						<a class="weui_btn weui_btn_plain_primary"
+						<a class="weui_btn wx-btn-default"
 						href="<?php echo $this->url('wxs/wildcard', array('websiteId' => $this->websiteId, 'controller' => 'le-index', 'action' => 'index', 'eventId' => $this->eventId))?>"
 						>
 							我也要报名
 						</a>
 					</div>
 					<div class="button-box">
-						<a class="weui_btn weui_btn_plain_default" href="">比赛规则</a>
+						<a class="weui_btn wx-btn-default" href="">比赛规则</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/live-event/style/candidate.css'); ?>
+<?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/live-event/style/candidate.css?v=111'); ?>

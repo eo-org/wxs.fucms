@@ -70,7 +70,7 @@ if($this->voteActivated) {
 			<a style='float:right;' class="weui_btn weui_btn_mini weui_btn_default" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">修改信息</a>
 		</div>
 		<div style='margin: 2em 0;'>
-			<a class="weui_btn weui_btn_plain_default" href='<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'index', 'candidateId' => $this->voteConfig['candidateId']), true)?>'>分享拉票</a>
+			<a class="weui_btn wx-btn-default" href='<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'index', 'candidateId' => $this->voteConfig['candidateId']), true)?>'>分享拉票</a>
 		</div>
 		<?php }?>
 		

@@ -1,8 +1,26 @@
-<div>
-	中国好声音湖北赛区现已开始报名，加入我们，唱响你的声音
+<div class="live-event-info">
+	<h3 class="title">湖北赛区报名咨询方式</h3>
+	<dl class="info-item">
+		<dt>报名时间</dt>
+		<dd>2015年10月8日起</dd>
+	</dl>
+	<dl class="info-item">
+		<dt>官方网络平台</dt>
+		<dd>www.chvoice.com</dd>
+	</dl>
+	<dl class="info-item">
+		<dt>报名咨询电话</dt>
+		<dd>027-86818899</dd>
+	</dl>
+	<dl class="info-item">
+		<dt>报名咨询地址</dt>
+		<dd>
+			<p>湖北中部影视有限公司</p>
+			<address>湖北省武汉市武昌民主路788号保利大酒店一楼0103室（位于地铁2号线及4号线换乘站洪山广场站A出口）</address>
+		</dd>
+	</dl>
 </div>
-<a class="weui_btn weui_btn_plain_primary" href='<?php echo $this->url('wxs/wildcard', array('controller' => 'le-applicant'), true)?>'>报名比赛</a>
-
-<div>
-	I WANT YOU
+<div class="apply-btn-box">
+	<a href="<?php echo $this->url('wxs/wildcard', array('websiteId' => $this->websiteId, 'controller' => 'le-applicant', 'action' => 'index', 'eventId' => $this->eventId))?>" 
+		class="wx-btn wx-btn-primary">报名比赛</a>
 </div>
