@@ -25,18 +25,19 @@ class AuthListener extends AbstractListenerAggregate
 //     	if(true) {
 //     		$sessionUser->setOpenid('gavinlocaltestor');
 //     	}
+
+    	$dm = $sm->get('DocumentManager');
+    	$wxSetting = $dm->createQueryBuilder('WxDocument\Setting')
+				    	->select('authorization_info.authorizer_appid')
+				    	->getQuery()
+				    	->getSingleResult();
+    	 
+    	$wxSettingArr = $wxSetting->getArrayCopy();
+    	$appId = $wxSettingArr['authorization_info']['authorizer_appid'];
+    	$jsSignature = $sm->get('Application\Service\JsSignatureService');
+    	$jsSignature->setAppId($appId);
     	
     	if(!$sessionUser->isLogin()) {
-    		$dm = $sm->get('DocumentManager');
-    		$wxSetting = $dm->createQueryBuilder('WxDocument\Setting')
-	    		->select('authorization_info.authorizer_appid')
-	    		->getQuery()
-	    		->getSingleResult();
-    		 
-    		$wxSettingArr = $wxSetting->getArrayCopy();
-    		$appId = $wxSettingArr['authorization_info']['authorizer_appid'];
-    		$jsSignature = $sm->get('Application\Service\JsSignatureService');
-    		$jsSignature->setAppId($appId);
     		$comAppId = "wx2ce4babba45b702d";
     		
     		$query = $mvcEvent->getRequest()->getQuery();
@@ -98,6 +99,7 @@ class AuthListener extends AbstractListenerAggregate
 		$cmsSiteService = $sm->get('Application\Service\CmsSiteService');
 		
 		$websiteId = $cmsSiteService->getWebsiteId();
+		$websiteId = '547e6e60ce2350a00d000029';
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, 'http://wx.fucmsweb.com/api/jsApiTicket/'.$websiteId);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
