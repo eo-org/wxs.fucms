@@ -1,4 +1,5 @@
 <div class="profile-box">
+	<h1 style="font-size: .24rem;text-align: center">个人信息</h1>
 	<div class="weui_cells">
 		<!-- 
 		<div class="weui_cell">
@@ -23,14 +24,13 @@
 		
 	</div>
 </div>
-
+<h1 style="font-size: .24rem;text-align: center;margin: .2rem 0;">线下互动</h1>
+<h2 class='title'>为我拉票</h2>
 <article class="weui_article">
-	<h1>线下互动</h1>
 <?php
 if($this->voteActivated) {
 ?>
 	<section>
-		<h2 class='title'>为我拉票</h2>
 		<?php if($this->voteConfig['candidateStatus'] == 'not-found') {?>
 		<!-- no document found -->
 		<p>
@@ -41,7 +41,7 @@ if($this->voteActivated) {
 				<li>有机会获得簰洲酒特别合约</li>
 			</ul>
 		</p>
-		<a class="weui_btn weui_btn_primary" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">创建档案</a>
+		<a class="weui_btn wx-btn-default" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>">创建档案</a>
 		
 		<p>
 			在正式为您自己拉票之前，需要创建一份拉票的档案，此档案中的内容会向公众公开
@@ -51,7 +51,7 @@ if($this->voteActivated) {
 		<?php if($this->voteConfig['candidateStatus'] == 'not-complete') {?>
 		<!-- partial document found -->
 		<p>人气榜拉票信息没有填写完整，只有完整的信息才会在人气排行中显示</p>
-		<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">完善信息</a>
+		<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn wx-btn-default">完善信息</a>
 		<?php }?>
 	
 		<?php if($this->voteConfig['candidateStatus'] == 'complete') {?>
