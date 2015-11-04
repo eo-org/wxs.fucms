@@ -99,6 +99,7 @@ class VoteCandidateController extends AbstractActionController
     		$data = $this->getRequest()->getPost();
     		
     		$candidateDoc->exchangeArray($data);
+    		$candidateDoc->updateInfoComplete();
     		$dm->persist($candidateDoc);
     		$dm->flush();
     		
