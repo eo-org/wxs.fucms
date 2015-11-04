@@ -19,7 +19,7 @@
 			<div class="vote-item">
 				<a class="vote-view" href="<?php echo $this->url('wxs/wildcard', array('action' => 'index', 'candidateId' => $candidateDoc->getId()), true)?>">
 					<img src="<?php echo $this->outputImage($candidateDoc->getCover(), 160, 240) ?>" alt="">
-					<span class="vote-info">112</span>
+					<span class="vote-info"><?php echo $candidateDoc->getId()?></span>
 					<div class="tickt-count">
 						<div class="ps">票数:<span id="j_vote_disp-<?php echo $candidateDoc->getId()?>"><?php echo $candidateDoc->getTicketCount()?></span></div>
 					</div>

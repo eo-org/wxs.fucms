@@ -14,6 +14,12 @@
 						<p>已得票数</p>
 					</div>
 				</div>
+				<div class="vote-brief" style="text-align: center; margin: .1rem 0;padding: 0 5%;">
+					<dl>
+						<dt style="font-size: .18rem;margin: .05rem 0;">兴趣爱好</dt>
+						<dd style="line-height: .24rem;"><?php echo $this->candidateDoc->getBrief()?></dd>
+					</dl>
+				</div>
 				<div class="vote-button">
 					<button
 						id='j_vote_btn-<?php echo $this->candidateDoc->getId()?>'
