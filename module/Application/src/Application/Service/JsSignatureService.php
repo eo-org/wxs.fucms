@@ -10,6 +10,7 @@ class JsSignatureService implements ServiceLocatorAwareInterface
 	
 	protected $jsApiTicket;
 	protected $url;
+	protected $appId;
 	
 	public function setServiceLocator(ServiceLocatorInterface $serviceLocator)
 	{
@@ -24,6 +25,11 @@ class JsSignatureService implements ServiceLocatorAwareInterface
     public function setJsApiTicket($ticket)
     {
     	$this->jsApiTicket = $ticket;
+    }
+    
+    public function setAppId($appId)
+    {
+    	$this->appId = $appId;
     }
     
     public function setUrl($url)
@@ -43,7 +49,7 @@ class JsSignatureService implements ServiceLocatorAwareInterface
     	
     	$str = 'jsapi_ticket='.$this->jsApiTicket.'&noncestr='.$nonceStr.'&timestamp='.$timestamp.'&url='.$this->url;
     	$signature = sha1($str);
-    	$appId = 'wx536a9272e58807e7';
+    	$appId = $this->appId;
     	$jsApiList = "['checkJsApi',
 				        'onMenuShareTimeline',
 				        'onMenuShareAppMessage',

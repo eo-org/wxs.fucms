@@ -35,6 +35,8 @@ class AuthListener extends AbstractListenerAggregate
     		 
     		$wxSettingArr = $wxSetting->getArrayCopy();
     		$appId = $wxSettingArr['authorization_info']['authorizer_appid'];
+    		$jsSignature = $sm->get('Application\Service\JsSignatureService');
+    		$jsSignature->setAppId($appId);
     		$comAppId = "wx2ce4babba45b702d";
     		
     		$query = $mvcEvent->getRequest()->getQuery();
