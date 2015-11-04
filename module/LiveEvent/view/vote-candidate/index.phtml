@@ -49,7 +49,7 @@
 	wx.config(<?php echo $this->wxConfig?>);
 	wx.ready(function(){
 		wx.onMenuShareTimeline({
-		    title: '我参加了中国好声音湖北赛区海选比赛，朋友们快来为我投票吧!',
+		    title: '<?php echo $this->candidateDoc->getNickname()?>参加了中国好声音湖北赛区海选比赛，朋友们快来为他投票吧!',
 		    link: window.location.href,
 		    imgUrl: '<?php echo $this->outputImage($this->candidateDoc->getCover(), 320, 480)?>',
 		    success: function () {
@@ -59,7 +59,7 @@
 		});
 		wx.onMenuShareAppMessage({
 		    title: '第五季中国好声音海选湖北赛区',
-		    desc: '我参加了第五季中国好声音湖北赛区海选比赛，朋友们快来为我投票吧!',
+		    desc: '<?php echo $this->candidateDoc->getNickname()?>参加了第五季中国好声音湖北赛区海选比赛，朋友们快来为他投票吧!',
 		    link: window.location.href,
 		    imgUrl: '<?php echo $this->outputImage($this->candidateDoc->getCover(), 320, 480)?>',
 		    type: '',

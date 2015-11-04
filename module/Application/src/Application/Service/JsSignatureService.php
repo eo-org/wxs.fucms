@@ -83,7 +83,7 @@ class JsSignatureService implements ServiceLocatorAwareInterface
 				        'addCard',
 				        'chooseCard',
 				        'openCard']";
-	    $wxconfigStr = '{debug: true, appId: "'.$appId.'", timestamp: "'.$timestamp.'", nonceStr: "'.$nonceStr.'", signature: "'.$signature.'",jsApiList: '.$jsApiList.' }';
+	    $wxconfigStr = '{debug: false, appId: "'.$appId.'", timestamp: "'.$timestamp.'", nonceStr: "'.$nonceStr.'", signature: "'.$signature.'",jsApiList: '.$jsApiList.' }';
     	
     	return $wxconfigStr;
     }
