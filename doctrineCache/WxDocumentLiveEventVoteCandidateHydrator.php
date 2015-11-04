@@ -91,6 +91,14 @@ class WxDocumentLiveEventVoteCandidateHydrator implements HydratorInterface
             $hydratedData['pics'] = $return;
         }
 
+        /** @Field(type="boolean") */
+        if (isset($data['infoComplete'])) {
+            $value = $data['infoComplete'];
+            $return = (bool) $value;
+            $this->class->reflFields['infoComplete']->setValue($document, $return);
+            $hydratedData['infoComplete'] = $return;
+        }
+
         /** @Field(type="int") */
         if (isset($data['ticketCount'])) {
             $value = $data['ticketCount'];
