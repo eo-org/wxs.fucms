@@ -27,10 +27,10 @@ class WxDocumentLiveEventVoteCandidateHydrator implements HydratorInterface
     {
         $hydratedData = array();
 
-        /** @Field(type="id") */
+        /** @Field(type="int_id") */
         if (isset($data['_id'])) {
             $value = $data['_id'];
-            $return = $value instanceof \MongoId ? (string) $value : $value;
+            $return = (int) $value;
             $this->class->reflFields['id']->setValue($document, $return);
             $hydratedData['id'] = $return;
         }
