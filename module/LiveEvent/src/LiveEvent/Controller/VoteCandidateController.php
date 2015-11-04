@@ -15,6 +15,11 @@ class VoteCandidateController extends AbstractActionController
     	
     	$sm = $this->getServiceLocator();
     	$dm = $sm->get('DocumentManager');
+    	
+    	$userAuth = $sm->get('User\Service\SessionAuth');
+    	$openId = $userAuth->getOpenId();
+    	$jsSignature = $sm->get('Application\Service\JsSignatureService');
+    	$wxConfigStr = $jsSignature->getJsSdkConfig();
     	 
     	$candidateDoc = $dm->getRepository('WxDocument\LiveEvent\VoteCandidate')->findOneById($candidateId);
     	if(is_null($candidateDoc)) {
@@ -31,7 +36,8 @@ class VoteCandidateController extends AbstractActionController
     		'websiteId' => $websiteId,
     		'eventId' => $eventId,
     		'candidateDoc' => $candidateDoc,
-    		'eventDoc' => $eventDoc
+    		'eventDoc' => $eventDoc,
+    		'wxConfig' => $wxConfigStr,
     	);
     }
     

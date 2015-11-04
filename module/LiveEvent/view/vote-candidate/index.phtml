@@ -45,3 +45,29 @@
 	</div>
 </div>
 <?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/live-event/style/candidate.css?v=111'); ?>
+<script>
+	wx.config(<?php echo $this->wxConfig?>);
+	wx.ready(function(){
+		wx.onMenuShareTimeline({
+		    title: '我参加了中国好声音湖北赛区海选比赛，朋友们快来为我投票吧!',
+		    link: window.location.href,
+		    imgUrl: '<?php echo $this->outputImage($this->candidateDoc->getCover(), 320, 480)?>',
+		    success: function () {
+		    },
+		    cancel: function () {
+		    }
+		});
+		wx.onMenuShareAppMessage({
+		    title: '第五季中国好声音海选湖北赛区',
+		    desc: '我参加了第五季中国好声音湖北赛区海选比赛，朋友们快来为我投票吧!',
+		    link: window.location.href,
+		    imgUrl: '<?php echo $this->outputImage($this->candidateDoc->getCover(), 320, 480)?>',
+		    type: '',
+		    dataUrl: '',
+		    success: function () { 
+		    },
+		    cancel: function () { 
+		    }
+		});
+	});
+</script>
