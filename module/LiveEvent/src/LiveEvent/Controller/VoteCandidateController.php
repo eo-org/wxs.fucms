@@ -51,6 +51,7 @@ class VoteCandidateController extends AbstractActionController
     		->select('id', 'nickname', 'cover', 'ticketCount')
     		->field('eventId')->equals($eventId)
     		->field('infoComplete')->equals(true)
+    		->sort('ticketCount', -1)
     		->getQuery()
     		->execute();
     	
