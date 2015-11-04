@@ -53,7 +53,7 @@ class IndexController extends AbstractActionController
 	    			'candidateStatus' => $candidateStatus,
 	    			'candidateDoc' => $candidateDoc
 	    		);
-	    	} elseif($candidateDoc->isComplete()) {
+	    	} elseif($candidateDoc->getInfoComplete()) {
 	    		$candidateStatus = 'complete';
 	    		$voteConfig = array(
 	    			'candidateStatus' => $candidateStatus,

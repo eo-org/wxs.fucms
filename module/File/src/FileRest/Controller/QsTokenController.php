@@ -28,7 +28,6 @@ class QsTokenController extends AbstractRestfulController
 		$putPolicy->ReturnBody = '{"key":$(key), "mimeType": $(mimeType), "ext": $(ext), "avinfo": $(avinfo)}';
 		$uptoken = $putPolicy->Token(null);
 		
-		
 		return new JsonModel(array('uptoken' => $uptoken));
 	}
 
