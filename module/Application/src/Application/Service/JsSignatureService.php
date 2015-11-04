@@ -46,7 +46,6 @@ class JsSignatureService implements ServiceLocatorAwareInterface
     		$nonceStr .= $chars[rand(0, $max)];
     	}    	
     	$timestamp = time();
-    	
     	$str = 'jsapi_ticket='.$this->jsApiTicket.'&noncestr='.$nonceStr.'&timestamp='.$timestamp.'&url='.$this->url;
     	$signature = sha1($str);
     	$appId = $this->appId;
@@ -84,7 +83,7 @@ class JsSignatureService implements ServiceLocatorAwareInterface
 				        'addCard',
 				        'chooseCard',
 				        'openCard']";
-	    $wxconfigStr = '{debug: false, appId: "'.$appId.'", timestamp: "'.$timestamp.'", nonceStr: "'.$nonceStr.'", signature: "'.$signature.'",jsApiList: '.$jsApiList.' }';
+	    $wxconfigStr = '{debug: true, appId: "'.$appId.'", timestamp: "'.$timestamp.'", nonceStr: "'.$nonceStr.'", signature: "'.$signature.'",jsApiList: '.$jsApiList.' }';
     	
     	return $wxconfigStr;
     }

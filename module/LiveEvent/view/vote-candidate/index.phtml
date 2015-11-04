@@ -48,6 +48,7 @@
 <script>
 	wx.config(<?php echo $this->wxConfig?>);
 	wx.ready(function(){
+		alert('ok');
 		wx.onMenuShareTimeline({
 		    title: '我参加了中国好声音湖北赛区海选比赛，朋友们快来为我投票吧!',
 		    link: window.location.href,
