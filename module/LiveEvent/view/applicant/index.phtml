@@ -14,7 +14,7 @@
 	您的报名信息我们不会向任何无关个人或单位泄漏，此信息仅供中国好声音湖北赛区联系和验证身份使用，请务必填写真实信息以免联系不上。
 </p>
 
-<form name="sign-up" method='post' action=''>
+<form id="j-applicant-form" name="sign-up" method='post' action=''>
 	<div class="weui_cells weui_cells_form">
 		<div class="weui_cell">
 			<div class="weui_cell_hd">
@@ -49,7 +49,49 @@
 				<i class="weui_icon_warn"></i>
 			</div>
 		</div>
-		<div class="weui_btn_area"><button class="weui_btn weui_btn_primary wx-btn-primary">提交信息</button></div>
+		<div class="weui_btn_area"><button id="j-post-form" class="weui_btn wx-btn-primary">提交信息</button></div>
 		<br>
 	</div>
 </form>
+<script>
+	$().ready(function(){
+		var applicantForm = $('#j-applicant-form');
+		$('#j-post-form').on('click', function(e){
+			e.preventDefault();
+			var name = applicantForm.find("input[name='name']").val();
+			var mobile = applicantForm.find("input[name='mobile']").val();
+			var idNumber = applicantForm.find("input[name='info_idNumber']").val();
+			if(name && mobile && idNumber){
+				var telReg = !!mobile.match(/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/);
+				var idNumberReg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+				if(!telReg){
+					$.dialog({
+	                    title: 'alert',
+	                    content: "请填写正确的手机号码!",
+	                    okText: '确定',
+	                    ok: function(){}
+	                });
+	                return;
+				}
+				if(!idNumberReg.test(idNumber)){
+					$.dialog({
+	                    title: 'alert',
+	                    content: "请填写正确的身份证号!",
+	                    okText: '确定',
+	                    ok: function(){}
+	                });
+	                return;
+				}
+				applicantForm.submit();
+			}else {
+				$.dialog({
+                    title: 'alert',
+                    content: "请填写完整信息!",
+                    okText: '确定',
+                    ok: function(){}
+                });
+                return;
+			}
+		});
+	});
+</script>
