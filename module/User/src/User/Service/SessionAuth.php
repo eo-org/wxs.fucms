@@ -30,7 +30,7 @@ class SessionAuth
 	
 	public function isLogin()
 	{
-		if($this->wxUser->openid) {
+		if($this->wxUser->openid && !empty($this->wxUser->openid)) {
 			return true;
 		}
 		return false;
