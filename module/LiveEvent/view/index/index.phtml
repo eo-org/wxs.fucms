@@ -25,7 +25,7 @@
 	</div>
 </div>
 <h1 style="font-size: .24rem;text-align: center;margin: .2rem 0;">线下互动</h1>
-<h2 class='title'>为我拉票</h2>
+<h2 class='title'>人气榜</h2>
 <article class="weui_article">
 <?php
 if($this->voteActivated) {
@@ -82,3 +82,9 @@ if($this->voteActivated) {
 <?php if($this->wallActivated) {}?>
 <?php if($this->checkInActivated) {}?>
 </article>
+<script>
+	wx.config(<?php echo $this->wxConfig?>);
+	wx.ready(function(){
+		wx.hideOptionMenu();
+	});
+</script>

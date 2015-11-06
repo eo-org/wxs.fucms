@@ -17,7 +17,8 @@ class IndexController extends AbstractActionController
     	$dm = $sm->get('DocumentManager');
     	$userAuth = $sm->get('User\Service\SessionAuth');
     	$openid = $userAuth->getOpenid();
-    	
+    	$jsSignature = $sm->get('Application\Service\JsSignatureService');
+    	$wxConfigStr = $jsSignature->getJsSdkConfig();
     	$eventDoc = $dm->getRepository('WxDocument\LiveEvent')->findOneById($eventId);
     	
     	if(is_null($eventDoc)) {
@@ -78,7 +79,8 @@ class IndexController extends AbstractActionController
     		'applicantInfo' => $applicantDoc->getInfo(),
     		
     		'voteActivated' => $voteActivated,
-    		'voteConfig' => $voteConfig
+    		'voteConfig' => $voteConfig,
+    		'wxConfig' => $wxConfigStr,
     	);
     }
     
