@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="vote-button">
-				<a class="back-button weui_btn wx-btn-default"
+				<a class="back-button weui_btn wx-btn-primary"
 				href="<?php echo $this->url('wxs/wildcard', array('websiteId' => $this->websiteId, 'controller' => 'le-vote-candidate', 'action' => 'list', 'eventId' => $this->eventId))?>"
 				>
 					前往人气榜
@@ -46,11 +46,15 @@
 						<a class="weui_btn wx-btn-default" href="">比赛规则</a>
 					</div>
 				</div>
+				<div style="width: 70%; margin: .15rem auto;">
+					<a class="weui_btn wx-btn-info j-view-wx-share-box">叫小伙伴们来投票!</a>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/live-event/style/candidate.css?v=1106'); ?>
+
+<?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/live-event/style/candidate.css?v=110602'); ?>
 <script>
 	wx.config(<?php echo $this->wxConfig?>);
 	wx.ready(function(){
@@ -74,6 +78,15 @@
 		    },
 		    cancel: function () { 
 		    }
+		});
+	});
+
+	$().ready(function(){
+		$('.j-view-wx-share-box').on('click', function(){
+			$('body').append("<div class=\"share-box j-wx-share-box\"></div>");
+			$('.j-wx-share-box').on('click', function(){
+				$(this).remove();
+			});
 		});
 	});
 </script>
