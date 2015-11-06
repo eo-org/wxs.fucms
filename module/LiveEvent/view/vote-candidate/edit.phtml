@@ -1,14 +1,3 @@
-<?php if($this->errorMsg != "") {?>
-<div class="weui_cell weui_cell_warn">
-	<div class="weui_cell_bd weui_cell_primary">
-		<p style="color: #F43530;"><?php echo $this->errorMsg?></p>
-	</div>
-	<div class="weui_cell_ft">
-	<i class="weui_icon_warn"></i>
-	</div>
-</div>
-<?php }?>
-
 <form id="upload-form">
 	<div class="weui_cells_title">人气榜封面:</div>
 	<div class="weui_cells weui_cells_form">
@@ -24,6 +13,17 @@
 	</div>
 </form>
 
+<?php if($this->errorMsg != "") {?>
+<div class="weui_cell weui_cell_warn">
+	<div class="weui_cell_bd weui_cell_primary">
+		<p style="color: #F43530;"><?php echo $this->errorMsg?></p>
+	</div>
+	<div class="weui_cell_ft">
+	<i class="weui_icon_warn"></i>
+	</div>
+</div>
+<?php }?>
+
 <form name="sign-up" method='post' action=''>
 	<div class="weui_cells_title">您的榜单信息，此信息将向所有人公开，请尽量完善，展示您最好的个人形象</div>
 	<div class="weui_cells weui_cells_form">
@@ -33,17 +33,6 @@
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
 				<input class="weui_input" type="text" id="nickname" name="nickname" value="<?php echo $this->candidateDoc->getNickname()?>" placeholder="请输入榜单名，不需要是真名" required>
-			</div>			
-			<div class="weui_cell_ft">
-				<i class="weui_icon_warn"></i>
-			</div>
-		</div>
-		<div class="weui_cell">
-			<div class="weui_cell_hd">
-				<label for="brief" class="weui-label">简介:</label>
-			</div>
-			<div class="weui_cell_bd weui_cell_primary">
-				<textarea style="color: #000;" class='weui_textarea' id='brief' name='brief'><?php echo $this->candidateDoc->getBrief()?></textarea>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>
@@ -63,18 +52,19 @@
 		</div>
 		<div class="weui_cell">
 			<div class="weui_cell_hd">
-				<label for="hobby" class="weui-label">兴趣爱好:</label>
+				<label for="brief" class="weui-label">简介:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<input class="weui_input" type="text" id="hobby" name="hobby" value="<?php echo $this->hobby?>" placeholder="请输入您的兴趣爱好" required>
+				<textarea style="color: #000;" class='weui_textarea' id='brief' name='brief'><?php echo $this->candidateDoc->getBrief()?></textarea>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>
 			</div>
 		</div>
-		<div class="weui_btn_area"><button class="weui_btn wx-btn-primary">提交信息</button></div>
-		<br>
 	</div>
+	<br>
+	<div class="weui_btn_area"><button class="weui_btn wx-btn-primary">提交信息</button></div>
+	<br>
 </form>
 
 <script src="<?php echo $this->path('wxs.fucms')?>/file/js/plupload.full.min.js"></script>
