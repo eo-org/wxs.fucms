@@ -63,12 +63,10 @@ class ApplicantController extends AbstractActionController
     				'eventDoc' => $eventDoc,
     				'applicantDoc' => $applicantDoc
     			));
-    			
     			return $vm;
     		}
     		
     	}
-    	
     	return array(
     		'websiteId' => $websiteId,
     		'eventId' => $eventId,

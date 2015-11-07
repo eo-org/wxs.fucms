@@ -1,6 +1,6 @@
 <div class="profile-box">
 	<h1 style="font-size: .24rem;text-align: center">个人信息</h1>
-	<div class="weui_cells">
+	<div class="weui_cells weui_cells_access">
 		<!-- 
 		<div class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
@@ -9,18 +9,18 @@
 			<div class="weui_cell_ft"><img width="55px" src="http://7fvjw0.com1.z0.glb.clouddn.com/547d70e3ce2350bc0d000029/avatar.jpg" alt="avatar.jpg"></div>
 		</div>
 		 -->
-		<div class="weui_cell">
+		<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-applicant', 'action' => 'index', 'eventId' =>$this->eventId, 'websiteId'=> $this->websiteId), true)?>" class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>姓名</p>
 			</div>
 			<div class="weui_cell_ft"><?php echo $this->applicantDoc->getName()?></div>
-		</div>
-		<div class="weui_cell">
+		</a>
+		<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-applicant', 'action' => 'index', 'eventId' =>$this->eventId, 'websiteId'=> $this->websiteId), true)?>" class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
 				<p>电话</p>
 			</div>
 			<div class="weui_cell_ft"><?php echo $this->applicantDoc->getMobile()?></div>
-		</div>
+		</a>
 		
 	</div>
 </div>
