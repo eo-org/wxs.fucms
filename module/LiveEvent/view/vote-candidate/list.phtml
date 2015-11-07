@@ -1,6 +1,6 @@
 <div class="candidate-list" style="background-color: <?php echo "#000" ?>">
 	<div class="warp">
-		<div class="vote-box">
+		<div class="vote-box" style="padding: 0 3%;">
 			<div class="vote-button">
 				<div class="button-group">
 					<div class="button-box">
@@ -13,8 +13,13 @@
 				</div>
 			</div>
 		</div>
+		<div class="search">
+			<form name="search">
+				<input id="j-vote-search-value" type="text" placeholder="输入参赛者编号或姓名 ">
+				<a id="j-vote-search-btn" class="btn-search">搜索</a>
+			</form>			
+		</div>
 		<div class="vote-list">
-			<h3 class="title">参赛选手</h3>
 			<?php foreach($this->candidateDocs as $candidateDoc) {?>
 			<div class="vote-item">
 				<a class="vote-view" href="<?php echo $this->url('wxs/wildcard', array('action' => 'index', 'candidateId' => $candidateDoc->getId()), true)?>">
@@ -40,5 +45,35 @@
 	</div>
 </div>
 <?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/live-event/style/candidate.css?v=11061115'); ?>
+<script>
+	$().ready(function(){
+		$('#j-vote-search-btn').on('click', function(){
+			var value = $('#j-vote-search-value').val();
+			value = value.replace(/(^\s*)|(\s*$)/g,'');
+			if(value){
+				$.ajax({
+					url: location.href,
+			 		type: 'POST',
+			 		data: {
+				 		'id': value
+				 	},
+			 		success: function (resp) {
+			 			if(resp.status == 'error'){
+			 				$.dialog({
+			                    title: 'alert',
+			                    content: resp.errMsg,
+			                    okText: '确定',
+			                    ok: function(){}
+			                });
+				 		}else if(resp.status == 'success'){
+					 		var url = resp.url;
+							location.href = url;
+					 	}
+			 		}
+			 	});
+			}
+		});
+	});
+</script>
 
 <!-- websiteId -->

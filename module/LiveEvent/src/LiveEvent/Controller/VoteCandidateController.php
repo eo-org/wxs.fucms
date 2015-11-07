@@ -3,6 +3,7 @@ namespace LiveEvent\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\View\Model\JsonModel;
 
 require_once (BASE_PATH . "/inc/Qiniu/rs.php");
 class VoteCandidateController extends AbstractActionController
@@ -51,6 +52,24 @@ class VoteCandidateController extends AbstractActionController
     	$eventDoc = $dm->getRepository('WxDocument\LiveEvent')->findOneById($eventId);
     	if(is_null($eventDoc)) {
     		throw new PageNotFoundException();
+    	}
+    	
+    	if($this->getRequest()->isPost()) {
+    		$data = $this->getRequest()->getPost();
+    		$candidateDoc = $dm->getRepository('WxDocument\LiveEvent\VoteCandidate')->findOneById($data['id']);
+    		if(is_null($candidateDoc)){
+    			$candidateDoc = $dm->getRepository('WxDocument\LiveEvent\VoteCandidate')->findOneByNickname($data['id']);
+    			if(is_null($candidateDoc)){
+    				return new JsonModel(array(
+    					'status' => 'error',
+    					'errMsg' => '请输入正确的编号或者姓名!'
+    				));
+    			}
+    		}
+    		return new JsonModel(array(
+    			'status' => 'success',
+    			'url'	=> '/'.$websiteId.'/le-vote-candidate/index/eventId/'.$candidateDoc->getEventId().'/candidateId/'.$candidateDoc->getId()
+    		));
     	}
     	
     	$candidateDocs = $dm->createQueryBuilder('WxDocument\LiveEvent\VoteCandidate')

@@ -35,11 +35,6 @@ if($this->voteActivated) {
 		<!-- no document found -->
 		<p>
 			加入人气榜，为自己拉票，海选期间获得最多票数的参赛者可以在最终环节获得部分优势哦。
-			<ul>
-				<li>可以自由选择导师</li>
-				<li>可以获得VIP资格</li>
-				<li>有机会获得簰洲酒特别合约</li>
-			</ul>
 		</p>
 		<a class="weui_btn wx-btn-default" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>">创建档案</a>
 		
@@ -62,9 +57,9 @@ if($this->voteActivated) {
 		<p>
 			如果您的排名靠前，将在比赛中拥有很大优势哦
 		</p>
-		<div style='overflow: auto;'>
+		<div style='overflow: auto;margin-top: 15px;'>
 			<img style='display:block;float: left; border: 1px solid #777;' src='<?php echo $this->outputImage($this->voteConfig['candidateDoc']->getCover(), 100, 100)?>' />
-			<div style='float: left;'>
+			<div style='float: left; padding-left: 10px;'>
 				<?php echo $this->voteConfig['candidateDoc']->getNickname()?>
 			</div>
 			<a style='float:right;' class="weui_btn weui_btn_mini weui_btn_default" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">修改信息</a>
