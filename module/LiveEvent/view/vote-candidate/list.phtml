@@ -50,8 +50,8 @@
 <script>
 	var voteItemTpl = function(data){
 		var resutl = "<div class='vote-item "+data.id+"'>"+
-						"<a class='vote-view' href='javascript:;'>"+
-							"<img src='<?php echo $this->path['qiniu']?>/<?php echo $this->websiteId?>/"+data.cover+"'>"+
+						"<a class='vote-view' href='<?php echo $this->url('wxs/wildcard', array('action' => 'index'), true)?>/candidateId/"+data.id+"'>"+
+							"<img src='<?php echo $this->path['qiniu']?>/<?php echo $this->websiteId?>/"+data.cover+"?imageView2/1/w/160/h/240'>"+
 							"<span class='vote-info'>"+data.id+"</span>"+
 							"<div class='tickt-count'><div class='ps'><span>"+data.ticketCount+"</span></div></div>"+
 						"</a>"+
