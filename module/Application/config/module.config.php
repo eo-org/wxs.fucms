@@ -59,7 +59,7 @@ return array(
 					'restroutes' => array (
 						'type' => 'segment',
 						'options' => array (
-							'route' => '/[:websiteId]/[:controller].json[/:id]',
+							'route' => '/[:websiteId]/[:controller][/page:page].json[/:id]',
 							'constraints' => array (
 								'websiteId' => '[a-z0-9]{24}',
 								'controller' => '[a-z-]*',
@@ -109,7 +109,8 @@ return array(
 	'view_helpers' => array(
 		'invokables' => array(
 			'path' => 'Application\View\Helper\Path',
-			'outputImage' => 'Application\View\Helper\OutputImage'
+			'outputImage' => 'Application\View\Helper\OutputImage',
+			'subText'	=> 'Application\View\Helper\SubText'
 		)
 	),
 );

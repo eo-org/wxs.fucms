@@ -19,7 +19,7 @@
 				<a id="j-vote-search-btn" class="btn-search">搜索</a>
 			</form>			
 		</div>
-		<div class="vote-list">
+		<div class="vote-list" id="vote-list-content">
 			<?php foreach($this->candidateDocs as $candidateDoc) {?>
 			<div class="vote-item">
 				<a class="vote-view" href="<?php echo $this->url('wxs/wildcard', array('action' => 'index', 'candidateId' => $candidateDoc->getId()), true)?>">
@@ -30,50 +30,93 @@
 					</div>
 				</a>
 				<div class="info-box">
-					<div class="name"><strong><?php echo $candidateDoc->getNickname()?></strong></div>
+					<div class="name"><strong><?php echo $this->subText($candidateDoc->getNickname(), 7, '...')?></strong></div>
 					<div class="button-box">
 						<button
 							id='j_vote_btn-<?php echo $candidateDoc->getId() ?>'
 							vote-url='<?php echo $this->url('wxsrs/restroutes', array('controller' => 'ler-vote-ticket', 'id' => $candidateDoc->getId()), true)?>'
-							class="wx-vote-btn" href=""
-						>支持TA</a>
+							class="wx-vote-btn"
+						>支持TA</button>
 					</div>
 				</div>
 			</div>
 			<?php }?>
 		</div>
+		<a id="next" href="//wxs.fucmsweb.test/wxsrs/547d70e3ce2350bc0d000029/rest-le-vote-candidate/page2.json">加载更多...</a>
 	</div>
 </div>
 <?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/live-event/style/candidate.css?v=11061115'); ?>
+<script src="<?php echo $this->path('src')?>/jquery/plugIn/jquery.infinitescroll.min.js"></script>
 <script>
+	var voteItemTpl = function(data){
+		var resutl = "<div class='vote-item "+data.id+"'>"+
+						"<a class='vote-view' href='javascript:;'>"+
+							"<img src=''>"+
+							"<span class='vote-info'>"+data.id+"</span>"+
+							"<div class='tickt-count'><div class='ps'><span>"+data.ticketCount+"</span></div></div>"+
+						"</a>"+
+						"<div class='info-box'>"+
+							"<div class='name'><strong>"+data.nickname.substr(0, 8)+"</strong></div>"+
+							"<div class='button-box'>"+
+							"<button vote-url='<?php echo $this->url('wxsrs/restroutes', array('controller' => 'ler-vote-ticket'), true)?>/"+data.id+"' class='wx-vote-btn' id='j_vote_btn-"+data.id+"'>支持TA</button></div>"+
+						"</div>"+
+					"</div>";
+		return resutl;
+	}
+	var voteFn = function(){
+		var value = $('#j-vote-search-value').val();
+		value = value.replace(/(^\s*)|(\s*$)/g,'');
+		if(value){
+			$.ajax({
+				url: location.href,
+		 		type: 'POST',
+		 		data: {
+			 		'id': value
+			 	},
+		 		success: function (resp) {
+		 			if(resp.status == 'error'){
+		 				$.dialog({
+		                    title: 'alert',
+		                    content: resp.errMsg,
+		                    okText: '确定',
+		                    ok: function(){}
+		                });
+			 		}else if(resp.status == 'success'){
+				 		var url = resp.url;
+						location.href = url;
+				 	}
+		 		}
+			});
+		}
+	}
 	$().ready(function(){
-		$('#j-vote-search-btn').on('click', function(){
-			var value = $('#j-vote-search-value').val();
-			value = value.replace(/(^\s*)|(\s*$)/g,'');
-			if(value){
-				$.ajax({
-					url: location.href,
-			 		type: 'POST',
-			 		data: {
-				 		'id': value
-				 	},
-			 		success: function (resp) {
-			 			if(resp.status == 'error'){
-			 				$.dialog({
-			                    title: 'alert',
-			                    content: resp.errMsg,
-			                    okText: '确定',
-			                    ok: function(){}
-			                });
-				 		}else if(resp.status == 'success'){
-					 		var url = resp.url;
-							location.href = url;
-					 	}
-			 		}
-			 	});
-			}
+		$('#j-vote-search-btn').bind('click',voteFn );
+		$('#vote-list-content').infinitescroll({
+				navSelector  	: "a#next:last",
+				nextSelector 	: "a#next:last",
+				itemSelector 	: "#vote-list-content .vote-item",
+				debug		 	: false,
+				dataType	 	: 'JSON',
+				appendCallback	: false,
+				pathParse: function(){
+					return ['//wxs.fucmsweb.test/wxsrs/547d70e3ce2350bc0d000029/rest-le-vote-candidate/page', '.json?eventId=<?php echo $this->eventId?>']
+				},
+				loading: {
+				    msgText: "<em>加载中...</em>"
+				  },
+			}, function(resp) {
+				var resp = JSON.parse(resp);
+				if(resp.data.length > 0){
+					for(var i=0;i<resp.data.length;i++) {
+			        	var item = $(voteItemTpl(resp.data[i]));
+			        	$('#vote-list-content').append(item);
+					}
+				}
+				if(resp.data.length < 40) {
+					$('#vote-list-content').infinitescroll('unbind');
+				}
+			});
 		});
-	});
 </script>
 
 <!-- websiteId -->

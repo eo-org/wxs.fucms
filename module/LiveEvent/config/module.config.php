@@ -5,6 +5,7 @@ return array(
         	'le-index'			=> 'LiveEvent\Controller\IndexController',
         	'le-applicant'		=> 'LiveEvent\Controller\ApplicantController',
         	'le-vote-candidate'	=> 'LiveEvent\Controller\VoteCandidateController',
+        	'rest-le-vote-candidate'	=> 'LiveEvent\Controller\RestVoteCandidateController',
         	
         	'ler-applicant'			=> 'LiveEventRest\Controller\ApplicantController',
         	'ler-vote-candidate'	=> 'LiveEventRest\Controller\VoteCandidateController',
