@@ -32,7 +32,6 @@ class VoteCandidateController extends AbstractActionController
     	if(is_null($eventDoc)) {
     		throw new PageNotFoundException();
     	}
-    	
     	return array(
     		'websiteId' => $websiteId,
     		'eventId' => $eventId,
@@ -80,12 +79,14 @@ class VoteCandidateController extends AbstractActionController
     		->limit('40')
     		->getQuery()
     		->execute();
-    	
+    	$config = $sm->get('Config');
+    	$path = $config['env']['path'];
     	return array(
     		'eventDoc'	=> $eventDoc,
     		'candidateDocs' => $candidateDocs,
     		'websiteId' => $websiteId,
     		'eventId' => $eventId,
+    		'path'	=> $path
     	);
     }
     

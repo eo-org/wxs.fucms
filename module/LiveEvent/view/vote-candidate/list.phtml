@@ -51,7 +51,7 @@
 	var voteItemTpl = function(data){
 		var resutl = "<div class='vote-item "+data.id+"'>"+
 						"<a class='vote-view' href='javascript:;'>"+
-							"<img src=''>"+
+							"<img src='<?php echo $this->path['qiniu']?>/<?php echo $this->websiteId?>/"+data.cover+"'>"+
 							"<span class='vote-info'>"+data.id+"</span>"+
 							"<div class='tickt-count'><div class='ps'><span>"+data.ticketCount+"</span></div></div>"+
 						"</a>"+
