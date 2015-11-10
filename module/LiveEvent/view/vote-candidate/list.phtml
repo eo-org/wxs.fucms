@@ -42,7 +42,7 @@
 			</div>
 			<?php }?>
 		</div>
-		<a id="next" href="//wxs.fucmsweb.test/wxsrs/547d70e3ce2350bc0d000029/rest-le-vote-candidate/page2.json">加载更多...</a>
+		<a id="next" href="/wxsrs/<?php echo $this->websiteId?>/rest-le-vote-candidate/page2.json?eventId=<?php echo $this->eventId?>">加载更多...</a>
 	</div>
 </div>
 <?php $this->headLink()->appendStylesheet($this->path('wxs.fucms').'/live-event/style/candidate.css?v=11061115'); ?>
@@ -99,7 +99,7 @@
 				dataType	 	: 'JSON',
 				appendCallback	: false,
 				pathParse: function(){
-					return ['/wxsrs/547d70e3ce2350bc0d000029/rest-le-vote-candidate/page', '.json?eventId=<?php echo $this->eventId?>']
+					return ['/wxsrs/<?php echo $this->websiteId?>/rest-le-vote-candidate/page', '.json?eventId=<?php echo $this->eventId?>']
 				},
 				loading: {
 				    msgText: "<em>加载中...</em>"
