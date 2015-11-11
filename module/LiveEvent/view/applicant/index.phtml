@@ -9,9 +9,9 @@
 </div>
 <?php }?>
 
-<h3 class="title">报名信息填写</h3>
+<h3 class="title">签到信息填写</h3>
 <p class="apply-info">
-	您的报名信息我们不会向任何无关个人或单位泄漏，此信息仅供中国好声音湖北赛区联系和验证身份使用，请务必填写真实信息以免联系不上。
+	您的签到信息我们不会向任何无关个人或单位泄漏，此信息仅供中国好声音湖北赛区联系和验证身份使用，请务必填写真实信息以免联系不上。
 </p>
 
 <form id="j-applicant-form" name="sign-up" method='post' action=''>
@@ -43,7 +43,7 @@
 				<label for="id-number" class="weui-label">身份证号:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<input class="weui_input" type="text" id="id-number" name="info_idNumber" value="<?php echo $this->applicantDoc->getInfo()['idNumber']?>" placeholder="请输入您的身份证号码" required>
+				<input class="weui_input" type="text" id="id-number" name="info_idNumber" value="<?php echo $this->applicantDoc->getInfo('info_idNumber')?>" placeholder="请输入您的身份证号码" required>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>

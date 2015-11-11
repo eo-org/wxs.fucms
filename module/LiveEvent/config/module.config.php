@@ -64,6 +64,7 @@ return array(
 			'live-event/vote-candidate/edit'	=> __DIR__ . '/../view/vote-candidate/edit.phtml',
 			'live-event/vote-candidate/list'	=> __DIR__ . '/../view/vote-candidate/list.phtml',
 			'live-event/vote-candidate/index'	=> __DIR__ . '/../view/vote-candidate/index.phtml',
+			'live-event/vote-candidate/success'	=> __DIR__ . '/../view/vote-candidate/success.phtml',
 		)
 	)
 );

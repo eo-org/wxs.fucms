@@ -41,6 +41,11 @@ class VoteCandidateController extends AbstractActionController
     	);
     }
     
+    public function successAction()
+    {
+    	
+    }
+    
     public function listAction()
     {
     	$eventId = $this->params()->fromRoute('eventId');
@@ -132,8 +137,8 @@ class VoteCandidateController extends AbstractActionController
     		$dm->flush();
     		
     		return $this->redirect()->toRoute('wxs/wildcard', array(
-    			'controller' => 'le-index',
-    			'action' => 'index',
+    			'controller' => 'le-vote-candidate',
+    			'action' => 'success',
     			'eventId' => $eventId
     		), true);
     	}
@@ -156,7 +161,8 @@ class VoteCandidateController extends AbstractActionController
     		'websiteId'		=> $websiteId,
     		'uptoken'		=> $uptoken,
     		'candidateDoc'	=> $candidateDoc,
-    		'candidateId'	=> $candidateDoc->getId()
+    		'candidateId'	=> $candidateDoc->getId(),
+    		'eventId'		=> $eventId
     	);
     }
 }

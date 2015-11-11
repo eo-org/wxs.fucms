@@ -1,5 +1,5 @@
 <div class="profile-box">
-	<h1 style="font-size: .24rem;text-align: center">个人信息</h1>
+	<h1 style="font-size: .24rem;text-align: center">签到信息</h1>
 	<div class="weui_cells weui_cells_access">
 		<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-applicant', 'action' => 'index', 'eventId' =>$this->eventId, 'websiteId'=> $this->websiteId), true)?>" class="weui_cell">
 			<div class="weui_cell_bd weui_cell_primary">
@@ -16,8 +16,7 @@
 		
 	</div>
 </div>
-<h1 style="font-size: .24rem;text-align: center;margin: .2rem 0;">线下互动</h1>
-<h2 class='title'>人气榜</h2>
+<h1 style="font-size: .24rem;text-align: center;margin: .2rem 0;">签到互动</h1>
 <article class="weui_article">
 <?php
 if($this->voteActivated) {
@@ -25,36 +24,48 @@ if($this->voteActivated) {
 	<section>
 		<?php if($this->voteConfig['candidateStatus'] == 'not-found') {?>
 		<!-- no document found -->
-		<p>
+		<!-- p>
 			加入人气榜，为自己拉票，海选期间获得最多票数的参赛者可以在最终环节获得部分优势哦。
-		</p>
-		<a class="weui_btn wx-btn-default" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>">创建档案</a>
+		</p -->
+		<a class="weui_btn wx-btn-default" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>">下一步</a>
 		
 		<p>
-			在正式为您自己拉票之前，需要创建一份拉票的档案，此档案中的内容会向公众公开
+			在正式签到之前，需要创建档案，此档案中的内容会向公众公开
 		</p>
 		<?php }?>
 		
 		<?php if($this->voteConfig['candidateStatus'] == 'not-complete') {?>
+		
+		<a class="weui_btn wx-btn-default" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>">下一步</a>
+		
+		<p>
+			在正式签到之前，需要创建档案，此档案中的内容会向公众公开
+		</p>
+		
+		
 		<!-- partial document found -->
-		<p>人气榜拉票信息没有填写完整，只有完整的信息才会在人气排行中显示</p>
+		<!-- 
+		<p>签到信息没有填写完整，只有完整的信息才会在排行中显示</p>
 		<a href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn wx-btn-default">完善信息</a>
+		-->
 		<?php }?>
 	
 		<?php if($this->voteConfig['candidateStatus'] == 'complete') {?>
 		<!-- document completed -->
+		<!-- 
 		<p>
 			您的榜单信息如下，请分享给您的粉丝，每位粉丝每天有三张选票可以选择他们最喜欢的歌手。
 		</p>
 		<p>
 			如果您的排名靠前，将在比赛中拥有很大优势哦
 		</p>
-		<div style='overflow: auto;margin-top: 15px;'>
-			<img style='display:block;float: left; border: 1px solid #777;' src='<?php echo $this->outputImage($this->voteConfig['candidateDoc']->getCover(), 100, 100)?>' />
-			<div style='float: left; padding-left: 10px;'>
+		 -->
+		<div style='overflow: auto;margin-top: 5px;'>
+			<img style='display:block;border: 1px solid #777;width: 100%;' src='<?php echo $this->outputImage($this->voteConfig['candidateDoc']->getCover(), 200, 200)?>' />
+			<div style=''>
 				<?php echo $this->voteConfig['candidateDoc']->getNickname()?>
 			</div>
-			<a style='float:right;' class="weui_btn weui_btn_mini weui_btn_default" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">修改信息</a>
+			<a class="weui_btn weui_btn_mini weui_btn_default" href="<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'edit'), true)?>" class="weui_btn weui_btn_mini weui_btn_default">修改信息</a>
 		</div>
 		<div style='margin: 2em 0;'>
 			<a class="weui_btn wx-btn-default" href='<?php echo $this->url('wxs/wildcard', array('controller' => 'le-vote-candidate', 'action' => 'index', 'candidateId' => $this->voteConfig['candidateId']), true)?>'>分享拉票</a>
@@ -62,7 +73,7 @@ if($this->voteActivated) {
 		<?php }?>
 		
 		<br />
-		<a class="weui_btn wx-btn-default" href="http://www.chvoice.com/public/register">进入秀立方官方报名入口</a>
+		<!-- a class="weui_btn wx-btn-default" href="http://www.chvoice.com/public/register">进入秀立方官方报名入口</a -->
 	<section>
 <?php
 }

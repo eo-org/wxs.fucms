@@ -25,14 +25,14 @@
 <?php }?>
 
 <form name="sign-up" method='post' action=''>
-	<div class="weui_cells_title">您的榜单信息，此信息将向所有人公开，请尽量完善，展示您最好的个人形象</div>
+	<div class="weui_cells_title">您的签到信息，此信息将向所有人公开，请尽量完善，展示您最好的个人形象</div>
 	<div class="weui_cells weui_cells_form">
 		<div class="weui_cell">
 			<div class="weui_cell_hd">
-				<label for="nickname" class="weui-label">榜单名:</label>
+				<label for="nickname" class="weui-label">签到名:</label>
 			</div>
 			<div class="weui_cell_bd weui_cell_primary">
-				<input class="weui_input" type="text" id="nickname" name="nickname" value="<?php echo $this->candidateDoc->getNickname()?>" placeholder="请输入榜单名，不需要是真名" required>
+				<input class="weui_input" type="text" id="nickname" name="nickname" value="<?php echo $this->candidateDoc->getNickname()?>" placeholder="请输入签到名" required>
 			</div>			
 			<div class="weui_cell_ft">
 				<i class="weui_icon_warn"></i>
@@ -78,7 +78,7 @@ var applicantId = '<?php echo $this->applicantId?>';
 var qiniuDomain = "<?php echo $this->path('qiniu')?>";
 var fileResourceId = eventId + ':' + applicantId;
 
-var browserBtn = $('#pickfiles');
+var browserBtn = $('#pickfiles')[0];
 var uploader = Qiniu.uploader({
 	runtimes: 'html5',
 	browse_button: browserBtn,
@@ -98,6 +98,7 @@ var uploader = Qiniu.uploader({
 		'BeforeUpload': function(up, file) {
 			$('#upload-form').css('display', 'none');
 			$('#replace-text').css('display', 'block');
+			$('#loadingToast').show();
 		},
 		'UploadProgress': function(up, file) {
 			$('#upload-bar').innerHTML = file.percent;
@@ -124,37 +125,16 @@ var uploader = Qiniu.uploader({
 		 		success: function (response) {
 		 			$('#candidate-cover').attr('src', qiniuDomain + '/' + websiteId + '/' + file.urlname + '?imageView2/1/w/200/h/200');
 			 		
-		 			//alert('照片上传成功');
+		 			$('#loadingToast').hide();
 		 		},
 		 		error: function (response) {
 		 			alert('sorry, 图片上传失败');
 		 		}
-		 	});
-
-// 			$ajax({
-//				url: '/wxsrs/<?php echo $this->websiteId?>/lers-vote-candidate.json/',
-// 		 		type: 'POST',
-// 		 		data: {
-// 					'cover': file.urlname
-// 			 	},
-// 		 		success: function (response) {
-			 		
-// 			 		$('#candidate-cover').attr('src', qiniuDomain + '/' + websiteId + '/' + file.urlname + '?imageView2/1/w/200/h/200');
-// 		 			//alert('照片上传成功');
-// 		 		},
-// 		 		error: function (response) {
-// 		 			alert('sorry, 图片上传失败');
-// 		 		}
-// 			});
-		 	
+		 	});		 	
 		},
 		'UploadComplete': function() {
 			$('#upload-form').css('display', 'block');
 			$('#replace-text').css('display', 'none');
-
-
-			//$('#')
-			
 		},
 		'Key': function(up, file) {
 			//first in seq
