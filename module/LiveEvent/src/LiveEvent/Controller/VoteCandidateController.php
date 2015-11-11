@@ -18,13 +18,24 @@ class VoteCandidateController extends AbstractActionController
     	$dm = $sm->get('DocumentManager');
     	
     	$userAuth = $sm->get('User\Service\SessionAuth');
-    	$openId = $userAuth->getOpenId();
+    	$openId = $userAuth->getOpenid();
     	$jsSignature = $sm->get('Application\Service\JsSignatureService');
     	$wxConfigStr = $jsSignature->getJsSdkConfig();
-    	 
-    	$candidateDoc = $dm->getRepository('WxDocument\LiveEvent\VoteCandidate')->findOneById($candidateId);
-    	if(is_null($candidateDoc)) {
-    		throw new PageNotFoundException();
+    	
+    	if($candidateId == 'me') {
+    		$candidateDoc = $dm->getRepository('WxDocument\LiveEvent\VoteCandidate')->findOneByOpenid($openId);
+    		if(is_null($candidateDoc)) {
+    			return $this->redirect()->toRoute('wxs/wildcard', array(
+    				'controller' => 'le-index',
+    				'action' => 'index',
+    				'eventId' => $eventId
+    			), true);
+    		}
+    	} else {
+	    	$candidateDoc = $dm->getRepository('WxDocument\LiveEvent\VoteCandidate')->findOneById($candidateId);
+	    	if(is_null($candidateDoc)) {
+	    		throw new PageNotFoundException();
+	    	}
     	}
     	
     	$eventId = $candidateDoc->getEventId();
