@@ -62,7 +62,7 @@
 	wx.ready(function(){
 		wx.onMenuShareTimeline({
 		    title: '<?php echo $this->candidateDoc->getNickname()?>参加了中国好声音湖北赛区海选比赛，朋友们快来为他投票吧!',
-		    link: window.location.href,
+		    link: <?php echo $this->url('wxs/wildcard', array('action' => 'index', 'candidateId' => $candidateDoc->getId()), true)?>,
 		    imgUrl: '<?php echo $this->outputImage($this->candidateDoc->getCover(), 320, 480)?>',
 		    success: function () {
 		    },
@@ -72,7 +72,7 @@
 		wx.onMenuShareAppMessage({
 		    title: '第五季中国好声音海选湖北赛区',
 		    desc: '<?php echo $this->candidateDoc->getNickname()?>参加了第五季中国好声音湖北赛区海选比赛，朋友们快来为他投票吧!',
-		    link: window.location.href,
+		    link: <?php echo $this->url('wxs/wildcard', array('action' => 'index', 'candidateId' => $candidateDoc->getId()), true)?>,
 		    imgUrl: '<?php echo $this->outputImage($this->candidateDoc->getCover(), 320, 480)?>',
 		    type: '',
 		    dataUrl: '',
